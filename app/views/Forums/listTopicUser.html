@@ -1,0 +1,140 @@
+#{extends 'main.html' /}
+#{set title:title /}
+
+#{set 'description'}
+<meta name="description" content="Zawaj.al-imane.org, le site matrimonial qui propose un espace de rencontre dans le respect de la religion et d'autrui pour la communauté musulmane chiite francophone">
+#{/set}
+#{set 'keywords'}
+<meta name="keywords" content="zawaj,mariage,chiite,chiisme,épouse,mari, mariage islamique,site zawaj,site mariage, site zawaj musulman,site mariage musulman">
+#{/set}
+
+<table align="right" cellpadding="0px">
+    #{if nbPage > 1}
+
+    <tr >
+        #{if page > 1}
+        <td class="pagination">
+            <span class="arrow">
+                <a href="@{Forums.listTopicUser(page-1)}">
+                    <img src="@{'/public/images/previous.png'}"/>
+                </a>
+            </span>
+
+        </td>
+        #{/if}
+
+        #{list items:1..nbPage, as:'i'}
+
+        #{if page == i}
+        <td class="paginationSelected" valign="middle" align="center" id="currentPage">
+            <span>
+                <strong>${i}</strong>
+            </span>
+
+        </td>
+        #{/if}
+        #{else}
+        <td class="pagination" valign="middle" align="center" >
+            <span>
+                <a href="@{Forums.listTopicUser(i)}">
+                    ${i}
+                </a>
+            </span>
+        </td>
+        #{/else}
+
+        #{/list}
+
+        #{if page < nbPage}
+        <td class="pagination">
+            <span class="arrow">
+                <a href="@{Forums.listTopicUser(page+1)}" >
+                    <img src="@{'/public/images/next.png'}" />
+                </a>
+            </span>
+
+        </td>
+        #{/if}
+    </tr>
+    #{/if}
+</table>
+<br/>
+#{if nbPage > 1}
+    <br/>
+#{/if}
+
+<div style="width: 1000px;border: 1px #7a3919 solid;">
+    <div id="forumCategoryHead">
+        <div style="display: inline-block;width: 750px">
+            &{'forum.byAndName'}
+        </div>
+        <div style="display: inline-block;width: 215px">
+            &{'forum.lastMessageBy'}
+        </div>
+    </div>
+    #{list items:threads, as:'thread'}
+        #{showThread thread:thread /}
+    #{/list}
+
+    #{if threads.size() == 0}
+        <br/>
+        <strong style="padding-left: 10px">
+            &{'forum.noThreads'}
+        </strong>
+        <br/><br/>
+    #{/if}
+</div>
+<br/>
+
+<table align="right" cellpadding="0px">
+    #{if nbPage > 1}
+
+    <tr >
+        #{if page > 1}
+        <td class="pagination">
+            <span class="arrow">
+                <a href="@{Forums.listTopicUser(page-1)}">
+                    <img src="@{'/public/images/previous.png'}"/>
+                </a>
+            </span>
+
+        </td>
+        #{/if}
+
+        #{list items:1..nbPage, as:'i'}
+
+        #{if page == i}
+        <td class="paginationSelected" valign="middle" align="center" id="currentPage">
+            <span>
+                <strong>${i}</strong>
+            </span>
+
+        </td>
+        #{/if}
+        #{else}
+        <td class="pagination" valign="middle" align="center" >
+            <span>
+                <a href="@{Forums.listTopicUser(i)}">
+                    ${i}
+                </a>
+            </span>
+        </td>
+        #{/else}
+
+        #{/list}
+
+        #{if page < nbPage}
+        <td class="pagination">
+            <span class="arrow">
+                <a href="@{Forums.listTopicUser(page+1)}" >
+                    <img src="@{'/public/images/next.png'}" />
+                </a>
+            </span>
+
+        </td>
+        #{/if}
+    </tr>
+    #{/if}
+</table>
+<br/><br/>
+

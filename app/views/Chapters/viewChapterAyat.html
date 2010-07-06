@@ -1,0 +1,346 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Mes chapitres' /}
+
+#{if chapter.ayats.size() > 0}
+<script src="@{'/public/javascripts/tiny_mce.js'}" type="text/javascript" charset='utf-8'></script>
+
+#{i18n /}
+
+<script>
+
+    function showCommentBox(id,ayatId){
+
+        $("#"+id).html('<textarea id="comment_'+id+'" class="comment_'+id+'" cols="80" rows="8"></textarea>');
+
+        $.post("@{Comments.load()}", { ayatId: ayatId },
+        function(data){
+            $("#comment_"+id).html(data.content);
+        });
+
+
+        tinyMCE.init({
+
+            mode : "specific_textareas",
+            editor_selector : "comment_"+id,
+
+            plugins : "save",
+            theme : "advanced",
+            theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull",
+            theme_advanced_buttons2 : "",
+            theme_advanced_buttons3 :"",
+            theme_advanced_buttons4 :"",
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_toolbar_align : "left",
+            theme_advanced_statusbar_location : "bottom",
+            theme_advanced_resizing : true,
+            cleanup: false,
+            convert_fonts_to_spans : false,
+            inline_styles: false,
+            fix_table_elements : true,
+            fix_list_elements : true,
+            relative_urls : false,
+            convert_urls : false,
+            extended_valid_elements :
+                "a[href|rel|rev|target|title|type]," +
+                "b[],"+
+                "blink[],"+
+                "blockquote[align|cite|clear|height|type|width],"+
+                "br[clear],"+
+                "caption[align|height|valign|width],"+
+                "center[align|height|width],"+
+                "col[align|bgcolor|char|charoff|span|valign|width],"+
+                "colgroup[align|bgcolor|char|charoff|span|valign|width],"+
+                "comment[],"+
+                "em[],"+
+                "font[color|face|font-weight|point-size|size],"+
+                "h1[align|clear|height|width],"+
+                "h2[align|clear|height|width],"+
+                "h3[align|clear|height|width],"+
+                "h4[align|clear|height|width],"+
+                "h5[align|clear|height|width],"+
+                "h6[align|clear|height|width],"+
+                "hr[align|clear|color|noshade|size|width],"+
+                "img[align|alt|border|height|hspace|src|vspace|width],"+
+                "li[align|clear|height|type|value|width],"+
+                "marquee[behavior|bgcolor|direction|height|hspace|loop|scrollamount|scrolldelay|vspace|width],"+
+                "ol[align|clear|height|start|type|width],"+
+                "p[align|clear|height|width],"+
+                "pre[clear|width|wrap],"+
+                "s[],"+
+                "small[],"+
+                "span[align],"+
+                "strike[],"+
+                "strong[],"+
+                "sub[],"+
+                "sup[],"+
+                "table[align|background|bgcolor|border|bordercolor|bordercolordark|bordercolorlight|"+
+                "bottompadding|cellpadding|cellspacing|clear|cols|height|hspace|leftpadding|"+
+                "rightpadding|rules|summary|toppadding|vspace|width],"+
+                "tbody[align|bgcolor|char|charoff|valign],"+
+                "td[abbr|align|axis|background|bgcolor|bordercolor|"+
+                "bordercolordark|bordercolorlight|char|charoff|headers|"+
+                "height|nowrap|rowspan|scope|valign|width],"+
+                "tfoot[align|bgcolor|char|charoff|valign],"+
+                "th[abbr|align|axis|background|bgcolor|bordercolor|"+
+                "bordercolordark|bordercolorlight|char|charoff|headers|"+
+                "height|nowrap|rowspan|scope|valign|width],"+
+                "thead[align|bgcolor|char|charoff|valign],"+
+                "tr[align|background|bgcolor|bordercolor|"+
+                "bordercolordark|bordercolorlight|char|charoff|"+
+                "height|nowrap|valign],"+
+                "tt[],"+
+                "u[],"+
+                "ul[align|clear|height|start|type|width]"
+
+
+        });
+    }
+
+    function showTranslationBox(id,ayatId){
+
+        $("#ayat_translation_"+id).html('<textarea id="translation_'+id+'" class="translation_'+id+'" cols="80" rows="8"></textarea>');
+
+
+        tinyMCE.init({
+
+            mode : "specific_textareas",
+            editor_selector : "translation_"+id,
+
+            plugins : "save",
+            theme : "advanced",
+            theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull",
+            theme_advanced_buttons2 : "",
+            theme_advanced_buttons3 :"",
+            theme_advanced_buttons4 :"",
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_toolbar_align : "left",
+            theme_advanced_statusbar_location : "bottom",
+            theme_advanced_resizing : true,
+            cleanup: false,
+            convert_fonts_to_spans : false,
+            inline_styles: false,
+            fix_table_elements : true,
+            fix_list_elements : true,
+            relative_urls : false,
+            convert_urls : false,
+            extended_valid_elements :
+                "a[href|rel|rev|target|title|type]," +
+                "b[],"+
+                "blink[],"+
+                "blockquote[align|cite|clear|height|type|width],"+
+                "br[clear],"+
+                "caption[align|height|valign|width],"+
+                "center[align|height|width],"+
+                "col[align|bgcolor|char|charoff|span|valign|width],"+
+                "colgroup[align|bgcolor|char|charoff|span|valign|width],"+
+                "comment[],"+
+                "em[],"+
+                "font[color|face|font-weight|point-size|size],"+
+                "h1[align|clear|height|width],"+
+                "h2[align|clear|height|width],"+
+                "h3[align|clear|height|width],"+
+                "h4[align|clear|height|width],"+
+                "h5[align|clear|height|width],"+
+                "h6[align|clear|height|width],"+
+                "hr[align|clear|color|noshade|size|width],"+
+                "img[align|alt|border|height|hspace|src|vspace|width],"+
+                "li[align|clear|height|type|value|width],"+
+                "marquee[behavior|bgcolor|direction|height|hspace|loop|scrollamount|scrolldelay|vspace|width],"+
+                "ol[align|clear|height|start|type|width],"+
+                "p[align|clear|height|width],"+
+                "pre[clear|width|wrap],"+
+                "s[],"+
+                "small[],"+
+                "span[align],"+
+                "strike[],"+
+                "strong[],"+
+                "sub[],"+
+                "sup[],"+
+                "table[align|background|bgcolor|border|bordercolor|bordercolordark|bordercolorlight|"+
+                "bottompadding|cellpadding|cellspacing|clear|cols|height|hspace|leftpadding|"+
+                "rightpadding|rules|summary|toppadding|vspace|width],"+
+                "tbody[align|bgcolor|char|charoff|valign],"+
+                "td[abbr|align|axis|background|bgcolor|bordercolor|"+
+                "bordercolordark|bordercolorlight|char|charoff|headers|"+
+                "height|nowrap|rowspan|scope|valign|width],"+
+                "tfoot[align|bgcolor|char|charoff|valign],"+
+                "th[abbr|align|axis|background|bgcolor|bordercolor|"+
+                "bordercolordark|bordercolorlight|char|charoff|headers|"+
+                "height|nowrap|rowspan|scope|valign|width],"+
+                "thead[align|bgcolor|char|charoff|valign],"+
+                "tr[align|background|bgcolor|bordercolor|"+
+                "bordercolordark|bordercolorlight|char|charoff|"+
+                "height|nowrap|valign],"+
+                "tt[],"+
+                "u[],"+
+                "ul[align|clear|height|start|type|width]"
+
+
+        });
+    }
+
+    function saveComment(id,ayatId){
+        $.post("@{Comments.save()}", { ayatId: ayatId,content:tinyMCE.get("comment_ayat_"+id).getContent() },
+        function(data){
+
+            $("#message_"+id).html(i18n("comment.add")+"<br/>");
+            $("#message_"+id).removeClass("validation");
+            $("#message_"+id).addClass("success");
+            $("#message_"+id).show();
+            window.setTimeout(function() {
+                $("#message_"+id).fadeOut('slow');
+            }, 3000);
+        });
+    }
+
+    function saveTranslation(id,ayatId){
+        $.post("@{Translations.save()}", { ayatId: ayatId,translation:tinyMCE.get("translation_"+id).getContent() },
+        function(data){
+            if(data.result == 'ok'){
+                $("#message_"+id).html(i18n("translation.add")+"<br/>");
+                $("#message_"+id).removeClass("validation");
+                $("#message_"+id).addClass("success");
+                $("#message_"+id).show();
+                window.setTimeout(function() {
+                    $("#message_"+id).fadeOut('slow');
+                }, 3000);
+            }else{
+                $("#message_"+id).html(i18n("translation.notAdd")+"<br/>");
+                $("#message_"+id).removeClass("success");
+                $("#message_"+id).addClass("validation");
+                $("#message_"+id).show();
+                window.setTimeout(function() {
+                    $("#message_"+id).fadeOut('slow');
+                }, 5000);
+            }
+        });
+    }
+
+    function showHideCommentBox(id,ayatId){
+        if('${session.username}' == ''){
+            alert(i18n("error.userNotConnected"));
+            return;
+        }
+
+        if($('#comment_'+id).length == 0){
+            showCommentBox(id,ayatId);
+            $("#"+id).toggle();
+        }else{
+            $("#"+id).toggle();
+        }
+
+    }
+
+    function showHideTranslateBox(id,ayatId){
+        if('${session.username}' == ''){
+            alert(i18n("error.userNotConnected"));
+            return;
+        }
+
+        if($('#translation_'+id).length == 0){
+            showTranslationBox(id,ayatId);
+            $("#ayat_translation_"+id).toggle();
+        }else{
+            $("#ayat_translation_"+id).toggle();
+        }
+
+    }
+
+    function removeChapterAyat(chapterID,ayatID){
+        var result = confirm(i18n("info.confirmRemoveChapterAyat"));
+        if(result){
+            $.post("@{Chapters.removeChapterAyat()}", { ayatID: ayatID,chapterID:chapterID },
+            function(data){
+                if(data.result == 'ok'){
+                    $("#message_"+ayatID).html(i18n("info.ayatRemovedFromChapter")+"<br/>");
+                    $("#message_"+ayatID).addClass("success");
+                    $("#message_"+ayatID).show();
+                    window.setTimeout(function() {
+
+                        $("#allAyat_"+ayatID).fadeOut('slow');
+                    }, 3000);
+                }else if(data.result == 'error'){
+                    $("#message_"+ayatID).html(i18n("error.badChapter")+"<br/>");
+                    $("#message_"+ayatID).addClass("validation");
+                    $("#message_"+ayatID).show();
+                    window.setTimeout(function() {
+                        $("#message_"+ayatID).fadeOut('slow');
+
+                    }, 5000);
+                }
+            });
+        }
+    }
+
+</script>
+#{/if}
+
+<div style="text-align: center"><h1 style="border: 0px;">&{'chapter'} : ${chapter.title}</h1>
+</div>
+
+#{if chapter.ayats.size() > 0}
+
+#{list items:chapter.ayats, as:'ayat'}
+
+<div style="padding-bottom: 10px;padding-top: 10px;" id="allAyat_${ayat.id}">
+    <div id="message_${ayat.id}"></div>
+    <div style="display: inline-block;width: 70px;height: 80px">
+        <div>
+            <div id="ayatNumber">${ayat.sa}</div>
+            <div style="padding-top: 3px;">
+                <a href="#top">
+                    <img src="@{'/public/images/up.png'}" title="&{'ayat.top'}" width="20px" height="20px"/>
+                </a>
+                <a href="#" id="link_${ayat.id}" onclick="showHideCommentBox('ayat_${ayat.id}','${ayat.id}');return false;">
+                    <img src="@{'/public/images/comment.png'}" title="&{'ayat.comment'}" width="20px" height="20px"/>
+                </a>
+            </div>
+            <div>
+
+                #{if session.username}
+                #{secure.check 'admin'}
+                <a href="@{Ayats.editAyat(ayat.id)}">
+                    <img src="@{'/public/images/idea.png'}" title="&{'ayat.suggest'}" width="20px" height="20px"/>
+                </a>
+                #{/secure.check}
+                #{secure.check 'user'}
+                <a href="#" onclick="showHideTranslateBox('${ayat.id}','${ayat.id}');return false;">
+                    <img src="@{'/public/images/idea.png'}" title="&{'ayat.suggest'}" width="20px" height="20px"/>
+                </a>
+                #{/secure.check}
+                #{/if}
+                #{else}
+                <a href="#" onclick="showHideTranslateBox('${ayat.id}','${ayat.id}');return false;">
+                    <img src="@{'/public/images/idea.png'}" title="&{'ayat.suggest'}" width="20px" height="20px"/>
+                </a>
+                #{/else}
+                <a href="#" onclick="removeChapterAyat('${chapter.id}','${ayat.id}');return false;">
+                    <img src="@{'/public/images/delete.png'}" title="&{'ayat.delete'}" width="20px" height="20px"/>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="ayatContent">${ayat.content}</div>
+
+    <form action="" onsubmit="saveComment('${ayat.id}','${ayat.id}');return false;">
+        <div class="ayatComment" id="ayat_${ayat.id}" >
+
+        </div>
+    </form>
+
+    <form action="" onsubmit="saveTranslation('${ayat.id}','${ayat.id}');return false;">
+        <div class="ayatComment" id="ayat_translation_${ayat.id}" ></div>
+    </form>
+
+    <div style="border-bottom: 1px #eeeeee solid"></div>
+</div>
+
+
+#{/list}
+
+#{/if}
+#{else}
+<br/>
+&{'info.noChapterAyat'}
+#{/else}

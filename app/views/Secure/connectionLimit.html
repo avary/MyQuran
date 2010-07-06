@@ -1,0 +1,8 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Trop de tentative de connexion' /}
+
+<p class="error">
+    &{'secure.attemptExceded'}
+</p>
+
+<a href="@{Secure.lostPassword()}" id="forgotPassword">&{'forgotPassword'}?</a>

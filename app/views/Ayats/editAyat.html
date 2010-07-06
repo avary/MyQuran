@@ -1,0 +1,38 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Modifier un verset' /}
+
+<h4>&{'editAyat'} : </h4>
+
+#{if flash.success}
+<p class="success">
+    &{flash.success}
+</p>
+#{/if}
+
+<div style="padding-bottom: 10px;padding-top: 10px;">
+    <a href="#${ayat.number}" id="${ayat.number}"></a>
+    <div id="message_${ayat.number}"></div>
+    <div style="display: inline-block;width: 70px;height: 80px">
+        <div>
+            <div id="ayatNumber">${ayat.sa}</div>
+
+        </div>
+    </div>
+
+    <div id="ayatContent" >${ayat.content}</div>
+
+</div>
+
+<div style="border-bottom: 1px #eeeeee solid"></div>
+
+
+<h4>&{'info.proposedTranslation'} : </h4>
+<br/>
+<form action="@{Ayats.saveAyat()}" >
+    <input type="hidden" name="ayatID" value="${ayat.id}"/>
+    <textarea cols="70" rows="10" name="content">
+
+    </textarea>
+    <br/>
+    <input type="submit" name="send" value="&{'edit'}"/>
+</form>

@@ -1,0 +1,70 @@
+<div style="width: 1000px;border: 1px #7a3919 solid;">
+    <div id="forumCategoryHead">
+        <div style="display: inline-block;width: 750px">
+            ${_category.name}
+        </div>
+        <div style="display: inline-block;width: 215px">
+            &{'forum.lastMessage'}
+        </div>
+        <div style="display: inline-block;">
+            <a href="#" id="closeOpenLink_${_category.id}" onclick="closeOpen('${_category.id}');return false;">
+                <img id="close_${_category.id}" title="&{'forum.closeCategory'}" src="@{'public/images/open.png'}" border="0"/>
+            </a>
+        </div>
+    </div>
+    <div id="forums_${_category.id}">
+        #{list items:_category.forums, as:'forum'}
+        <div style="border-bottom: 1px #ccc solid;" >
+                <div style="display: inline-block;width: 50px;padding: 5px">
+                    <img src="@{'public/images/forum.png'}"/>
+                </div>
+                <div style="display: inline-block;width: 520px;vertical-align: top;padding-top: 10px">
+                    <a href="@{Forums.listThread(forum.id,1,forum.name.slugify())}">
+                        ${forum.name}
+                    </a>
+                </div>
+                <div style="display: inline-block;width: 140px;
+                     text-align: right">
+                    <p>
+                        &{'forum.thread'} : ${forum.nbTopic}
+                    </p>
+                    <p>
+                        &{'forum.post'} : ${forum.nbPost}
+                    </p>
+                </div>
+                <div style="display: inline-block;width: 220px;
+                     vertical-align: top;
+                     padding-top: 10px;
+                     padding-left: 30px">
+                    #{if forum.lastTopic}
+                        <p style="padding: 0px;margin: 0px;">
+                            #{if forum.lastTopic.nbResponse > 0}
+                            <a title="&{'forum.lastPost'}" href="@{Forums.listPost(forum.lastTopic.id,(int) (Math.ceil(forum.lastTopic.nbResponse / 10)),forum.lastTopic.name.slugify())}#last">
+                                    ${forum.lastTopic.name.maxString(27)}
+                                    <img src="@{'public/images/newPost.png'}" title="&{'forum.lastPost'}"/>
+                                </a>
+                            #{/if}
+                            #{else}
+                                <a href="@{Forums.listPost(forum.lastTopic.id,1,forum.lastTopic.name.slugify())}#last">
+                                    ${forum.lastTopic.name.maxString(27)}
+                                    <img src="@{'public/images/newPost.png'}"/>
+                                </a>
+                            #{/else}
+                            
+                            
+                        </p>
+                        <p style="padding: 0px;margin: 0px;font-weight: bold">
+                            ${forum.lastTopic.author.username.capFirst()}
+                        </p>
+                        <p style="padding: 0px;margin: 0px;">
+                            ${forum.lastTopic.updateAt.since()}
+                        </p>
+                    #{/if}
+                    #{else}
+                        &{'forum.noLastThread'}
+                    #{/else}
+                </div>
+            </div>
+        #{/list}
+    </div>
+</div>

@@ -1,0 +1,81 @@
+<div style="width: 1000px;border: 1px #7a3919 solid">
+    <div id="postHead">
+        <a name="post${_post.id}"></a>
+        &{'forum.the'} ${_post.createAt.format('dd-MM-yyyy à HH:mm')}
+    </div>
+    <div style="background-color: #fff1c7">
+        <div id="postUser">
+            <p style="padding: 0px;margin: 0px;">
+                <strong>
+                    ${_post.author.username.capFirst()}
+                </strong>
+            </p>
+        </div>
+        <div style="display: inline-block;width: 826px;">
+
+            <div id="postTitle">
+                ${_post.title}&nbsp;
+            </div>
+            <div id="postContent">
+                ${_post.content.raw()}
+                #{if _post.updateAt}
+                <br/><br/>
+                <div id="postUpdate">
+                    &{'forum.lastEdit'}; ${_post.updateAt.since()}
+                </div>
+                #{/if}
+            </div>
+        </div>
+
+    </div>
+    <div id="postFooter" >
+        <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="left">
+                    #{if session.username}
+                    #{if session.username == _post.author.username}
+                    <a href="@{Forums.deletePost(_post.id)}" style="padding: 5px">
+                        &{'forum.deletePost'}
+                    </a>
+                    #{/if}
+                    #{else}
+                    #{secure.check 'admin'}
+                    <a href="@{Forums.deletePost(_post.id)}" style="padding: 5px">
+                        &{'forum.deletePost'}
+                    </a>
+                    #{/secure.check}
+                    #{/else}
+                    #{/if}
+
+                </td>
+                <td align="right">
+                    &nbsp;
+                    #{if session.username}
+                    #{if session.username == _post.author.username}
+                    <a href="@{Forums.editPost(_post.id)}">
+                        <img src="@{'public/images/editPost.png'}" alt="&{'forum.editPost'}" title="&{'forum.editPost'}"/>
+                        &{'forum.editMyPost'}
+                    </a>
+                    #{/if}
+                    #{else}
+                    #{secure.check 'admin'}
+                    <a href="@{Forums.editPost(_post.id)}">
+                        <img src="@{'public/images/editPost.png'}" alt="&{'forum.editPost'}" title="&{'forum.editPost'}"/>
+                        &{'forum.editPost'}
+                    </a>
+                    #{/secure.check}
+                    #{/else}
+                    #{/if}
+
+                    #{if session.username}
+                    <a href="@{Forums.newQuotedPost(_post.id)}">
+                        <img src="@{'public/images/quote.png'}" alt="&{'forum.replyQuote'}" title="&{'forum.replyQuote'}"/>
+                        &{'forum.replyQuote'}
+                    </a>
+                    #{/if}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+

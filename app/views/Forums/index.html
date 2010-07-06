@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+#{set title:'zawaj.al-imane.org - Salon de discussions' /}
+
+#{set 'description'}
+<meta name="description" content="Zawaj.al-imane.org, le site matrimonial qui propose un espace de rencontre dans le respect de la religion et d'autrui pour la communauté musulmane chiite francophone">
+#{/set}
+#{set 'keywords'}
+<meta name="keywords" content="zawaj,mariage,chiite,chiisme,épouse,mari, mariage islamique,site zawaj,site mariage, site zawaj musulman,site mariage musulman">
+#{/set}
+
+<script>
+
+    function closeOpen(categoryID){
+        if($("#close_"+categoryID).length > 0){
+            var title = "&{'forum.openCategory'}";
+            var source = "@{'public/images/closed.png'}";
+            $("#closeOpenLink_"+categoryID).html("<img id='open_"+categoryID+"' title='"+title+"' src='"+source+"' border='0'/>");
+            $("#forums_"+categoryID).slideUp();
+        }else{
+            var title = "&{'forum.closeCategory'}";
+            var source = "@{'public/images/open.png'}";
+            $("#closeOpenLink_"+categoryID).html("<img id='close_"+categoryID+"' title='"+title+"' src='"+source+"' border='0'/>");
+            $("#forums_"+categoryID).slideDown();
+        }
+    }
+
+</script>
+
+<br/>
+#{list items:forumCategories, as:'category'}
+    #{showForumCategory category:category /}<br/>
+#{/list}

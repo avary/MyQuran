@@ -1,0 +1,68 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Connexion' /}
+
+#{set 'description'}
+<meta name="description" content="coran.al-imane.org - Coran en ligne, la meilleure traduction du coran de nos jours. Recherche, commentaires (tafsir), chapitres peronnalisés">
+#{/set}
+#{set 'keywords'}
+<meta name="keywords" content="coran,coran en ligne,tafsir,commentaires, recherche coran, traduction, meilleure traduction">
+#{/set}
+
+<h1>&{'login'}</h1>
+
+#{if flash.success}
+<p class="success">
+    &{flash.success}
+</p>
+#{/if}
+
+#{if flash.error}
+<p class="error">
+    &{flash.error}
+</p>
+	#{/if}
+#{if flash.userDisabled}
+<p class="error">
+    &{flash.userDisabled}
+</p>
+#{/if}
+
+	#{form @Secure.authenticate()}
+<table>
+    <tr>
+        <td>
+            &{'user.username'} :
+        </td>
+        <td>
+            <input type="text" name="username" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &{'user.password'} : 
+        </td>
+        <td>
+            <input type="password" name="password"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+
+        </td>
+        <td>
+            <input type="checkbox" name="remember"/>
+            &{'remember'}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="right">
+            <input type="submit" name="login" value="&{'login'}"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left">
+            <a href="@{Secure.lostPassword()}" id="forgotPassword">&{'forgotPassword'}</a>
+        </td>
+    </tr>
+</table>
+#{/form}

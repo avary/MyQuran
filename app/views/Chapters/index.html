@@ -1,0 +1,107 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Mes chapitres' /}
+
+#{i18n /}
+
+<script>
+
+    function deleteChapter(id,title){
+        var result = confirm(i18n("info.confirmChapterDelete",title));
+        if(result){
+            window.location = "/chapters/delete?id="+id;
+        }
+
+    }
+
+</script>
+
+<style type="text/css">
+
+    .borderit img{
+    border: 1px solid white;
+    }
+
+    .borderit:hover img{
+    border: 1px solid black;
+    }
+
+    .borderit:hover{
+    color: red; /* irrelevant definition to overcome IE bug */
+}
+
+</style>
+
+#{if flash.error}
+<p class="validation">
+    &{flash.errorDelete}
+    &{flash.errorViewChapter}
+</p>
+#{/if}
+
+#{if flash.success}
+<p class="success">
+    &{flash.success}
+</p>
+#{/if}
+
+<div align="center">
+    <ul style="list-style: none">
+        #{if selectedAyat > 0 }
+        <li>
+            <a href="@{Chapters.viewSelectedAyat()}">
+                &{'info.viewSelectedAyat'}
+            </a>
+        </li>
+        #{/if}
+        <li>
+            <a href="@{Chapters.newChapter()}">
+                &{'info.newChapter'}
+            </a>
+        </li>
+    </ul>
+</div>
+
+#{if chapters.size() > 0 }
+
+<div style="border-bottom: 1px #eeeeee solid"></div>
+
+<h4>&{'info.chapters'} : </h4>
+<br/>
+
+#{list items:chapters, as:'chapter'}
+    #{if chapter_index == 1}
+    <div id="chapterList" >
+        <table>
+    #{/if}
+    #{if chapter_index == 51}
+    <div id="chapterList">
+        <table>
+    #{/if}
+    #{if chapter_index == 101}
+    <div id="chapterList">
+        <table>
+    #{/if}
+
+    <tr><td>
+    ${chapter_index} - <a href="@{Chapters.viewChapterAyat(chapter.id,chapter.title.slugify())}">${chapter.title}</a>
+    </td>
+    <td>
+    <a href="@{Chapters.edit(chapter.id,chapter.title)}" class="borderit">
+        <img src="@{'public/images/edit.png'}" title="&{'chapter.edit'}" width="16px" height="16px"/>
+    </a>
+        <a href="#" onclick="deleteChapter('${chapter.id}','${chapter.title}')" class="borderit">
+        <img src="@{'public/images/delete.png'}" title="&{'chapter.delete'}" width="16px" height="16px"/>
+    </a>
+    </td></tr>
+    #{if chapter_index == 50 || chapter_index == 100 || chapter_index == 150}
+    </table>
+    </div>
+    #{/if}
+
+#{/list}
+
+#{if chapter_index != 50 || chapter_index != 100 || chapter_index != 150}
+    </table></div>
+#{/if}
+#{/if}
+

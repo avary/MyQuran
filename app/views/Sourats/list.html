@@ -1,0 +1,29 @@
+#{extends 'main.html' /}
+#{set title:souratList /}
+
+#{set 'description'}
+<meta name="description" content="coran.al-imane.org - Coran en ligne, la meilleure traduction du coran de nos jours. Recherche, commentaires (tafsir), chapitres peronnalisés">
+#{/set}
+#{set 'keywords'}
+<meta name="keywords" content="coran,coran en ligne,tafsir,commentaires, recherche coran, traduction, meilleure traduction,liste des sourates du coran,liste sourate coran,liste sourate">
+#{/set}
+
+<div style="text-align: center">
+    <h1 style="border: 0px;">&{'title.souratList'}</h1>
+#{list items:sourats, as:'sourat'}
+    #{if sourat_index == 1}
+    <div id="souratList">
+    #{/if}
+    #{if sourat_index == 39}
+    <div id="souratList">
+    #{/if}
+    #{if sourat_index == 77}
+    <div id="souratList">
+    #{/if}
+
+   ${sourat.number} - <a href="@{Ayats.list(sourat.title.slugify(),sourat.number)}">${sourat.title}</a><br/>
+    #{if sourat_index == 38 || sourat_index == 76 || sourat_index == 114}
+    </div>
+    #{/if}
+#{/list}
+</div>

@@ -1,0 +1,28 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                       Application.index
+
+GET     /liste-des-sourates-du-coran            Sourats.list
+GET     /nous-contacter                         Application.contact
+GET     /sourate/{souratNumber}/{title}         Ayats.list
+GET     /connexion                              Secure.login
+GET     /inscription                            Secure.registration
+GET     /inscription-reussie                    Secure.register
+GET     /mes-chapitres                          Chapters.index
+GET     /nouveau-chapitre                       Chapters.newChapter
+GET     /chapitre-ajouté                        Chapters.add
+GET     /renommer-chapitre                      Chapters.edit
+GET     /chapitre-renommé                       Chapters.save
+GET     /chapitre/{chapterID}/{title}           Chapters.viewChapterAyat
+GET     /chapitre/versets-selectionnés          Chapters.viewSelectedAyat
+GET     /mes-commentaires                       Comments.list
+GET     /mes-commentaires-par-sourate           Comments.listBySourat
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}

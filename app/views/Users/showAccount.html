@@ -1,0 +1,129 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Coran en ligne' /}
+
+#{i18n /}
+
+<script>
+    //initiate validator on load
+
+    $(function() {
+        // validate contact form on keyup and submit
+        $("#editAccount").validate({
+            errorElement: 'span',
+            errorClass: 'errorMessage',
+            onkeyup: false,
+            highlight: function(element, errorClass) {
+
+            },
+
+            errorPlacement: function(error, element) {
+                error.appendTo( element.parent("td").next("td") );
+            },
+
+
+            rules: {
+
+                mail: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true
+                },
+                newPassword: {
+                    required: false
+                },
+                confirmPassword: {
+                    equalTo: "#newPassword"
+                }
+            },
+            //set messages to appear inline
+            messages: {
+                mail: i18n("error.mail"),
+                password: i18n("error.mandatoryPassword"),
+                confirmPassword: i18n("error.badConfirmPassword")
+            }
+        });
+
+
+    });
+</script>
+
+<h1>&{'myAccount'}</h1>
+
+<p>
+    &{'info.editAccountInfo'}<br/>
+
+</p>
+#{if flash.error}
+<p class="validation">
+    &{flash.errorEmail}
+    #{if flash.errorPassword}<br/>#{/if}
+    &{flash.errorPassword}
+    #{if flash.errorConfirmPassword}<br/>#{/if}
+    &{flash.errorConfirmPassword}
+</p>
+#{/if}
+
+#{if flash.success}
+<p class="success">
+    &{flash.success}
+</p>
+#{/if}
+
+	#{form @editAccount(),id:'editAccount'}
+<table>
+    <tr>
+        <td>
+            &{'user.password'} :
+        </td>
+        <td>
+            <input type="password" name="password" id="password"/>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &{'user.email'} :
+        </td>
+        <td>
+            <input type="text" name="mail" id="mail" value="${user.email}"/>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &{'user.newPassword'} :
+        </td>
+        <td>
+            <input type="password" name="newPassword" id="newPassword"/>
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &{'confirmPassword'} :
+        </td>
+        <td>
+            <input type="password" name="confirmPassword" id="confirmPassword"/>
+        </td>
+        <td>
+
+
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="right">
+            <input type="submit" name="edit" value="&{'send'}"/>
+        </td>
+    </tr>
+
+</table>
+#{/form}

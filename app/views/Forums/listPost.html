@@ -1,0 +1,179 @@
+#{extends 'main.html' /}
+#{set title:title /}
+
+#{set 'description'}
+<meta name="description" content="Zawaj.al-imane.org, le site matrimonial qui propose un espace de rencontre dans le respect de la religion et d'autrui pour la communauté musulmane chiite francophone">
+#{/set}
+#{set 'keywords'}
+<meta name="keywords" content="zawaj,mariage,chiite,chiisme,épouse,mari, mariage islamique,site zawaj,site mariage, site zawaj musulman,site mariage musulman">
+#{/set}
+
+#{set 'moreStyles'}
+<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/validationEngine.jquery.css'}">
+#{/set}
+
+#{set 'moreScripts'}
+<script src="@{'/public/javascripts/jquery.validationEngine-fr.js'}" type="text/javascript" charset='utf-8'></script>
+<script src="@{'/public/javascripts/jquery.validationEngine.js'}" type="text/javascript" charset='utf-8'></script>
+
+#{/set}
+
+<script>
+
+    function seePost(postID){
+        $("#postDeletedMessage_"+postID).hide();
+        $("#postDeleted_"+postID).show();
+        $("#seeLink_"+postID).hide();
+        $("#undeleteLink_"+postID).show();
+    }
+
+</script>
+
+#{secure.check 'admin'}
+<a href="@{Forums.index()}">
+    &{'proposal'}
+</a>
+<img src="@{'public/images/arrow.png'}"/>
+<a href="@{Forums.listThread(topic.forum.id,1,topic.forum.name.slugify())}">
+    ${topic.forum.name}
+</a>
+
+#{/secure.check}
+#{secure.check 'user'}
+<a href="@{Forums.listTopicUser(1)}">
+    &{'myProposal'}
+</a>
+#{/secure.check}
+
+<img src="@{'public/images/arrow.png'}"/>
+${topic.name}
+<br/><br/>
+
+<strong>&{'forum.thread'} :</strong>
+<a href="@{Forums.listPost(topic.id,1,topic.name.slugify())}">
+    ${topic.name}
+</a>
+
+
+#{if flash.error}
+<p class="error">
+    &{flash.error}
+</p>
+#{/if}
+<table align="right" cellpadding="0px">
+    #{if nbPage > 1}
+
+    <tr >
+        #{if page > 1}
+        <td class="pagination">
+            <span class="arrow">
+                <a href="@{Forums.listPost(topic.id,page-1)}">
+                    <img src="@{'/public/images/previous.png'}"/>
+                </a>
+            </span>
+
+        </td>
+        #{/if}
+
+        #{list items:1..nbPage, as:'i'}
+
+        #{if page == i}
+        <td class="paginationSelected" valign="middle" align="center" id="currentPage">
+            <span>
+                <strong>${i}</strong>
+            </span>
+
+        </td>
+        #{/if}
+        #{else}
+        <td class="pagination" valign="middle" align="center" >
+            <span>
+                <a href="@{Forums.listPost(topic.id,i)}">
+                    ${i}
+                </a>
+            </span>
+        </td>
+        #{/else}
+
+        #{/list}
+
+        #{if page < nbPage}
+        <td class="pagination">
+            <span class="arrow">
+                <a href="@{Forums.listPost(topic.id,page+1)}" >
+                    <img src="@{'/public/images/next.png'}" />
+                </a>
+            </span>
+
+        </td>
+        #{/if}
+    </tr>
+    #{/if}
+</table>
+<br/><br/>
+#{list items:posts, as:'post'}
+#{if post_isLast}
+<a name="last"></a>
+#{/if}
+#{showPost post:post /}<br/>
+#{/list}
+
+#{if session.username}
+<div class="buttons" style="text-align: left">
+    <a href="@{Forums.newPost(topic.id)}">
+        &{'forum.response'}
+    </a>
+</div>
+#{/if}
+
+<table align="right" cellpadding="0px">
+    #{if nbPage > 1}
+
+    <tr >
+        #{if page > 1}
+        <td class="pagination">
+            <span class="arrow">
+                <a href="@{Forums.listPost(topic.id,page-1)}">
+                    <img src="@{'/public/images/previous.png'}"/>
+                </a>
+            </span>
+
+        </td>
+        #{/if}
+
+        #{list items:1..nbPage, as:'i'}
+
+        #{if page == i}
+        <td class="paginationSelected" valign="middle" align="center" id="currentPage">
+            <span>
+                <strong>${i}</strong>
+            </span>
+
+        </td>
+        #{/if}
+        #{else}
+        <td class="pagination" valign="middle" align="center" >
+            <span>
+                <a href="@{Forums.listPost(topic.id,i)}">
+                    ${i}
+                </a>
+            </span>
+        </td>
+        #{/else}
+
+        #{/list}
+
+        #{if page < nbPage}
+        <td class="pagination">
+            <span class="arrow">
+                <a href="@{Forums.listPost(topic.id,page+1)}" >
+                    <img src="@{'/public/images/next.png'}" />
+                </a>
+            </span>
+
+        </td>
+        #{/if}
+    </tr>
+    #{/if}
+</table>
+<br/><br/>

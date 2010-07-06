@@ -1,0 +1,56 @@
+<div style="border-bottom: 1px #ccc solid;">
+    <div style="display: inline-block;width: 50px;padding: 5px">
+        <img src="@{'public/images/thread.png'}"/>
+    </div>
+    <div style="display: inline-block;width: 520px;vertical-align: top;padding-top: 10px">
+        <a href="@{Forums.listPost(_thread.id,1,_thread.name.slugify())}">
+            ${_thread.name}
+        </a>
+        <p>
+            &{'forum.by'}
+            <strong>
+                ${_thread.author.username.capFirst()}
+            </strong>
+            , ${_thread.createAt.since()}
+        </p>
+    </div>
+    <div style="display: inline-block;width: 115px;
+         text-align: right;
+         background-color: #ffefbd;
+         padding-right: 25px">
+        <p>
+            &{'forum.nbResponse'} : ${_thread.nbResponse}
+        </p>
+        <p>
+            &{'forum.nbDisplay'} : ${_thread.nbDisplay}
+        </p>
+    </div>
+    <div style="display: inline-block;width: 220px;
+         vertical-align: top;
+         padding-top: 10px;
+         padding-left: 30px">
+        #{if _thread.lastPost}
+        <p style="padding: 0px;margin: 0px;">
+            <strong>
+                ${_thread.lastPost.author.username.capFirst()}
+            </strong>
+            #{if _thread.nbResponse > 0}
+                <a href="@{Forums.listPost(_thread.id,(int) (Math.ceil(_thread.nbResponse / 10)))}#last">
+                    <img src="@{'public/images/newPost.png'}" title="&{'forum.lastPost'}"/>
+                </a>
+            #{/if}
+            #{else}
+                <a href="@{Forums.listPost(_thread.id,1)}#last">
+                    <img src="@{'public/images/newPost.png'}"/>
+                </a>
+            #{/else}
+        </p>
+        <p style="padding: 0px;margin: 0px;">
+            ${_thread.lastPost.createAt.since()}
+        </p>
+        #{/if}
+        #{else}
+        &{'forum.noLastThread'}
+        #{/else}
+    </div>
+</div>

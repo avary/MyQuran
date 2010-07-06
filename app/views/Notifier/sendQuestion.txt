@@ -1,0 +1,3 @@
+Vous avez reçu un message :
+
+${subject}

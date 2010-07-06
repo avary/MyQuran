@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=8">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}">
+        #{get 'moreStyles' /}
+        #{get 'description'/}
+        #{get 'keywords'/}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="@{'/public/javascripts/jquery-1.4.min.js'}" type="text/javascript" charset='utf-8'></script>
+        <script src="@{'/public/javascripts/jquery.validate.min.js'}" type="text/javascript" charset='utf-8'></script>
+        <script src="@{'/public/javascripts/jquery-blink.js'}" type="text/javascript" charset='utf-8'></script>
+
+        #{get 'moreScripts' /}
+    </head>
+    <body>
+
+        <script>
+            $(function() {
+                $('.img').blink({delay:800});
+
+                $('#searchBox').keyup(function(e) {
+                    if(e.keyCode == 13) {
+                        searchAyat();
+                    }
+                });
+            });
+
+            function searchAyat(){
+                window.location = "/Ayats/search?q="+$("#searchBox").val();
+            }
+
+        </script>
+        <div id="container">
+            <a name="top"></a>
+            <div id="header">
+                <div id="hijriDate">
+                    #{if session.username}
+                    <span style="font-weight: normal">&{'mail.hello'}</span> <strong>${session.username}</strong>,
+                    #{secure.check 'admin'}
+                    <a href="@{Forums.index()}">
+                        &{'proposal'}
+                    </a> 
+                    #{/secure.check}
+                    #{secure.check 'user'}
+                    <a href="@{Forums.listTopicUser(1)}">
+                        &{'myProposal'}
+                    </a>
+                    #{/secure.check}
+                    |
+                    
+                    <a href="@{Users.showAccount()}">&{'myAccount'}</a> | <a href="@{Secure.logout()}">&{'logout'}</a>
+
+                    #{/if}
+                    #{if session.username == null}
+                    <a href="@{Secure.registration()}">&{'registration'}</a> | <a href="@{Secure.login()}">&{'login'}</a>
+                    #{/if}
+
+                </div>
+                <img src="@{'/public/images/header.jpg'}" width="1024px" />
+            </div>
+            <div id="menu">
+                <ul>
+                    <li><a href="@{Application.index()}">&{'menu.home'}</a></li>
+                    <li>|</li>
+                    <li><a href="@{Sourats.list()}">&{'menu.sourats'}</a></li>
+                    <li>|</li>
+                    <li><a href="@{Chapters.index()}">&{'menu.myChapter'}</a></li>
+                    <li>|</li>
+                    <li><a href="@{Comments.list()}">&{'menu.myComment'}</a></li>
+                    <li>|</li>
+                    <li><a href="@{Downloads.index()}">&{'menu.download'}</a></li>
+                          <li>|</li>
+                      <!--      <li><a href="#">&{'menu.advancedSearch'}</a></li>
+                           <li>|</li> -->
+                    <li><a href="@{Application.contact()}">&{'menu.contact'}</a></li>
+                    <li>
+                        <div id="search">
+                            <input type="text" name="searchBox" id="searchBox"/>
+                            <a href="#" onclick="searchAyat();return false;">
+                                <img src="@{'/public/images/search.png'}" width="23px" height="23px"/>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+            <div id="content">
+
+                #{doLayout /}
+            </div>
+            <div id="footer">
+                <a href="http://www.al-imane.org">Al-imane.org</a> |
+                <a href="http://quran.al-shia.org/ar/id/9/">Tafsirs (arabe)</a> |
+                <a href="http://www.shiasource.com/al-mizan/">Tafsir al-mizane (anglais)</a>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+            try {
+                var pageTracker = _gat._getTracker("UA-4011989-4");
+                pageTracker._trackPageview();
+            } catch(err) {}
+        </script>
+    </body>
+</html>

@@ -1,0 +1,73 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Renommer ce chapitre' /}
+
+#{i18n /}
+
+<script>
+    //initiate validator on load
+
+    $(function() {
+        // validate contact form on keyup and submit
+        $("#editChapter").validate({
+            errorElement: 'span',
+            errorClass: 'errorMessage',
+            onkeyup: false,
+            highlight: function(element, errorClass) {
+
+            },
+
+            errorPlacement: function(error, element) {
+                error.appendTo( element.parent("td").next("td") );
+            },
+
+
+            rules: {
+                title: {
+                    required: true
+                }
+            },
+            //set messages to appear inline
+            messages: {
+                title: i18n("error.emptyChapter")
+            }
+        });
+    });
+</script>
+<h4>&{'info.editChapter'} : </h4>
+<br/>
+
+#{if flash.error}
+<p class="validation">
+    &{flash.emptyChapter}
+    #{if flash.duplicateChapter && flash.emptyChapter}<br/>#{/if}
+    &{flash.duplicateChapter}
+</p>
+#{/if}
+
+#{if flash.success}
+<p class="success">
+    &{flash.success}
+</p>
+#{/if}
+
+<form action="@{Chapters.save()}" id="editChapter">
+    <table>
+        <tr>
+            <td>
+                &{'chapter.title'} :
+            </td>
+            <td>
+                <input type="text" name="title" id="title" value="${params.title?params.title:title}"/>
+                <input type="hidden" name="id" id="id" value="${id}"
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right">
+                <input type="submit" name="save" value="&{'edit'}"/>
+            </td>
+        </tr>
+    </table>
+</form>

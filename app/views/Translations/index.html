@@ -1,0 +1,65 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Traductions' /}
+
+<script>
+    $(function() {
+        $(".viewResponse").mouseover( function() {
+            $(this).css("background-color","#eee");
+        });
+
+        $(".viewResponse").mouseout( function() {
+            $(this).css("background-color","#FFF");
+        });
+
+        $('.blink').blink({delay:800});
+    });
+
+</script>
+
+#{secure.check 'admin'}
+<h4>&{'info.translationsAdmin'} : </h4>
+#{/secure.check}
+#{secure.check 'user'}
+<h4>&{'info.translations'} : </h4>
+#{/secure.check}
+
+#{if translations.size() > 0}
+
+#{list items:translations, as:'t'}
+<div class="viewResponse" onclick="window.location ='@{Translations.view(t.id)}'">
+    <a href="@{Translations.view(t.id)}" id="${t.id}"></a>
+    <div style="padding-bottom: 10px;padding-top: 10px;">
+
+        <div style="display: inline-block;width: 70px">
+            <div>
+                <div id="ayatNumber">${t.ayat.sa}</div>
+                #{if t.newMessage}
+                <div style="padding-top: 3px;">
+                    <img class="blink" src="@{'/public/images/message.png'}" title="&{'info.newMessage'}" />
+                </div>
+                #{/if}
+            </div>
+        </div>
+        <div id="ayatContent" >${t.ayat.content}</div>
+    </div>
+</div>
+
+
+
+<div style="border-bottom: 1px #eeeeee solid"></div>
+
+#{/list}
+#{/if}
+#{else}
+#{secure.check 'admin'}
+&{'info.noTranslationAdmin'}
+#{/secure.check}
+#{secure.check 'user'}
+&{'info.noTranslation'}
+#{/secure.check}
+
+#{/else}
+
+
+
+
