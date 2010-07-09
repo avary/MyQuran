@@ -1,6 +1,15 @@
 <div style="border-bottom: 1px #ccc solid;">
     <div style="display: inline-block;width: 50px;padding: 5px">
-        <img src="@{'public/images/thread.png'}"/>
+        #{if _thread.proposal.type == 0}
+        <img src="@{'public/images/ideaForum.png'}" width="40" height="40"/>
+        #{/if}
+        #{if _thread.proposal.type == 1}
+        <img src="@{'public/images/commentForum.png'}" width="40" height="40"/>
+        #{/if}
+        #{if _thread.proposal.type == 2}
+        <img src="@{'public/images/chapterForum.png'}" width="40" height="40"/>
+        #{/if}
+        
     </div>
     <div style="display: inline-block;width: 520px;vertical-align: top;padding-top: 10px">
         <a href="@{Forums.listPost(_thread.id,1,_thread.name.slugify())}">

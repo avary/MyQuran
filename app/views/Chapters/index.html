@@ -83,7 +83,10 @@
     #{/if}
 
     <tr><td>
-    ${chapter_index} - <a href="@{Chapters.viewChapterAyat(chapter.id,chapter.title.slugify())}">${chapter.title}</a>
+    ${chapter_index} -
+    <a href="@{Chapters.viewChapterAyat(chapter.id,chapter.title.slugify())}">
+        ${chapter.title} (${chapter.ayats.size()} &{'ayat',chapter.ayats.size().pluralize()})
+    </a>
     </td>
     <td>
     <a href="@{Chapters.edit(chapter.id,chapter.title)}" class="borderit">

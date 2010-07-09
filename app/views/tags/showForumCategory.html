@@ -16,7 +16,15 @@
         #{list items:_category.forums, as:'forum'}
         <div style="border-bottom: 1px #ccc solid;" >
                 <div style="display: inline-block;width: 50px;padding: 5px">
-                    <img src="@{'public/images/forum.png'}"/>
+                    #{if forum.name == "Propositions de traduction"}
+                    <img src="@{'public/images/ideaForum.png'}" width="40" height="40"/>
+                    #{/if}
+                    #{if forum.name == "Propositions de commentaires"}
+                    <img src="@{'public/images/commentForum.png'}" width="40" height="40"/>
+                    #{/if}
+                    #{if forum.name == "Propositions de chapitres"}
+                    <img src="@{'public/images/chapterForum.png'}" width="40" height="40"/>
+                    #{/if}
                 </div>
                 <div style="display: inline-block;width: 520px;vertical-align: top;padding-top: 10px">
                     <a href="@{Forums.listThread(forum.id,1,forum.name.slugify())}">

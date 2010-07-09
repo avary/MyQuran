@@ -20,6 +20,7 @@ user.password=Mot de passe
 user.email=Email
 user.newPassword=Nouveau mot de passe
 
+ayat=verset%s
 ayat.top=Remonter en haut de la page
 ayat.select=Selectionner ce verset
 ayat.publicComment=Ajouter un commentaire public
