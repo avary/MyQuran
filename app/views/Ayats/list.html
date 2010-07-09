@@ -73,95 +73,11 @@
 
 #{list items:ayats, as:'ayat'}
 
-<div style="padding-bottom: 10px;padding-top: 10px;">
-    <a href="#${ayat.number}" id="${ayat.number}"></a>
+#{showAyat ayat:ayat,load:'yes'/}
 
-    <div id="message_${ayat.id}"></div>
-
-    <div style="display: inline-block;width: 70px;height: 80px">
-        <div>
-            <div id="ayatNumber">${ayat.sa}</div>
-            <div style="padding-top: 3px;">
-                <a href="#top">
-                    <img src="@{'/public/images/up.png'}" 
-                         title="&{'ayat.top'}" width="20px" height="20px"
-                         alt="&{'ayat.top'}"/>
-                </a>
-                <a href="#" id="link_${ayat.number}"
-                   onclick="showHidePublicCommentBox('${ayat.id}');return false;">
-                    <img src="@{'/public/images/publicComment.png'}"
-                         title="&{'ayat.publicComment'}" width="20px"
-                         height="20px" alt="&{'ayat.publicComment'}"/>
-                </a>
-                <a href="#" id="link_${ayat.number}"
-                   onclick="showHidePrivateCommentBox('${ayat.id}');return false;">
-                    <img src="@{'/public/images/privateComment.png'}"
-                         title="&{'ayat.privateComment'}" width="20px"
-                         height="20px" alt="&{'ayat.privateComment'}"/>
-                </a>
-            </div>
-
-            <div>
-                <a href="#"
-                   onclick="selectAyat('${ayat.id}');return false;">
-                    <img src="@{'/public/images/select.png'}"
-                         title="&{'ayat.select'}" width="20px"
-                         height="20px" alt="&{'ayat.select'}"/>
-                </a>
-
-                #{if session.username}
-
-                #{secure.check 'admin'}
-                <a href="@{Ayats.editAyat(ayat.id)}">
-                    <img src="@{'/public/images/idea.png'}"
-                         title="&{'ayat.suggest'}" width="20px"
-                         height="20px" alt="&{'ayat.suggest'}"/>
-                </a>
-                #{/secure.check}
-
-                #{secure.check 'user'}
-                <a href="#"
-                   onclick="showHideTranslateBox('${ayat.id}');return false;">
-                    <img src="@{'/public/images/idea.png'}"
-                         title="&{'ayat.suggest'}" width="20px"
-                         height="20px" alt="&{'ayat.suggest'}"/>
-                </a>
-                #{/secure.check}
-                #{/if}
-
-                #{else}
-                <a href="#" 
-                   onclick="showHideTranslateBox('${ayat.id}');return false;">
-                    <img src="@{'/public/images/idea.png'}" 
-                         title="&{'ayat.suggest'}" width="20px" height="20px"
-                         alt="&{'ayat.suggest'}"/>
-                </a>
-                #{/else}
-
-            </div>
-        </div>
-    </div>
-
-    <div id="ayatContent" >${ayat.content}</div>
-    <div style="padding-left: 85px">
-        <a href="">
-            &{'ayat.viewComment'}
-        </a>
-    </div>
-
-    <form action="" onsubmit="savePublicComment('${ayat.id}');return false;">
-        <div class="ayatComment" id="publicComment_${ayat.id}" ></div>
-    </form>
-    <form action="" onsubmit="savePrivateComment('${ayat.id}');return false;">
-        <div class="ayatComment" id="privateComment_${ayat.id}" ></div>
-    </form>
-    <form action="" onsubmit="saveTranslation('${ayat.id}');return false;">
-        <div class="ayatComment" id="translation_${ayat.id}" ></div>
-    </form>
-
-</div>
-
+#{if !ayat_isLast}
 <div style="border-bottom: 1px #eeeeee solid"></div>
+#{/if}
 
 #{/list}
 

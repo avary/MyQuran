@@ -1,13 +1,15 @@
-function showPrivateCommentBox(id){
-    $("#privateComment_"+id).html('<textarea id="privateCommentArea_'+id+'" class="privateCommentArea_'+id+'" cols="80" rows="8"></textarea>');
 
-    $.post(privateCommentLoadURL, {
-        ayatId: id
-    },
-    function(data){
-        $("#privateCommentArea_"+id).html(data.content);
-    });
+function showPrivateCommentBox(id,load){
+    if(load == "yes"){
+        $("#privateComment_"+id).html('<textarea id="privateCommentArea_'+id+'" class="privateCommentArea_'+id+'" cols="80" rows="8"></textarea>');
 
+        $.post(privateCommentLoadURL, {
+            ayatId: id
+        },
+        function(data){
+            $("#privateCommentArea_"+id).html(data.content);
+        });
+    }
 
     tinyMCE.init({
 
@@ -322,14 +324,14 @@ function saveTranslation(id){
     });
 }
 
-function showHidePrivateCommentBox(id){
+function showHidePrivateCommentBox(id,load){
     if(username == ''){
         alert(userNotConnected);
         return;
     }
 
-    if($('#privateCommentArea_'+id).length == 0){
-        showPrivateCommentBox(id);
+    if($('#privateCommentArea_'+id).length == 0 || load == "no"){
+        showPrivateCommentBox(id,load);
         $("#privateComment_"+id).toggle();
     }else{
         $("#privateComment_"+id).toggle();
@@ -395,4 +397,121 @@ function selectAyat(id){
             }, 3000);
         }
     });
+}
+
+
+function addAllSelectedAyatToChapter(){
+    var chapterID = $("#chapter option:selected").val();
+    if(chapterID == "-1"){
+        alert(noChapter);
+        return;
+    }
+
+    $("input:checkbox:checked").each(function() {
+        var ayatID = $(this).val();
+
+        if(ayatID != "-1"){
+            $("select[id='chapter_"+ayatID+"'] option[value='"+chapterID+"']").attr("selected","selected")
+            addToChapterSimple(ayatID);
+        }
+
+    });
+}
+
+function addToChapterSimple(ayatID){
+    var chapterID = $("#chapter_"+ayatID+" option:selected").val();
+
+    if(chapterID == "-1"){
+        alert(noChapter);
+        return;
+    }
+
+    $.post(addAyatToChapterURL, {
+        ayatID: ayatID,
+        chapterID:chapterID
+    },
+    function(data){
+        if(data.result == 'ok'){
+            $("#allAyat_"+ayatID).fadeOut('slow');
+        }else if(data.result == 'error'){
+            $("#message_"+ayatID).html(noChapter+"<br/>");
+            $("#message_"+ayatID).addClass("validation");
+            $("#message_"+ayatID).show();
+        }else{
+            $("#message_"+ayatID).html(selectedAyatAlreadyAdded+"<br/>");
+            $("#message_"+ayatID).addClass("validation");
+            $("#message_"+ayatID).show();
+        }
+    });
+}
+
+function addToChapter(ayatID){
+    var chapterID = $("#chapter_"+ayatID+" option:selected").val();
+
+    if(chapterID == "-1"){
+        alert(noChapter);
+        return;
+    }
+
+    $.post(addAyatToChapterURL, {
+        ayatID: ayatID,
+        chapterID:chapterID
+    },
+    function(data){
+        if(data.result == 'ok'){
+            $("#message_"+ayatID).html(selectedAyatAddedToChapter+"<br/>");
+            $("#message_"+ayatID).addClass("success");
+            $("#message_"+ayatID).show();
+            window.setTimeout(function() {
+
+                $("#allAyat_"+ayatID).fadeOut('slow');
+            }, 3000);
+        }else if(data.result == 'error'){
+            $("#message_"+ayatID).html(noChapter+"<br/>");
+            $("#message_"+ayatID).addClass("validation");
+            $("#message_"+ayatID).show();
+            window.setTimeout(function() {
+                $("#message_"+ayatID).fadeOut('slow');
+
+            }, 5000);
+        }else{
+            $("#message_"+ayatID).html(selectedAyatAlreadyAdded+"<br/>");
+            $("#message_"+ayatID).addClass("validation");
+            $("#message_"+ayatID).show();
+            window.setTimeout(function() {
+                $("#message_"+ayatID).fadeOut('slow');
+
+            }, 5000);
+        }
+    });
+}
+
+
+function removeChapterAyat(chapterID,ayatID){
+    var result = confirm(confirmRemoveChapterAyat);
+    if(result){
+        $.post(removeChapterAyatURL, {
+            ayatID: ayatID,
+            chapterID:chapterID
+        },
+        function(data){
+            if(data.result == 'ok'){
+                $("#message_"+ayatID).html(ayatRemovedFromChapter+"<br/>");
+                $("#message_"+ayatID).addClass("success");
+                $("#message_"+ayatID).show();
+                window.setTimeout(function() {
+
+                    $("#allAyat_"+ayatID).fadeOut('slow');
+                }, 3000);
+            }else if(data.result == 'error'){
+                $("#message_"+ayatID).html(badChapter+"<br/>");
+                $("#message_"+ayatID).addClass("validation");
+                $("#message_"+ayatID).show();
+                window.setTimeout(function() {
+                    $("#message_"+ayatID).fadeOut('slow');
+
+                }, 5000);
+            }
+        });
+    }
 }

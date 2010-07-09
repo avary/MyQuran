@@ -1,0 +1,131 @@
+<div style="padding-bottom: 10px;padding-top: 10px;">
+    <a href="#${_ayat.number}" id="${_ayat.number}"></a>
+
+    <div id="message_${_ayat.id}"></div>
+
+    <div style="display: inline-block;width: 70px;height: 80px">
+        <div>
+            <div id="ayatNumber">${_ayat.sa}</div>
+            <div style="padding-top: 3px;">
+                <a href="#top">
+                    <img src="@{'/public/images/up.png'}"
+                         title="&{'ayat.top'}" width="20px" height="20px"
+                         alt="&{'ayat.top'}"/>
+                </a>
+                <a href="#" id="link_${_ayat.number}"
+                   onclick="showHidePublicCommentBox('${_ayat.id}');return false;">
+                    <img src="@{'/public/images/publicComment.png'}"
+                         title="&{'ayat.publicComment'}" width="20px"
+                         height="20px" alt="&{'ayat.publicComment'}"/>
+                </a>
+                <a href="#" id="link_${_ayat.number}"
+                   onclick="showHidePrivateCommentBox('${_ayat.id}','${_load}');return false;">
+                    <img src="@{'/public/images/privateComment.png'}"
+                         title="&{'ayat.privateComment'}" width="20px"
+                         height="20px" alt="&{'ayat.privateComment'}"/>
+                </a>
+            </div>
+
+            <div>
+                <a href="#"
+                   onclick="selectAyat('${_ayat.id}');return false;">
+                    <img src="@{'/public/images/select.png'}"
+                         title="&{'ayat.select'}" width="20px"
+                         height="20px" alt="&{'ayat.select'}"/>
+                </a>
+
+                #{if session.username}
+
+                #{secure.check 'admin'}
+                <a href="@{Ayats.editAyat(_ayat.id)}">
+                    <img src="@{'/public/images/idea.png'}"
+                         title="&{'ayat.suggest'}" width="20px"
+                         height="20px" alt="&{'ayat.suggest'}"/>
+                </a>
+                #{/secure.check}
+
+                #{secure.check 'user'}
+                <a href="#"
+                   onclick="showHideTranslateBox('${_ayat.id}');return false;">
+                    <img src="@{'/public/images/idea.png'}"
+                         title="&{'ayat.suggest'}" width="20px"
+                         height="20px" alt="&{'ayat.suggest'}"/>
+                </a>
+                #{/secure.check}
+                #{/if}
+
+                #{else}
+                <a href="#"
+                   onclick="showHideTranslateBox('${_ayat.id}');return false;">
+                    <img src="@{'/public/images/idea.png'}"
+                         title="&{'ayat.suggest'}" width="20px" height="20px"
+                         alt="&{'ayat.suggest'}"/>
+                </a>
+                #{/else}
+
+                #{if _rm}
+                <a href="#" onclick="removeChapterAyat('${_chapter.id}','${_ayat.id}');return false;">
+                    <img src="@{'/public/images/delete.png'}"
+                         title="&{'ayat.delete'}" width="20px" height="20px"
+                         alt="&{'ayat.delete'}"/>
+                </a>
+                #{/if}
+            </div>
+        </div>
+    </div>
+
+    <div id="ayatContent" >${_ayat.content}</div>
+
+    #{if _chap}
+    <div style="margin-left: 75px;" >
+        <table width="100%">
+            <tr>
+                <td width="1%">
+                    <input type="checkbox" name="check_${_ayat.id}" value="${_ayat.id}"/>
+                </td>
+                <td>
+                    &{'info.selectAyat'}
+                </td>
+                <td  align="right">
+                    &{'info.addAyatToChapter'} :
+                </td>
+                <td width="1%">
+                    <select name="chapter_${_ayat.id}" id="chapter_${_ayat.id}">
+                        <option value="-1"></option>
+                        #{list items:_chapters, as:'chapter'}
+                        <option value="${chapter.id}">${chapter.title}</option>
+                        #{/list}
+                    </select>
+                </td>
+                <td width="1%">
+                    <input type="button" name="add" value="&{'info.add'}" onclick="addToChapter('${_ayat.id}')"/>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    #{/if}
+
+    <div style="padding-left: 85px">
+        <a href="">
+            &{'ayat.viewComment'}
+        </a>
+    </div>
+
+    <form action="" onsubmit="savePublicComment('${_ayat.id}');return false;">
+        <div class="ayatComment" id="publicComment_${_ayat.id}" ></div>
+    </form>
+    <form action="" onsubmit="savePrivateComment('${_ayat.id}');return false;">
+        <div class="ayatComment" id="privateComment_${_ayat.id}" >
+            #{if _com}
+            <textarea id="privateCommentArea_${_ayat.id}" class="privateCommentArea_${_ayat.id}" cols="80" rows="8">
+                ${_com.content}
+            </textarea>
+            #{/if}
+        </div>
+    </form>
+    <form action="" onsubmit="saveTranslation('${_ayat.id}');return false;">
+        <div class="ayatComment" id="translation_${_ayat.id}" ></div>
+    </form>
+
+</div>

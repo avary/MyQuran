@@ -5,6 +5,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import models.Ayat;
 import models.Chapter;
@@ -230,7 +231,7 @@ public class Chapters extends Controller {
         Chapter chapter = Chapter.findById(chapterID);
 
         if (chapter != null && chapter.user.equals(user)) {
-            //List<Ayat> ayats = chapter.ayats;
+            Collections.sort(chapter.ayats);
             render(chapter);
         } else {
             flash.error("error");
