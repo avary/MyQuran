@@ -61,7 +61,7 @@
 <h4>&{'info.selectedAyat'} :</h4>
 #{if ayats.size() > 0}
 <div style="margin-left: 75px;" >
-    <table width="100%">
+    <table width="100%" border="0">
         <tr>
             <td width="1%">
                 <input type="checkbox" name="checkall" id="checkall" value="-1" />
@@ -69,18 +69,27 @@
             <td id="selectAllInfo">
                 &{'info.selectAllAyat'}
             </td>
-            <td  align="right">
+            <td  align="right" nowrap="">
                 &{'info.addAllSelectedAyatToChapter'} :
             </td>
-            <td width="1%">
-                <select name="chapter" id="chapter">
+        </tr>
+        <tr>
+            <td colspan="3" align="right" >
+                <strong>&{'chapter.public'} : &nbsp;</strong>
+                <select name="publicChapter" id="publicChapter">
                     <option value="-1"></option>
                     #{list items:chapters, as:'chapter'}
                     <option value="${chapter.id}">${chapter.title}</option>
                     #{/list}
                 </select>
-            </td>
-            <td width="1%">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <strong>&{'chapter.private'} : &nbsp;</strong>
+                <select name="privateChapter" id="privateChapter">
+                    <option value="-1"></option>
+                    #{list items:chapters, as:'chapter'}
+                    <option value="${chapter.id}">${chapter.title}</option>
+                    #{/list}
+                </select>
                 <input type="button" name="add" value="&{'info.add'}" onclick="addAllSelectedAyatToChapter();"/>
             </td>
         </tr>

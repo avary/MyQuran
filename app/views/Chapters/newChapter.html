@@ -33,10 +33,16 @@
         });
     });
 </script>
+#{if type == 1}
+<h4>&{'chapter.newPublicChapter'} : </h4>
+#{/if}
+#{if type == 2}
 <h4>&{'info.newChapter'} : </h4>
+#{/if}
+
 <br/>
 
-#{if flash.error}
+#{if flash.emptyChapter || flash.duplicateChapter}
 <p class="validation">
     &{flash.emptyChapter}
     #{if flash.duplicateChapter && flash.emptyChapter}<br/>#{/if}
@@ -44,17 +50,41 @@
 </p>
 #{/if}
 
-#{if flash.success}
+#{if flash.chapterAdded || flash.chapterProposed}
 <p class="success">
-    &{flash.success}
+    &{flash.chapterAdded}
+    &{flash.chapterProposed}
 </p>
 #{/if}
 
+#{if type == 1}
+<form action="@{Proposals.newChapter()}" id="addChapter">
+    <table>
+        <tr>
+            <td>
+                &{'chapter.title'} :
+            </td>
+            <td>
+                <input type="text" name="title" id="title" value="${params.title}"/>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right">
+                <input type="submit" name="save" value="&{'propose'}"/>
+            </td>
+        </tr>
+    </table>
+</form>
+#{/if}
+#{if type == 2}
 <form action="@{Chapters.add()}" id="addChapter">
     <table>
         <tr>
             <td>
-                &{'chapter.title'} : 
+                &{'chapter.title'} :
             </td>
             <td>
                 <input type="text" name="title" id="title" value="${params.title}"/>
@@ -70,3 +100,5 @@
         </tr>
     </table>
 </form>
+#{/if}
+

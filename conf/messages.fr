@@ -36,6 +36,10 @@ ayat.deleteSelected=Enlever ce verset des versets sélectionnés.
 chapter.title=Nom
 chapter.delete=Supprimer ce chapitre
 chapter.edit=Modifier le nom de ce chapitre
+chapter.chapterProposed=Votre proposition de nouveau chapitre a été envoyée.
+chapter.newPublicChapter=Proposer un nouveau chapitre public
+chapter.public=Chapitre public
+chapter.private=Chapitre privé
 
 comment.add=Commentaire ajouté
 comment.addPublic=Votre proposition de commentaire a été envoyée
@@ -48,6 +52,7 @@ translation.notAdd=Votre traduction n'a pas encore été validée
 contact.object=Sujet
 contact.subject=Message
 
+propose=Proposer
 send=Envoyer
 confirmPassword=Repetez le mot de passe
 remember=Se souvenir de moi

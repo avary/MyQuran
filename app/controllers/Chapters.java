@@ -93,9 +93,8 @@ public class Chapters extends Controller {
         render(selectedAyat, chapters);
     }
 
-    public static void newChapter() {
-        flash.clear();
-        render();
+    public static void newChapter(int type) {
+        render(type);
     }
 
     public static void add(@Required String title) {
@@ -123,12 +122,15 @@ public class Chapters extends Controller {
             Chapter chapter = new Chapter();
             chapter.user = user;
             chapter.title = title;
+            chapter.type = 2;
             chapter.save();
 
-            flash.success("info.chapterAdded");
+            flash.put("chapterAdded","info.chapterAdded");
         }
 
-        render("Chapters/newChapter.html");
+        flash.keep();
+
+        newChapter(2);
     }
 
     public static void delete(Long id) {

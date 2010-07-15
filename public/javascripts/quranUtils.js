@@ -446,7 +446,7 @@ function addToChapterSimple(ayatID){
 }
 
 function addToChapter(ayatID){
-    var chapterID = $("#chapter_"+ayatID+" option:selected").val();
+    var chapterID = $("#privateChapter_"+ayatID+" option:selected").val();
 
     if(chapterID == "-1"){
         alert(noChapter);

@@ -89,15 +89,24 @@
                 <td  align="right">
                     &{'info.addAyatToChapter'} :
                 </td>
-                <td width="1%">
-                    <select name="chapter_${_ayat.id}" id="chapter_${_ayat.id}">
+            </tr>
+            <tr>
+                <td colspan="3" align="right" >
+                    <strong>&{'chapter.public'} : &nbsp;</strong>
+                    <select name="publicChapter_${_ayat.id}" id="publicChapter_${_ayat.id}">
                         <option value="-1"></option>
                         #{list items:_chapters, as:'chapter'}
                         <option value="${chapter.id}">${chapter.title}</option>
                         #{/list}
                     </select>
-                </td>
-                <td width="1%">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong>&{'chapter.private'} : &nbsp;</strong>
+                    <select name="privateChapter_${_ayat.id}" id="privateChapter_${_ayat.id}">
+                        <option value="-1"></option>
+                        #{list items:_chapters, as:'chapter'}
+                        <option value="${chapter.id}">${chapter.title}</option>
+                        #{/list}
+                    </select>
                     <input type="button" name="add" value="&{'info.add'}" onclick="addToChapter('${_ayat.id}')"/>
                 </td>
             </tr>

@@ -54,8 +54,13 @@
         </li>
         #{/if}
         <li>
-            <a href="@{Chapters.newChapter()}">
+            <a href="@{Chapters.newChapter(2)}">
                 &{'info.newChapter'}
+            </a>
+        </li>
+        <li>
+            <a href="@{Chapters.newChapter(1)}">
+                &{'chapter.newPublicChapter'}
             </a>
         </li>
     </ul>
