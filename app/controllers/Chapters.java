@@ -214,10 +214,12 @@ public class Chapters extends Controller {
 
         Chapter defaultChapter = Chapter.find("byTitleAndUser", "", user).first();
         List<Ayat> ayats = defaultChapter.ayats;
+        Collections.sort(ayats);
 
         List<Chapter> chapters = Chapter.find("user = ? and title != '' order by title", user).fetch();
+        List<Chapter> publicChapters = Chapter.find("user is null and title != '' order by title").fetch();
 
-        render(ayats, chapters,defaultChapter);
+        render(ayats, chapters,defaultChapter,publicChapters);
     }
 
     public static void viewChapterAyat(long chapterID,String title) {

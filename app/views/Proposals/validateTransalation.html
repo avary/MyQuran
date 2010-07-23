@@ -1,0 +1,48 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Valider la traduction' /}
+
+
+<h4 style="border: 0px;">&{'transalation.validate'} : </h4>
+
+#{if flash.transalationError}
+<p class="validation">
+    &{flash.transalationError}
+</p>
+#{/if}
+
+#{if flash.success}
+<p class="success">
+    &{flash.success}
+</p>
+#{/if}
+<br/>
+<strong>
+    &{'transalation.now'} :
+</strong>
+
+<br/><br/>
+<div style="display: inline-block;width: 70px;height: 50px">
+    <div>
+        <div id="ayatNumber">${post.topic.proposal.ayat.sa}</div>
+    </div>
+</div>
+
+<div id="ayatContent" >${post.topic.proposal.ayat.content}</div>
+<div style="border-bottom: 1px #eeeeee solid"></div>
+<br/>
+<strong>
+    &{'transalation.proposed'} :
+</strong>
+<br/><br/>
+${post.topic.proposal.content.raw()}
+
+<br/><br/>
+#{if accepted}
+#{form @Proposals.validateTransalation()}
+<input type="hidden" name="postID" value="${post.id}"/>
+<textarea cols="80" rows="10" name="content"></textarea>
+<br/>
+<input type="submit" name="save" value="&{'send'}"/>
+#{/form}
+#{/if}
+

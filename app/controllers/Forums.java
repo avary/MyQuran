@@ -53,10 +53,10 @@ public class Forums extends Controller {
         }
 
         List<models.forum.Topic> threads = models.forum.Topic.find("author = ? " +
-                "and finished = false "
+                " "
                     + "order by updateAt desc", user).fetch(page, 50);
 
-        renderArgs.put("title", "zawaj.al-imane.org - Mes propositions");
+        renderArgs.put("title", "coran.al-imane.org - Mes propositions");
 
         int nbPage = (int) (Math.ceil(threads.size() / 50));
 
@@ -84,12 +84,9 @@ public class Forums extends Controller {
 
         List<models.forum.Topic> threads = null;
         if (user.isAdmin) {
-            threads = models.forum.Topic.find("forum = ? and finished = false "
+            threads = models.forum.Topic.find("forum = ? "
                     + "order by updateAt desc", forum).fetch(page, 50);
-        } else {
-            threads = models.forum.Topic.find("forum = ? and author = ? and finished = false "
-                    + "order by updateAt desc", forum, user).fetch(page, 50);
-        }
+        } 
 
         renderArgs.put("title", "zawaj.al-imane.org - " + forum.name);
         render(forum, threads, nbPage, page);

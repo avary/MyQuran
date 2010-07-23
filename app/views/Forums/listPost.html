@@ -118,13 +118,15 @@ ${topic.name}
 #{showPost post:post /}<br/>
 #{/list}
 
-#{if session.username}
+
+#{if session.username && !post.topic.finished}
 <div class="buttons" style="text-align: left">
     <a href="@{Forums.newPost(topic.id)}">
         &{'forum.response'}
     </a>
 </div>
 #{/if}
+
 
 <table align="right" cellpadding="0px">
     #{if nbPage > 1}

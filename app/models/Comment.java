@@ -29,4 +29,6 @@ public class Comment extends Model{
     @Lob
     public String content;
 
+    
+
 }

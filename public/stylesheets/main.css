@@ -399,3 +399,24 @@ blockquote {
     margin: 10px;
     font-style: italic;
 }
+
+.accepted{
+    font-weight: bold;
+    color: #4F8A10;
+}
+
+.rejected{
+    font-weight: bold;
+    color: #D8000C;
+}
+
+.postDeleted{
+    border-left: 1px #ccc solid;
+    background-color: #ccc;
+    padding: 15px;
+    padding-top: 10px;
+    min-height:30px;
+    height:auto !important;
+    height:30px;
+    font-weight: bold;
+}

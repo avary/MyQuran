@@ -43,15 +43,30 @@ chapter.private=Chapitre privé
 
 comment.add=Commentaire ajouté
 comment.addPublic=Votre proposition de commentaire a été envoyée
-comment.notAddPublic=Votre proposition de commentaire n'a été envoyée
+comment.notAddPublic=Votre proposition de commentaire n'a pas été envoyée
 comment.yourComment=Vos commentaires
+comment.validate=Valider le commentaire
+comment.now=Commentaire actuel
+comment.noComment=Pas commentaire jusque à présent.
+comment.proposed=Commentaire proposé
+comment.noContent=Vous n'avez pas introduit de commentaire.
+comment.added=Le commentaire a été sauvegardé.
+comment.rejectedComment=Ce commentaire a été refusé.
 
 translation.add=Proposition de traduction envoyée
 translation.notAdd=Votre traduction n'a pas encore été validée
+transalation.validate=Valider la traduction suivante
+transalation.now=Traduction actuelle
+transalation.proposed=Traduction proposé
+transalation.noContent=Vous n'avez pas introduit la nouvelle traduction.
+transalation.added=Le verset a été changé.
+transalation.rejectedTransalation=Cette traduction a été refusé.
 
 contact.object=Sujet
 contact.subject=Message
 
+accepted=Accepté
+rejected=Rejeté
 propose=Proposer
 send=Envoyer
 confirmPassword=Repetez le mot de passe
@@ -108,8 +123,9 @@ error.viewChapter=Vous avez choisi un chapitre qui n'existe pas
 error.badChapter=Vous essayez d'enlever un verset d'un chapitre qui n'existe pas ou qui ne vous appartient pas
 error.denied=Vous n'avez pas les droits nécessaire pour accéder à cette page.
 error.emptyObject=Vous devez entrer le sujet de votre demande
+error.chapterError=Une erreur s'est produite lors de votre proposition.
 
-
+info.selectedAyatProposed=Votre proposition d'ajout de verset a été envoyé
 info.userAdded=Vous avez bien été enregistré, un email vous a été envoyé pour que nous puissons valider votre adresse mail.
 info.userConfirmed=Bienvenue <strong>%s</strong>, votre compte est dorénavant activé. Si vous rencontrer des problèmes, n'hésitez pas à contacter l'administrateur.
 info.goodUsername=Ce nom d'utilisateur est disponible.
@@ -203,6 +219,8 @@ forum.undeletePost=Restauré le message
 forum.post.title=Titre
 forum.yourMessage=Votre message
 forum.postContent=Message
+forum.validate=Valider
+forum.reject=Rejeter
 
 since.seconds=Il y a %s seconde%s
 since.minutes=Il y a %s minute%s

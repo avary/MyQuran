@@ -12,7 +12,13 @@
             </p>
         </div>
         <div style="display: inline-block;width: 826px;">
-
+            #{if _post.state == 3}
+            
+            <div class="postDeleted">
+                Message supprimé
+            </div>
+            #{/if}
+            #{if _post.state != 3}
             <div id="postTitle">
                 ${_post.title}&nbsp;
             </div>
@@ -25,10 +31,15 @@
                 </div>
                 #{/if}
             </div>
+            #{/if}
         </div>
 
     </div>
     <div id="postFooter" >
+        #{if _post.topic.finished || _post.state == 3}
+        &nbsp;
+        #{/if}
+        #{if !_post.topic.finished && _post.state != 3}
         <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td align="left">
@@ -37,12 +48,30 @@
                     <a href="@{Forums.deletePost(_post.id)}" style="padding: 5px">
                         &{'forum.deletePost'}
                     </a>
+                    #{secure.check 'admin'}
+                    #{if _post.topic.proposal.state == 0}
+                    <a href="@{Proposals.validate(_post.id)}" style="padding: 5px">
+                        &{'forum.validate'}
+                    </a>
+                    <a href="@{Proposals.reject(_post.id)}" style="padding: 5px">
+                        &{'forum.reject'}
+                    </a>
+                    #{/if}
+                    #{/secure.check}
                     #{/if}
                     #{else}
                     #{secure.check 'admin'}
                     <a href="@{Forums.deletePost(_post.id)}" style="padding: 5px">
                         &{'forum.deletePost'}
                     </a>
+                    #{if _post.topic.proposal.state == 0}
+                    <a href="@{Proposals.validate(_post.id)}" style="padding: 5px">
+                        &{'forum.validate'}
+                    </a>
+                    <a href="@{Proposals.reject(_post.id)}" style="padding: 5px">
+                        &{'forum.reject'}
+                    </a>
+                    #{/if}
                     #{/secure.check}
                     #{/else}
                     #{/if}
@@ -76,6 +105,7 @@
                 </td>
             </tr>
         </table>
+        #{/if}
     </div>
 </div>
 

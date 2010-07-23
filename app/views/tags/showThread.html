@@ -9,12 +9,23 @@
         #{if _thread.proposal.type == 2}
         <img src="@{'public/images/chapterForum.png'}" width="40" height="40"/>
         #{/if}
-        
+
     </div>
     <div style="display: inline-block;width: 520px;vertical-align: top;padding-top: 10px">
+        #{if _thread.proposal.state == 1}
+        <span class="accepted">
+            &{'accepted'}
+        </span> -
+        #{/if}
+        #{if _thread.proposal.state == 2}
+        <span class="rejected">
+            &{'rejected'}
+        </span> - 
+        #{/if}
         <a href="@{Forums.listPost(_thread.id,1,_thread.name.slugify())}">
             ${_thread.name}
         </a>
+
         <p>
             &{'forum.by'}
             <strong>
@@ -44,14 +55,14 @@
                 ${_thread.lastPost.author.username.capFirst()}
             </strong>
             #{if _thread.nbResponse > 0}
-                <a href="@{Forums.listPost(_thread.id,(int) (Math.ceil(_thread.nbResponse / 10)))}#last">
-                    <img src="@{'public/images/newPost.png'}" title="&{'forum.lastPost'}"/>
-                </a>
+            <a href="@{Forums.listPost(_thread.id,(int) (Math.ceil(_thread.nbResponse / 10)))}#last">
+                <img src="@{'public/images/newPost.png'}" title="&{'forum.lastPost'}"/>
+            </a>
             #{/if}
             #{else}
-                <a href="@{Forums.listPost(_thread.id,1)}#last">
-                    <img src="@{'public/images/newPost.png'}"/>
-                </a>
+            <a href="@{Forums.listPost(_thread.id,1)}#last">
+                <img src="@{'public/images/newPost.png'}"/>
+            </a>
             #{/else}
         </p>
         <p style="padding: 0px;margin: 0px;">

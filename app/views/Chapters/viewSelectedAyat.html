@@ -40,6 +40,8 @@
     var noChapter = "&{'error.noChapter'}";
     var selectedAyatAlreadyAdded = "&{'error.selectedAyatAlreadyAdded'}";
     var selectedAyatAddedToChapter = "&{'info.selectedAyatAddedToChapter'}";
+    var selectedAyatProposed = "&{'info.selectedAyatProposed'}";
+    var chapterError = "&{'error.chapterError'}";
     var confirmRemoveAyatSelected = "&{'info.confirmRemoveAyatSelected'}";
     var ayatRemovedFromDefaultChapter = "&{'info.ayatRemovedFromDefaultChapter'}";
     var badChapter = "&{'error.badChapter'}";
@@ -50,6 +52,7 @@
     var translationSaveURL = "@{Proposals.newTranslation()}";
     var selectAyatURL = "@{Chapters.selectAyat()}";
     var addAyatToChapterURL = "@{Chapters.addAyatToChapter()}";
+    var addAyatToPublicChapterURL = "@{Proposals.newAyatToChapter()}";
     var removeChapterAyatURL = "@{Chapters.removeChapterAyat()}";
 
 </script>
@@ -78,7 +81,7 @@
                 <strong>&{'chapter.public'} : &nbsp;</strong>
                 <select name="publicChapter" id="publicChapter">
                     <option value="-1"></option>
-                    #{list items:chapters, as:'chapter'}
+                    #{list items:publicChapters, as:'chapter'}
                     <option value="${chapter.id}">${chapter.title}</option>
                     #{/list}
                 </select>
@@ -103,7 +106,7 @@
 #{list items:ayats, as:'ayat'}
 
 <div style="padding-bottom: 10px;padding-top: 10px;" id="allAyat_${ayat.id}">
-    #{showAyat ayat:ayat,load:'yes',chap:'yes',chapters:chapters/}
+    #{showAyat ayat:ayat,load:'yes',chap:'yes',chapters:chapters,publicChapters:publicChapters/}
 
     #{if !ayat_isLast}
     <div style="border-bottom: 1px #eeeeee solid"></div>

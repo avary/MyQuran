@@ -2,6 +2,7 @@
     <a href="#${_ayat.number}" id="${_ayat.number}"></a>
 
     <div id="message_${_ayat.id}"></div>
+    <div id="message2_${_ayat.id}"></div>
 
     <div style="display: inline-block;width: 70px;height: 80px">
         <div>
@@ -95,7 +96,7 @@
                     <strong>&{'chapter.public'} : &nbsp;</strong>
                     <select name="publicChapter_${_ayat.id}" id="publicChapter_${_ayat.id}">
                         <option value="-1"></option>
-                        #{list items:_chapters, as:'chapter'}
+                        #{list items:_publicChapters, as:'chapter'}
                         <option value="${chapter.id}">${chapter.title}</option>
                         #{/list}
                     </select>
@@ -115,11 +116,14 @@
     </div>
     #{/if}
 
+    #{if _ayat.comment}
     <div style="padding-left: 85px">
-        <a href="">
+        <a href="#" onclick="showComment('${_ayat.id}');return false;">
             &{'ayat.viewComment'}
         </a>
+        <div id="ayatPublicComment_${_ayat.id}" style="display: none"></div>
     </div>
+    #{/if}
 
     <form action="" onsubmit="savePublicComment('${_ayat.id}');return false;">
         <div class="ayatComment" id="publicComment_${_ayat.id}" ></div>

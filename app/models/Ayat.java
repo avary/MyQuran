@@ -30,6 +30,8 @@ public class Ayat extends Model implements Comparable<Ayat>{
     @Lob
     public String content;
 
+    public boolean comment;
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

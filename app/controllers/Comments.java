@@ -94,6 +94,15 @@ public class Comments extends Controller {
 
     }
 
+    public static void loadPublic(Long ayatID) throws Throwable {
+        Ayat ayat = Ayat.findById(ayatID);
+        Comment comment = Comment.find("ayat = ? and user is null ", ayat).first();
+        if (comment == null) {
+            comment = new Comment();
+        }
+        renderJSON(comment);
+    }
+
     public static void save(Long ayatId, String content) {
         flash.clear();
 

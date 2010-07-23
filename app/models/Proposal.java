@@ -5,9 +5,12 @@
 
 package models;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import play.db.jpa.Model;
 
 /**
@@ -28,7 +31,10 @@ public class Proposal extends Model{
     // 2 = chapitre
     public int type;
 
-    public boolean finished;
+    // 0 = normal
+    // 1 = approuvé
+    // 2 = rejeté
+    public int state;
 
     @ManyToOne
     public Chapter chapter;
