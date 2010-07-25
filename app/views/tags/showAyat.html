@@ -118,10 +118,22 @@
 
     #{if _ayat.comment}
     <div style="padding-left: 85px">
-        <a href="#" onclick="showComment('${_ayat.id}');return false;">
+        #{if _com && !_com.user}
+        <a href="#" onclick="showComment('${_ayat.id}','no');return false;">
             &{'ayat.viewComment'}
         </a>
-        <div id="ayatPublicComment_${_ayat.id}" style="display: none"></div>
+        #{/if}
+        #{else}
+        <a href="#" onclick="showComment('${_ayat.id}','yes');return false;">
+            &{'ayat.viewComment'}
+        </a>
+        #{/else}
+        
+        <div id="ayatPublicComment_${_ayat.id}" style="display: none">
+            #{if _com && !_com.user}
+            ${_com.content.raw()}
+            #{/if}
+        </div>
     </div>
     #{/if}
 
@@ -130,7 +142,7 @@
     </form>
     <form action="" onsubmit="savePrivateComment('${_ayat.id}');return false;">
         <div class="ayatComment" id="privateComment_${_ayat.id}" >
-            #{if _com}
+            #{if _com && _com.user}
             <textarea id="privateCommentArea_${_ayat.id}" class="privateCommentArea_${_ayat.id}" cols="80" rows="8">
                 ${_com.content}
             </textarea>

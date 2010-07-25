@@ -344,6 +344,8 @@ public class Proposals extends Controller {
             post.topic.proposal.save();
             post.topic.proposal.ayat.save();
 
+            Cache.delete("sourat_ayat_" + post.topic.proposal.ayat.sourat.number);
+
             flash.success("comment.added");
             render(post,c);
         } catch (Throwable ex) {

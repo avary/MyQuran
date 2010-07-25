@@ -93,6 +93,14 @@ public class Chapters extends Controller {
         render(selectedAyat, chapters);
     }
 
+    public static void indexPublic() {
+        flash.clear();
+
+        List<Chapter> chapters = Chapter.find("user is null and title != '' order by title").fetch();
+
+        render(chapters);
+    }
+
     public static void newChapter(int type) {
         render(type);
     }

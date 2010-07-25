@@ -1,0 +1,92 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Commentaires' /}
+
+<script src="@{'/public/javascripts/tiny_mce.js'}" type="text/javascript" charset='utf-8'></script>
+
+<script type="text/javascript" charset='utf-8'>
+    var username = '${session.username}';
+    var commentAdd = "&{'comment.add'}";
+    var commentAddPublic = "&{'comment.addPublic'}";
+    var commentNotAddPublic = "&{'comment.notAddPublic'}";
+    var translationAdd = "&{'translation.add'}";
+    var translationNotAdd = "&{'translation.notAdd'}";
+    var userNotConnected = "&{'error.userNotConnected'}";
+    var ayatSelected = "&{'ayat.selected'}";
+    var ayatAlreadySelected = "&{'ayat.alreadySelected'}";
+
+    var privateCommentLoadURL = "@{Comments.load()}";
+    var publicCommentLoadURL = "@{Comments.loadPublic()}";
+    var privateCommentSaveURL = "@{Comments.save()}";
+    var publicCommentSaveURL = "@{Proposals.newComment()}";
+    var translationSaveURL = "@{Proposals.newTranslation()}";
+    var selectAyatURL = "@{Chapters.selectAyat()}";
+
+</script>
+
+<script src="@{'/public/javascripts/quranUtils.js'}" type="text/javascript" charset='utf-8'></script>
+
+<h4>&{'menu.comment'} :</h4>
+
+<table align="center" cellspacing="5px">
+    <tr>
+        <td colspan="3">
+            <form action="@{Comments.listBySourat()}">
+                &{'info.selectSourat'} :
+                <select name="id" >
+                    <option value="-1" ${id == -1?"selected='selected'":""}>Toutes</option>
+                    #{list items:sourats, as:'sourat'}
+                    <option value="${sourat.id}" ${id == sourat.id?"selected='selected'":""}>${sourat.number}.${sourat.title}</option>
+                    #{/list}
+                </select>
+                <input type="submit" name="see" value="&{'see'}"/>
+            </form>
+        </td>
+    </tr>
+    #{if nbPage > 1}
+
+    <tr >
+        #{if page > 1}
+        <td>
+            <a href="@{Comments.list(page-1)}">
+                <img src="@{'/public/images/previous.png'}" width="20px" height="20px"/>
+            </a>
+        </td>
+        #{/if}
+        #{list items:1..nbPage, as:'i'}
+        #{if page == i}
+        <td valign="middle" align="center" id="currentPage">
+            <strong>${i}</strong>
+        </td>
+        #{/if}
+        #{else}
+        <td valign="middle" align="center" id="page">
+            <a href="@{Comments.list(i)}"  >
+                ${i}
+            </a>
+        </td>
+        #{/else}
+
+        #{/list}
+
+        #{if page < nbPage}
+        <td>
+            <a href="@{Comments.list(page+1)}">
+                <img src="@{'/public/images/next.png'}" width="20px" height="20px"/>
+            </a>
+        </td>
+        #{/if}
+    </tr>
+    #{/if}
+</table>
+
+<div style="border-bottom: 1px #eeeeee solid"></div>
+
+#{list items:comments, as:'c'}
+
+#{showAyat ayat:c.ayat,load:'yes',com:c/}
+
+#{if !c_isLast}
+<div style="border-bottom: 1px #eeeeee solid"></div>
+#{/if}
+
+#{/list}

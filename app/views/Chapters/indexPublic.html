@@ -1,0 +1,67 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Chapitres' /}
+
+
+#{if flash.error}
+<p class="validation">
+    
+    &{flash.errorViewChapter}
+</p>
+#{/if}
+
+#{if flash.success}
+<p class="success">
+    &{flash.success}
+</p>
+#{/if}
+
+<div align="center">
+    <ul style="list-style: none">
+        <li>
+            <a href="@{Chapters.newChapter(1)}">
+                &{'chapter.newPublicChapter'}
+            </a>
+        </li>
+    </ul>
+</div>
+
+#{if chapters.size() > 0 }
+
+<div style="border-bottom: 1px #eeeeee solid"></div>
+
+<h4>&{'info.chapters'} : </h4>
+<br/>
+
+#{list items:chapters, as:'chapter'}
+    #{if chapter_index == 1}
+    <div id="chapterList" >
+        <table>
+    #{/if}
+    #{if chapter_index == 51}
+    <div id="chapterList">
+        <table>
+    #{/if}
+    #{if chapter_index == 101}
+    <div id="chapterList">
+        <table>
+    #{/if}
+
+    <tr><td>
+    ${chapter_index} -
+    <a href="@{Chapters.viewChapterAyat(chapter.id,chapter.title.slugify())}">
+        ${chapter.title} (${chapter.ayats.size()} &{'ayat',chapter.ayats.size().pluralize()})
+    </a>
+    </td>
+    </tr>
+    #{if chapter_index == 50 || chapter_index == 100 || chapter_index == 150}
+    </table>
+    </div>
+    #{/if}
+
+#{/list}
+
+#{if chapter_index != 50 || chapter_index != 100 || chapter_index != 150}
+    </table></div>
+#{/if}
+#{/if}
+

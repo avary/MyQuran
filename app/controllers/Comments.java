@@ -46,6 +46,24 @@ public class Comments extends Controller {
         render(page, nbPage, comments, sourats, id);
     }
 
+    public static void listPublic(int page) {
+
+        if (page < 1) {
+            page = 1;
+        }
+
+
+        List<Comment> comments = Comment.find("user is null order by ayat.id asc").from((page - 1) * 200).fetch(200);
+        int nbPage = (int) Math.ceil(Comment.count() / 200.0);
+
+        List<Sourat> sourats = Comment.find("select distinct (c.sourat) from models.Comment c "
+                + "where c.user is null order by c.sourat.number").fetch();
+
+        Long id = -1L;
+
+        render(page, nbPage, comments, sourats, id);
+    }
+
     public static void listBySourat(Long id) {
         if (id == -1) {
             list(1);
@@ -87,6 +105,7 @@ public class Comments extends Controller {
 
         Ayat ayat = Ayat.findById(ayatId);
         Comment comment = Comment.find("byUserAndAyat", user, ayat).first();
+        System.out.println("### comment = "+comment);
         if (comment == null) {
             comment = new Comment();
         }
@@ -97,6 +116,7 @@ public class Comments extends Controller {
     public static void loadPublic(Long ayatID) throws Throwable {
         Ayat ayat = Ayat.findById(ayatID);
         Comment comment = Comment.find("ayat = ? and user is null ", ayat).first();
+        System.out.println("### public comment = "+comment);
         if (comment == null) {
             comment = new Comment();
         }

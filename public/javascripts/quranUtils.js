@@ -1,6 +1,5 @@
-function showComment(ayatID){
-    if($("#ayatPublicComment_"+ayatID).text() == ""){
-        alert("load")
+function showComment(ayatID,load){
+    if($("#ayatPublicComment_"+ayatID).text().trim() == "" && load == "yes"){
         $.post(publicCommentLoadURL, {
             ayatID: ayatID
         },
