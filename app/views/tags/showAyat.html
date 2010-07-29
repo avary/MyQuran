@@ -1,25 +1,25 @@
 <div style="padding-bottom: 10px;padding-top: 10px;">
-    <a href="#${_ayat.number}" id="${_ayat.number}"></a>
+    <a href="#${_ayat.number}"></a>
 
     <div id="message_${_ayat.id}"></div>
     <div id="message2_${_ayat.id}"></div>
 
     <div style="display: inline-block;width: 70px;height: 80px">
         <div>
-            <div id="ayatNumber">${_ayat.sa}</div>
+            <div class="ayatNumber">${_ayat.sa}</div>
             <div style="padding-top: 3px;">
                 <a href="#top">
                     <img src="@{'/public/images/up.png'}"
                          title="&{'ayat.top'}" width="20px" height="20px"
                          alt="&{'ayat.top'}"/>
                 </a>
-                <a href="#" id="link_${_ayat.number}"
+                <a href="#" 
                    onclick="showHidePublicCommentBox('${_ayat.id}');return false;">
                     <img src="@{'/public/images/publicComment.png'}"
                          title="&{'ayat.publicComment'}" width="20px"
                          height="20px" alt="&{'ayat.publicComment'}"/>
                 </a>
-                <a href="#" id="link_${_ayat.number}"
+                <a href="#" 
                    onclick="showHidePrivateCommentBox('${_ayat.id}','${_load}');return false;">
                     <img src="@{'/public/images/privateComment.png'}"
                          title="&{'ayat.privateComment'}" width="20px"
@@ -75,7 +75,7 @@
         </div>
     </div>
 
-    <div id="ayatContent" >${_ayat.content}</div>
+    <div class="ayatContent" >${_ayat.content}</div>
 
     #{if _chap}
     <div style="margin-left: 75px;" >

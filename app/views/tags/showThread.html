@@ -1,13 +1,16 @@
 <div style="border-bottom: 1px #ccc solid;">
     <div style="display: inline-block;width: 50px;padding: 5px">
         #{if _thread.proposal.type == 0}
-        <img src="@{'public/images/ideaForum.png'}" width="40" height="40"/>
+        <img src="@{'public/images/ideaForum.png'}" width="40" height="40"
+             alt="Traductions"/>
         #{/if}
         #{if _thread.proposal.type == 1}
-        <img src="@{'public/images/commentForum.png'}" width="40" height="40"/>
+        <img src="@{'public/images/commentForum.png'}" width="40" height="40"
+             alt="Commentaires"/>
         #{/if}
         #{if _thread.proposal.type == 2}
-        <img src="@{'public/images/chapterForum.png'}" width="40" height="40"/>
+        <img src="@{'public/images/chapterForum.png'}" width="40" height="40"
+             alt="Chapitres"/>
         #{/if}
 
     </div>
@@ -56,12 +59,13 @@
             </strong>
             #{if _thread.nbResponse > 0}
             <a href="@{Forums.listPost(_thread.id,(int) (Math.ceil(_thread.nbResponse / 10)))}#last">
-                <img src="@{'public/images/newPost.png'}" title="&{'forum.lastPost'}"/>
+                <img src="@{'public/images/newPost.png'}" title="&{'forum.lastPost'}"
+                     alt="Dernier message"/>
             </a>
             #{/if}
             #{else}
             <a href="@{Forums.listPost(_thread.id,1)}#last">
-                <img src="@{'public/images/newPost.png'}"/>
+                <img src="@{'public/images/newPost.png'}" alt="Dernier message"/>
             </a>
             #{/else}
         </p>

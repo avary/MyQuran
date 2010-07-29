@@ -3,7 +3,7 @@
 
 #{i18n /}
 
-<script>
+<script type="text/javascript" charset="utf-8">
 
     function deleteChapter(id,title){
         var result = confirm(i18n("info.confirmChapterDelete",title));
@@ -15,21 +15,6 @@
 
 </script>
 
-<style type="text/css">
-
-    .borderit img{
-    border: 1px solid white;
-    }
-
-    .borderit:hover img{
-    border: 1px solid black;
-    }
-
-    .borderit:hover{
-    color: red; /* irrelevant definition to overcome IE bug */
-}
-
-</style>
 
 #{if flash.error}
 <p class="validation">
@@ -95,10 +80,12 @@
     </td>
     <td>
     <a href="@{Chapters.edit(chapter.id,chapter.title)}" class="borderit">
-        <img src="@{'public/images/edit.png'}" title="&{'chapter.edit'}" width="16px" height="16px"/>
+        <img src="@{'public/images/edit.png'}" title="&{'chapter.edit'}" 
+             width="16px" height="16px" alt="&{'chapter.edit'}"/>
     </a>
         <a href="#" onclick="deleteChapter('${chapter.id}','${chapter.title}')" class="borderit">
-        <img src="@{'public/images/delete.png'}" title="&{'chapter.delete'}" width="16px" height="16px"/>
+        <img src="@{'public/images/delete.png'}" title="&{'chapter.delete'}" 
+             width="16px" height="16px" alt="&{'chapter.delete'}"/>
     </a>
     </td></tr>
     #{if chapter_index == 50 || chapter_index == 100 || chapter_index == 150}

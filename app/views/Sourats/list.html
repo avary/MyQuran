@@ -12,13 +12,13 @@
     <h1 style="border: 0px;">&{'title.souratList'}</h1>
 #{list items:sourats, as:'sourat'}
     #{if sourat_index == 1}
-    <div id="souratList">
+    <div class="souratList">
     #{/if}
     #{if sourat_index == 39}
-    <div id="souratList">
+    <div class="souratList">
     #{/if}
     #{if sourat_index == 77}
-    <div id="souratList">
+    <div class="souratList">
     #{/if}
 
    ${sourat.number} - <a href="@{Ayats.list(sourat.title.slugify(),sourat.number)}">${sourat.title}</a><br/>

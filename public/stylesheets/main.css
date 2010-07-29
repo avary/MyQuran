@@ -173,7 +173,7 @@ input, button, select {
     display: inline;
 }
 
-#souratList{
+.souratList{
     text-align: left;
     display: inline-block;
     width: 330px;
@@ -244,7 +244,7 @@ input, button, select {
     font-weight: bold;
 }
 
-#ayatNumber{
+.ayatNumber{
     background:#FEF2DA none repeat scroll 0 0;
     color:#D6B169;
     font-size:15px;
@@ -255,7 +255,7 @@ input, button, select {
     border: 1px #DCC372 solid;
 }
 
-#ayatContent{
+.ayatContent{
     vertical-align: top;
     width: 905px;
     display: inline-block;
@@ -280,7 +280,7 @@ input, button, select {
 }
 
 #page{
-    
+
     border: 1px #DCC372 solid;
     width: 20px;
     height: 20px;
@@ -419,4 +419,17 @@ blockquote {
     height:auto !important;
     height:30px;
     font-weight: bold;
+}
+
+
+.borderit img{
+    border: 1px solid white;
+}
+
+.borderit:hover img{
+    border: 1px solid black;
+}
+
+.borderit:hover{
+    color: red; /* irrelevant definition to overcome IE bug */
 }

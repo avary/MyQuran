@@ -1,6 +1,7 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="fr">
 
-<html>
     <head>
         <title>#{get 'title' /}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -18,7 +19,7 @@
     </head>
     <body>
 
-        <script>
+        <script type="text/javascript">
             $(function() {
                 $('.img').blink({delay:800});
 
@@ -64,7 +65,7 @@
                     #{/if}
 
                 </div>
-                <img src="@{'/public/images/header.jpg'}" width="1024px" />
+                <img src="@{'/public/images/header.jpg'}" width="1024px" alt="coran.al-imane.org"/>
             </div>
             <div id="menu">
                 <ul>
@@ -85,7 +86,8 @@
                         <div id="search">
                             <input type="text" name="searchBox" id="searchBox"/>
                             <a href="#" onclick="searchAyat();return false;">
-                                <img src="@{'/public/images/search.png'}" width="23px" height="23px"/>
+                                <img src="@{'/public/images/search.png'}" 
+                                     width="23px" height="23px" alt="recherche"/>
                             </a>
                         </div>
                     </li>

@@ -10,7 +10,7 @@
 
 #{i18n /}
 
-<script>
+<script type="text/javascript" charset="utf-8">
     //initiate validator on load
 
     $(function() {
@@ -116,7 +116,7 @@
             &{'imageCode'} :
         </td>
         <td>
-            <img src="@{Application.captcha(randomID)}" />
+            <img src="@{Application.captcha(randomID)}" alt="captcha"/>
             <input type="hidden" name="randomID" value="${randomID}"/>
         </td>
         <td>
