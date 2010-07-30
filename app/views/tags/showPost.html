@@ -1,10 +1,10 @@
 <div style="width: 1000px;border: 1px #7a3919 solid">
-    <div id="postHead">
+    <div class="postHead">
         <a name="post${_post.id}"></a>
         &{'forum.the'} ${_post.createAt.format('dd-MM-yyyy à HH:mm')}
     </div>
     <div style="background-color: #fff1c7">
-        <div id="postUser">
+        <div class="postUser">
             <p style="padding: 0px;margin: 0px;">
                 <strong>
                     ${_post.author.username.capFirst()}
@@ -19,14 +19,14 @@
             </div>
             #{/if}
             #{if _post.state != 3}
-            <div id="postTitle">
+            <div class="postTitle">
                 ${_post.title}&nbsp;
             </div>
-            <div id="postContent">
+            <div class="postContent">
                 ${_post.content.raw()}
                 #{if _post.updateAt}
                 <br/><br/>
-                <div id="postUpdate">
+                <div class="postUpdate">
                     &{'forum.lastEdit'}; ${_post.updateAt.since()}
                 </div>
                 #{/if}
@@ -35,7 +35,7 @@
         </div>
 
     </div>
-    <div id="postFooter" >
+    <div class="postFooter" >
         #{if _post.topic.finished || _post.state == 3}
         &nbsp;
         #{/if}

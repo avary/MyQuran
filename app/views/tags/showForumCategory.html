@@ -8,7 +8,8 @@
         </div>
         <div style="display: inline-block;">
             <a href="#" id="closeOpenLink_${_category.id}" onclick="closeOpen('${_category.id}');return false;">
-                <img id="close_${_category.id}" title="&{'forum.closeCategory'}" src="@{'public/images/open.png'}" border="0"/>
+                <img id="close_${_category.id}" title="&{'forum.closeCategory'}" 
+                     src="@{'public/images/open.png'}" border="0" alt=""/>
             </a>
         </div>
     </div>
@@ -17,13 +18,16 @@
         <div style="border-bottom: 1px #ccc solid;" >
                 <div style="display: inline-block;width: 50px;padding: 5px">
                     #{if forum.name == "Propositions de traduction"}
-                    <img src="@{'public/images/ideaForum.png'}" width="40" height="40"/>
+                    <img src="@{'public/images/ideaForum.png'}" width="40" height="40"
+                         alt="Propositions de traduction"/>
                     #{/if}
                     #{if forum.name == "Propositions de commentaires"}
-                    <img src="@{'public/images/commentForum.png'}" width="40" height="40"/>
+                    <img src="@{'public/images/commentForum.png'}" width="40" height="40"
+                         alt="Propositions de commentaires"/>
                     #{/if}
                     #{if forum.name == "Propositions de chapitres"}
-                    <img src="@{'public/images/chapterForum.png'}" width="40" height="40"/>
+                    <img src="@{'public/images/chapterForum.png'}" width="40" height="40"
+                         alt="Propositions de chapitres"/>
                     #{/if}
                 </div>
                 <div style="display: inline-block;width: 520px;vertical-align: top;padding-top: 10px">
@@ -49,13 +53,15 @@
                             #{if forum.lastTopic.nbResponse > 0}
                             <a title="&{'forum.lastPost'}" href="@{Forums.listPost(forum.lastTopic.id,(int) (Math.ceil(forum.lastTopic.nbResponse / 10)),forum.lastTopic.name.slugify())}#last">
                                     ${forum.lastTopic.name.maxString(27)}
-                                    <img src="@{'public/images/newPost.png'}" title="&{'forum.lastPost'}"/>
+                                    <img src="@{'public/images/newPost.png'}" title="&{'forum.lastPost'}"
+                                         alt="&{'forum.lastPost'}"/>
                                 </a>
                             #{/if}
                             #{else}
                                 <a href="@{Forums.listPost(forum.lastTopic.id,1,forum.lastTopic.name.slugify())}#last">
                                     ${forum.lastTopic.name.maxString(27)}
-                                    <img src="@{'public/images/newPost.png'}"/>
+                                    <img src="@{'public/images/newPost.png'}"
+                                         alt="&{'forum.lastPost'}"/>
                                 </a>
                             #{/else}
                             

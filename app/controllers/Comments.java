@@ -19,11 +19,11 @@ import play.mvc.With;
  *
  * @author inf04
  */
-@With(value={Secure.class,InitControllers.class})
+@With(value = {InitControllers.class})
 public class Comments extends Controller {
 
-    public static void list(int page) {
-
+    public static void list(int page) throws Throwable {
+        Secure.checkAccess();
         if (page < 1) {
             page = 1;
         }
@@ -64,7 +64,8 @@ public class Comments extends Controller {
         render(page, nbPage, comments, sourats, id);
     }
 
-    public static void listBySourat(Long id) {
+    public static void listBySourat(Long id) throws Throwable {
+        Secure.checkAccess();
         if (id == -1) {
             list(1);
         }
@@ -90,8 +91,26 @@ public class Comments extends Controller {
         render("Comments/list.html", 0, 0, comments, sourats, id);
     }
 
-    public static void load(Long ayatId) throws Throwable {
+    public static void listPublicBySourat(Long id) throws Throwable {
+        if (id == -1) {
+            list(1);
+        }
 
+        Sourat sourat = Sourat.findById(id);
+        if (sourat == null) {
+            list(1);
+        }
+
+        List<Comment> comments = Comment.find("user is null and sourat = ? order by ayat.id", sourat).fetch();
+
+        List<Sourat> sourats = Comment.find("select distinct (c.sourat) from models.Comment c "
+                + "where c.user is null order by c.sourat.number").fetch();
+
+        render("Comments/listPublic.html", 0, 0, comments, sourats, id);
+    }
+
+    public static void load(Long ayatId) throws Throwable {
+        Secure.checkAccess();
         if (Secure.Security.connected() == null) {
             Secure.login("");
         }
@@ -105,7 +124,7 @@ public class Comments extends Controller {
 
         Ayat ayat = Ayat.findById(ayatId);
         Comment comment = Comment.find("byUserAndAyat", user, ayat).first();
-        System.out.println("### comment = "+comment);
+        System.out.println("### comment = " + comment);
         if (comment == null) {
             comment = new Comment();
         }
@@ -116,14 +135,15 @@ public class Comments extends Controller {
     public static void loadPublic(Long ayatID) throws Throwable {
         Ayat ayat = Ayat.findById(ayatID);
         Comment comment = Comment.find("ayat = ? and user is null ", ayat).first();
-        System.out.println("### public comment = "+comment);
+        System.out.println("### public comment = " + comment);
         if (comment == null) {
             comment = new Comment();
         }
         renderJSON(comment);
     }
 
-    public static void save(Long ayatId, String content) {
+    public static void save(Long ayatId, String content) throws Throwable {
+        Secure.checkAccess();
         flash.clear();
 
         User user = (User) Cache.get("user_" + Secure.Security.connected());

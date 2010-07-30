@@ -1,12 +1,16 @@
 #{extends 'main.html' /}
 #{set title:'coran.al-imane.org - Valider la traduction' /}
 
+#{if post.topic.proposal.ayat}
+<h4 style="border: 0px;">&{'chapter.newAyat',post.topic.proposal.chapter.title}</h4>
+#{/if}
+#{else}
+<h4 style="border: 0px;">&{'chapter.new'} :</h4>
+#{/else}
 
-<h4 style="border: 0px;">&{'transalation.validate'} : </h4>
-
-#{if flash.transalationError}
+#{if flash.chapterError}
 <p class="validation">
-    &{flash.transalationError}
+    &{flash.chapterError}
 </p>
 #{/if}
 
@@ -15,12 +19,9 @@
     &{flash.success}
 </p>
 #{/if}
-<br/>
-<strong>
-    &{'transalation.now'} :
-</strong>
 
-<br/><br/>
+#{if post.topic.proposal.ayat}
+<br/>
 <div style="display: inline-block;width: 70px;height: 50px">
     <div>
         <div class="ayatNumber">${post.topic.proposal.ayat.sa}</div>
@@ -30,19 +31,22 @@
 <div class="ayatContent" >${post.topic.proposal.ayat.content}</div>
 <div style="border-bottom: 1px #eeeeee solid"></div>
 <br/>
-<strong>
-    &{'transalation.proposed'} :
-</strong>
-<br/><br/>
-${post.topic.proposal.content.raw()}
-
-<br/><br/>
-#{if accepted}
-#{form @Proposals.validateTransalation()}
-<input type="hidden" name="postID" value="${post.id}"/>
-<textarea cols="80" rows="10" name="content"></textarea>
+#{/if}
+#{else}
 <br/>
-<input type="submit" name="save" value="&{'send'}"/>
+<strong>
+    &{'chapter.proposed'} : ${post.topic.proposal.content.raw()}
+</strong>
+#{/else}
+#{if accepted}
+#{form @Proposals.validateChapter()}
+<input type="hidden" name="postID" value="${post.id}"/>
+#{if !post.topic.proposal.ayat}
+<br/>
+<input type="text" name="title" id="title"/>
+#{/if}
+<input type="submit" name="save" value="&{'forum.validate'}"/>
 #{/form}
 #{/if}
+
 

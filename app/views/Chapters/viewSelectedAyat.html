@@ -4,7 +4,7 @@
 #{if ayats.size() > 0}
 <script src="@{'/public/javascripts/tiny_mce.js'}" type="text/javascript" charset='utf-8'></script>
 
-<script>
+<script type="text/javascript" charset='utf-8'>
 
     var deselectAllAyat = "&{'info.deselectAllAyat'}";
     var selectAllAyat = "&{'info.selectAllAyat'}";
@@ -48,6 +48,7 @@
 
     var privateCommentLoadURL = "@{Comments.load()}";
     var privateCommentSaveURL = "@{Comments.save()}";
+    var publicCommentLoadURL = "@{Comments.loadPublic()}";
     var publicCommentSaveURL = "@{Proposals.newComment()}";
     var translationSaveURL = "@{Proposals.newTranslation()}";
     var selectAyatURL = "@{Chapters.selectAyat()}";

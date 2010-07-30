@@ -11,7 +11,7 @@
 <a href="@{Forums.index()}">
     &{'proposal'}
 </a>
-<img src="@{'public/images/arrow.png'}"/>
+<img src="@{'public/images/arrow.png'}" alt="/"/>
 ${forum.name}
 <br/><br/>
 
@@ -36,15 +36,14 @@ ${forum.name}
 </div>
 #{/if}
 
+#{if nbPage > 1}
 <table align="right" cellpadding="0px">
-    #{if nbPage > 1}
-
     <tr >
         #{if page > 1}
         <td class="pagination">
             <span class="arrow">
                 <a href="@{Forums.listThread(forum.id,page-1)}">
-                    <img src="@{'/public/images/previous.png'}"/>
+                    <img src="@{'/public/images/previous.png'}" alt="<="/>
                 </a>
             </span>
 
@@ -77,15 +76,16 @@ ${forum.name}
         <td class="pagination">
             <span class="arrow">
                 <a href="@{Forums.listThread(forum.id,page+1)}" >
-                    <img src="@{'/public/images/next.png'}" />
+                    <img src="@{'/public/images/next.png'}" alt="=>"/>
                 </a>
             </span>
 
         </td>
         #{/if}
     </tr>
-    #{/if}
+    
 </table>
+#{/if}
 <br/>
 #{if nbPage > 1}
     <br/>
@@ -127,15 +127,15 @@ ${forum.name}
     </a>
 </div>
 #{/if}
+#{if nbPage > 1}
 <table align="right" cellpadding="0px">
-    #{if nbPage > 1}
 
     <tr >
         #{if page > 1}
         <td class="pagination">
             <span class="arrow">
                 <a href="@{Forums.listThread(forum.id,page-1)}">
-                    <img src="@{'/public/images/previous.png'}"/>
+                    <img src="@{'/public/images/previous.png'}" alt="<="/>
                 </a>
             </span>
 
@@ -168,14 +168,15 @@ ${forum.name}
         <td class="pagination">
             <span class="arrow">
                 <a href="@{Forums.listThread(forum.id,page+1)}" >
-                    <img src="@{'/public/images/next.png'}" />
+                    <img src="@{'/public/images/next.png'}" alt="=>"/>
                 </a>
             </span>
 
         </td>
         #{/if}
     </tr>
-    #{/if}
+    
 </table>
+#{/if}
 <br/><br/>
 

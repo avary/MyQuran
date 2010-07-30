@@ -18,7 +18,7 @@
 
 #{/set}
 
-<script>
+<script type="text/javascript" charset='utf-8'>
 
     function seePost(postID){
         $("#postDeletedMessage_"+postID).hide();
@@ -33,7 +33,7 @@
 <a href="@{Forums.index()}">
     &{'proposal'}
 </a>
-<img src="@{'public/images/arrow.png'}"/>
+<img src="@{'public/images/arrow.png'}" alt="/"/>
 <a href="@{Forums.listThread(topic.forum.id,1,topic.forum.name.slugify())}">
     ${topic.forum.name}
 </a>
@@ -45,7 +45,7 @@
 </a>
 #{/secure.check}
 
-<img src="@{'public/images/arrow.png'}"/>
+<img src="@{'public/images/arrow.png'}" alt="/"/>
 ${topic.name}
 <br/><br/>
 
@@ -60,15 +60,15 @@ ${topic.name}
     &{flash.error}
 </p>
 #{/if}
+#{if nbPage > 1}
 <table align="right" cellpadding="0px">
-    #{if nbPage > 1}
 
     <tr >
         #{if page > 1}
         <td class="pagination">
             <span class="arrow">
                 <a href="@{Forums.listPost(topic.id,page-1)}">
-                    <img src="@{'/public/images/previous.png'}"/>
+                    <img src="@{'/public/images/previous.png'}" alt="<="/>
                 </a>
             </span>
 
@@ -101,15 +101,16 @@ ${topic.name}
         <td class="pagination">
             <span class="arrow">
                 <a href="@{Forums.listPost(topic.id,page+1)}" >
-                    <img src="@{'/public/images/next.png'}" />
+                    <img src="@{'/public/images/next.png'}" alt="=>"/>
                 </a>
             </span>
 
         </td>
         #{/if}
     </tr>
-    #{/if}
+
 </table>
+#{/if}
 <br/><br/>
 #{list items:posts, as:'post'}
 #{if post_isLast}
@@ -127,16 +128,16 @@ ${topic.name}
 </div>
 #{/if}
 
-
+#{if nbPage > 1}
 <table align="right" cellpadding="0px">
-    #{if nbPage > 1}
+
 
     <tr >
         #{if page > 1}
         <td class="pagination">
             <span class="arrow">
                 <a href="@{Forums.listPost(topic.id,page-1)}">
-                    <img src="@{'/public/images/previous.png'}"/>
+                    <img src="@{'/public/images/previous.png'}" alt="<="/>
                 </a>
             </span>
 
@@ -169,13 +170,14 @@ ${topic.name}
         <td class="pagination">
             <span class="arrow">
                 <a href="@{Forums.listPost(topic.id,page+1)}" >
-                    <img src="@{'/public/images/next.png'}" />
+                    <img src="@{'/public/images/next.png'}" alt="=>"/>
                 </a>
             </span>
 
         </td>
         #{/if}
     </tr>
-    #{/if}
+
 </table>
+#{/if}
 <br/><br/>

@@ -21,7 +21,7 @@ public class Secure extends Controller {
     @Before(unless = {"login", "authenticate", "logout", "registration", "register",
         "confirmUser", "checkUsername", "lostPassword", "newPassword", "changePassword",
         "recoverPassword"})
-    static void checkAccess() throws Throwable {
+    public static void checkAccess() throws Throwable {
         // Authent
         if (!session.contains("username")) {
             flash.put("url", request.method == "GET" ? request.url : "/"); // seems a good default

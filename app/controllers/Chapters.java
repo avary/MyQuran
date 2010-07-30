@@ -20,13 +20,11 @@ import play.mvc.With;
  *
  * @author ali
  */
-@With(value={Secure.class,InitControllers.class})
+@With(value = {InitControllers.class})
 public class Chapters extends Controller {
 
     public static void selectAyat(Long ayatId) throws Throwable {
-        if (Secure.Security.connected() == null) {
-            Secure.login("");
-        }
+        Secure.checkAccess();
 
         Ayat ayat = Ayat.findById(ayatId);
         User user = User.find("byUsername", Secure.Security.connected()).first();
@@ -47,8 +45,8 @@ public class Chapters extends Controller {
         }
     }
 
-    public static void addAyatToChapter(long ayatID, long chapterID) {
-
+    public static void addAyatToChapter(long ayatID, long chapterID) throws Throwable {
+        Secure.checkAccess();
         User user = (User) Cache.get("user_" + Secure.Security.connected());
 
         if (user == null) {
@@ -77,7 +75,8 @@ public class Chapters extends Controller {
         renderJSON("{\"result\":\"ok\"}");
     }
 
-    public static void index() {
+    public static void index() throws Throwable {
+        Secure.checkAccess();
         flash.clear();
         User user = (User) Cache.get("user_" + Secure.Security.connected());
 
@@ -101,11 +100,13 @@ public class Chapters extends Controller {
         render(chapters);
     }
 
-    public static void newChapter(int type) {
+    public static void newChapter(int type) throws Throwable {
+        Secure.checkAccess();
         render(type);
     }
 
-    public static void add(@Required String title) {
+    public static void add(@Required String title) throws Throwable {
+        Secure.checkAccess();
         flash.clear();
         User user = (User) Cache.get("user_" + Secure.Security.connected());
 
@@ -130,10 +131,9 @@ public class Chapters extends Controller {
             Chapter chapter = new Chapter();
             chapter.user = user;
             chapter.title = title;
-            chapter.type = 2;
             chapter.save();
 
-            flash.put("chapterAdded","info.chapterAdded");
+            flash.put("chapterAdded", "info.chapterAdded");
         }
 
         flash.keep();
@@ -141,7 +141,8 @@ public class Chapters extends Controller {
         newChapter(2);
     }
 
-    public static void delete(Long id) {
+    public static void delete(Long id) throws Throwable {
+        Secure.checkAccess();
         flash.clear();
         Chapter chapter = Chapter.findById(id);
 
@@ -168,12 +169,14 @@ public class Chapters extends Controller {
         render("Chapters/index.html", selectedAyat, chapters);
     }
 
-    public static void edit(Long id, String title) {
+    public static void edit(Long id, String title) throws Throwable {
+        Secure.checkAccess();
         flash.clear();
         render(id, title);
     }
 
-    public static void save(long id, @Required String title) {
+    public static void save(long id, @Required String title) throws Throwable {
+        Secure.checkAccess();
         flash.clear();
 
         User user = (User) Cache.get("user_" + Secure.Security.connected());
@@ -212,7 +215,8 @@ public class Chapters extends Controller {
         render("Chapters/edit.html", id, title);
     }
 
-    public static void viewSelectedAyat() {
+    public static void viewSelectedAyat() throws Throwable {
+        Secure.checkAccess();
         User user = (User) Cache.get("user_" + Secure.Security.connected());
 
         if (user == null) {
@@ -227,10 +231,30 @@ public class Chapters extends Controller {
         List<Chapter> chapters = Chapter.find("user = ? and title != '' order by title", user).fetch();
         List<Chapter> publicChapters = Chapter.find("user is null and title != '' order by title").fetch();
 
-        render(ayats, chapters,defaultChapter,publicChapters);
+        render(ayats, chapters, defaultChapter, publicChapters);
     }
 
-    public static void viewChapterAyat(long chapterID,String title) {
+    public static void viewPublicChapterAyat(long chapterID, String title) {
+        flash.clear();
+
+        Chapter chapter = Chapter.findById(chapterID);
+
+        if (chapter != null) {
+            Collections.sort(chapter.ayats);
+            renderArgs.put("title", "coran.al-imane.org - Chapitre "+chapter.title);
+            render(chapter);
+        } else {
+            flash.error("error");
+            flash.put("errorViewChapter", "error.viewChapter");
+
+            List<Chapter> chapters = Chapter.find("user is null and title != '' order by title").fetch();
+
+            render("Chapters/indexPublic.html", chapters);
+        }
+    }
+
+    public static void viewChapterAyat(long chapterID, String title) throws Throwable {
+        Secure.checkAccess();
         flash.clear();
 
         User user = (User) Cache.get("user_" + Secure.Security.connected());
@@ -244,6 +268,7 @@ public class Chapters extends Controller {
 
         if (chapter != null && chapter.user.equals(user)) {
             Collections.sort(chapter.ayats);
+            renderArgs.put("title", "coran.al-imane.org - Chapitre "+chapter.title);
             render(chapter);
         } else {
             flash.error("error");
@@ -256,7 +281,8 @@ public class Chapters extends Controller {
         }
     }
 
-    public static void removeChapterAyat(long ayatID, long chapterID) {
+    public static void removeChapterAyat(long ayatID, long chapterID) throws Throwable {
+        Secure.checkAccess();
         flash.clear();
 
         User user = (User) Cache.get("user_" + Secure.Security.connected());

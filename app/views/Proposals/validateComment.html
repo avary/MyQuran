@@ -5,7 +5,7 @@
 <script src="@{'/public/javascripts/tiny_mce.js'}" type="text/javascript" charset='utf-8'></script>
 #{/set}
 
-<script>
+<script  type="text/javascript" charset='utf-8'>
     $(function() {
 
         tinyMCE.init({
@@ -104,11 +104,11 @@
 <br/>
 <div style="display: inline-block;width: 70px;height: 50px">
     <div>
-        <div id="ayatNumber">${post.topic.proposal.ayat.sa}</div>
+        <div class="ayatNumber">${post.topic.proposal.ayat.sa}</div>
     </div>
 </div>
 
-<div id="ayatContent" >${post.topic.proposal.ayat.content}</div>
+<div class="ayatContent" >${post.topic.proposal.ayat.content}</div>
 <div style="border-bottom: 1px #eeeeee solid"></div>
 
 

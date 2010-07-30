@@ -24,10 +24,6 @@ public class Chapter extends Model{
 
     public String title;
 
-    // type = 1 => public
-    // type = 2 => privé
-    public int type;
-
     @ManyToOne
     public User user;
 

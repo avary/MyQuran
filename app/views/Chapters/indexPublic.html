@@ -48,7 +48,7 @@
 
     <tr><td>
     ${chapter_index} -
-    <a href="@{Chapters.viewChapterAyat(chapter.id,chapter.title.slugify())}">
+    <a href="@{Chapters.viewPublicChapterAyat(chapter.id,chapter.title.slugify())}">
         ${chapter.title} (${chapter.ayats.size()} &{'ayat',chapter.ayats.size().pluralize()})
     </a>
     </td>

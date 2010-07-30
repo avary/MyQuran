@@ -282,9 +282,43 @@ public class Proposals extends Controller {
             render("Proposals/validateComment.html", post, accepted, c);
         }
         if (post.topic.proposal.type == 2) {
+            flash.keep();
             render("Proposals/validateChapter.html", post, accepted);
         }
 
+    }
+
+    public static void validateChapter(Long postID, String title) {
+        Post post = Post.findById(postID);
+
+        if (post.topic.proposal.ayat == null && (title == null || title.trim().isEmpty())) {
+            flash.put("chapterError", "chapter.noTitle");
+            flash.keep();
+            validate(postID);
+        }
+
+        post.topic.finished = true;
+        post.topic.updateAt = new Date();
+        post.topic.proposal.state = 1;
+
+        if (post.topic.proposal.ayat == null) {
+            Chapter c = new Chapter();
+            c.title = title;
+            c.save();
+            flash.success("chapter.added");
+        } else {
+            if(post.topic.proposal.chapter.ayats == null){
+                post.topic.proposal.chapter.ayats = new ArrayList<Ayat>();
+            }
+            post.topic.proposal.chapter.ayats.add(post.topic.proposal.ayat);
+            post.topic.proposal.chapter.save();
+            flash.success("chapter.added2");
+        }
+
+        post.topic.save();
+        post.topic.proposal.save();
+
+        render(post);
     }
 
     public static void validateTransalation(Long postID, String content) {
@@ -332,7 +366,7 @@ public class Proposals extends Controller {
             post.topic.proposal.ayat.comment = true;
 
             Comment c = Comment.find("ayat = ? and user is null ", post.topic.proposal.ayat).first();
-            if(c == null){
+            if (c == null) {
                 c = new Comment();
                 c.ayat = post.topic.proposal.ayat;
                 c.sourat = post.topic.proposal.ayat.sourat;
@@ -347,7 +381,7 @@ public class Proposals extends Controller {
             Cache.delete("sourat_ayat_" + post.topic.proposal.ayat.sourat.number);
 
             flash.success("comment.added");
-            render(post,c);
+            render(post, c);
         } catch (Throwable ex) {
             Logger.getLogger(Proposals.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -377,9 +411,22 @@ public class Proposals extends Controller {
             post.topic.proposal.save();
 
             flash.success("comment.rejectedComment");
-            render("Proposals/validateComment.html", post,c);
+            render("Proposals/validateComment.html", post, c);
         }
         if (post.topic.proposal.type == 2) {
+            post.topic.finished = true;
+            post.topic.proposal.state = 2;
+            post.topic.updateAt = new Date();
+
+            post.topic.save();
+            post.topic.proposal.save();
+
+            if(post.topic.proposal.ayat == null){
+                flash.success("chapter.rejectedChapter");
+            }else{
+                flash.success("chapter.rejectedChapterAyat");
+            }
+
             render("Proposals/validateChapter.html", post);
         }
     }

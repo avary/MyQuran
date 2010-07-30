@@ -30,7 +30,7 @@
 <table align="center" cellspacing="5px">
     <tr>
         <td colspan="3">
-            <form action="@{Comments.listBySourat()}">
+            <form action="@{Comments.listPublicBySourat()}">
                 &{'info.selectSourat'} :
                 <select name="id" >
                     <option value="-1" ${id == -1?"selected='selected'":""}>Toutes</option>
@@ -38,6 +38,7 @@
                     <option value="${sourat.id}" ${id == sourat.id?"selected='selected'":""}>${sourat.number}.${sourat.title}</option>
                     #{/list}
                 </select>
+                
                 <input type="submit" name="see" value="&{'see'}"/>
             </form>
         </td>
