@@ -69,4 +69,8 @@ public class Application extends Controller {
 
         render("Application/contact.html", randomID);
     }
+
+    public static void faq(){
+        render();
+    }
 }

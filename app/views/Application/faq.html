@@ -1,0 +1,314 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - FAQ' /}
+#{set 'description'}
+<meta name="description" content="coran.al-imane.org - Coran en ligne, la meilleure traduction du coran de nos jours. Recherche, commentaires (tafsir), chapitres peronnalisés">
+#{/set}
+#{set 'keywords'}
+<meta name="keywords" content="coran,coran en ligne,tafsir,commentaires, recherche coran, traduction, meilleure traduction">
+#{/set}
+
+<h3>
+    Général
+</h3>
+<ul>
+    <li>
+        <a href="#gen-1">
+            C'est quoi coran.al-imane.org?
+        </a>
+    </li>
+    <li>
+        <a href="#gen-2">
+            Suis je obligé de m'inscrire?
+        </a>
+    </li>
+    <li>
+        <a href="#gen-3">
+            Comment récupérer mon mot de passe?
+        </a>
+    </li>
+    <li>
+        <a href="#gen-4">
+            Pourquoi le système de recherche affiche des versets qui ne contiennent pas le mot recherché?
+        </a>
+    </li>
+    <li>
+        <a href="#gen-5">
+            C'est quoi toutes ces icônes à côté de chaque verset?
+        </a>
+    </li>
+</ul>
+<h3>
+    Traduction
+</h3>
+<ul>
+    <li>
+        <a href="#tra-0">
+            C'est quoi le système des traductions?
+        </a>
+    </li>
+    <li>
+        <a href="#tra-1">
+            N'y a t'il pas un risque d'avoir des fausses traductions?
+        </a>
+    </li>
+    <li>
+        <a href="#tra-2">
+            Comment proposer une traduction?
+        </a>
+    </li>
+</ul>
+<h3>
+    Commentaires
+</h3>
+<ul>
+    <li>
+        <a href="#com-0">
+            C'est quoi le système des commentaires?
+        </a>
+    </li>
+    <li>
+        <a href="#com-1">
+            C'est quoi la différence entre un commentaire public et un commentaire privé?
+        </a>
+    </li>
+    <li>
+        <a href="#com-2">
+            Comment proposer un commentaire?
+        </a>
+    </li>
+</ul>
+<h3>
+    Chapitres
+</h3>
+<ul>
+    <li>
+        <a href="#cha-1">
+            C'est quoi le système des chapitres?
+        </a>
+    </li>
+    <li>
+        <a href="#cha-2">
+            C'est quoi la différence entre un chapitre public et un chapitre privé?
+        </a>
+    </li>
+    <li>
+        <a href="#cha-3">
+            Comment proposer un nouveau chapitre?
+        </a>
+    </li>
+    <li>
+        <a href="#cha-4">
+            Comment proposer l'ajout d'un verset dans un chapitre?
+        </a>
+    </li>
+</ul>
+<strong>N'hésitez pas à nous contacter si vous avez une question qui n'a pas de réponse ici :</strong>
+<a href="@{Application.contact()}">
+    Nous contacter
+</a>
+<br/><br/>
+<div style="border-bottom: 1px #ccc solid"></div>
+
+<h3>
+    Général
+</h3>
+<br/>
+<h4 id="gen-1">C'est quoi coran.al-imane.org?</h4>
+<p>
+    Le site coran.al-imane.org est un site consacré au Saint Coran et à son étude.
+    Nous avons voulu faire un site qui permettra d'avoir la meilleure traduction française du Coran
+    en permettant à nos membres de proposer des meilleures traductions des versets qu'ils le souhaitent.
+    <br/><br/>
+    Nous avons aussi voulu permettre une meilleure compréhension du Coran grâce à notre
+    système de commentaires qui permet à nos membres de proposer des tafsir des versets qu'ils connaissent.
+    <br/><br/>
+    Enfin nous voulions aussi offrir un moyen rapide de trouver les versets portant sur un sujet
+    précis en permettant la création de chapitres pour regrouper ces versets.
+</p>
+<br/>
+<h4 id="gen-2">Suis je obligé de m'inscrire?</h4>
+<p>
+    Non vous n'êtes pas obligé de vous inscrire mais seul quelqu'un d'inscrit
+    pourra proposer des traductions, commentaires et des nouveau chapitres.
+</p>
+<br/>
+
+<h4 id="gen-3">Comment récupérer mon mot de passe?</h4>
+<p>
+    Vous pouvez récupérer votre mot de passe en cliquant sur connexion et puis
+    sur le lien en rouge "Mot de passe oublié?" il vous sera demandé votre email
+    et vous recevrez un email avec un lien vous permettant de choisir un nouveau mot de passe.
+</p>
+<br/>
+
+
+<h4 id="gen-4">Pourquoi le système de recherche affiche des versets qui ne contiennent pas le mot recherché?</h4>
+<p>
+    Pour mieux vous aider dans vos recherche, notre système de recherche utilise
+    aussi des mots proche de celui que vous entrez. Par exemple si vous tapez le mot :
+    <strong>"croyants"</strong>, notre système va aussi utilisé le mot
+    <strong>"Croyez"</strong> ou <strong>"Croirons"</strong>
+</p>
+<br/>
+<h4 id="gen-5">C'est quoi toutes ces icônes à côté de chaque verset?</h4>
+<p>
+    Ces icônes donnent accès à diverses fonction de notre site. Voilà à quoi ressemble un verset :<br/>
+    <img src="@{'public/images/ayat.png'}" alt="verset"/><br/>
+    Le chiffre "1:4" correspond à gauche au numéro de la sourate et à droite au numéro du verset.<br/>
+    L'image <img src="@{'/public/images/up.png'}"
+                         title="&{'ayat.top'}" width="20px" height="20px"
+                         alt="&{'ayat.top'}"/> 
+    permet d'aller tout en haut de la page, c'est utile quand on est au verset 150 par exemple qui se trouve tout en bas.
+<br/>
+L'image <img src="@{'/public/images/publicComment.png'}"
+                         title="&{'ayat.publicComment'}" width="20px"
+                         height="20px" alt="&{'ayat.publicComment'}"/>
+permet d'ajouter un commentaire public, un clique affiche une zone de texte pour taper votre commentaire
+et un nouveau clique cache cette zone.
+<br/>
+L'image <img src="@{'/public/images/privateComment.png'}"
+                         title="&{'ayat.privateComment'}" width="20px"
+                         height="20px" alt="&{'ayat.privateComment'}"/>
+permet d'ajouter un commentaire privé, un clique affiche une zone de texte pour taper votre commentaire
+et un nouveau clique cache cette zone.
+<br/>
+L'image <img src="@{'/public/images/select.png'}"
+                         title="&{'ayat.select'}" width="20px"
+                         height="20px" alt="&{'ayat.select'}"/>
+permet de sélectionner ce verset pour l'ajouter par après dans un chapitre public et/ou privé.
+<br/>
+L'image <img src="@{'/public/images/idea.png'}"
+                         title="&{'ayat.suggest'}" width="20px"
+                         height="20px" alt="&{'ayat.suggest'}"/>
+permet de proposer une traduction du verset courant, même principe de fonctionnement que le commentaire.
+</p>
+<br/>
+<div style="border-bottom: 1px #ccc solid"></div>
+<h3 id="tra">
+    Traduction
+</h3>
+<br/>
+<h4 id="tra-0">C'est quoi le système des traductions?</h4>
+<p>
+Cette fonction permet aux membres inscrit de proposer une meilleure traduction
+des versets qu'ils souhaitent ou tout simplement de corriger une erreur d'orthographe
+qui s'est glissé dans le Saint Coran.
+</p>
+<br/>
+<h4 id="tra-1">N'y a t'il pas un risque d'avoir des fausses traductions?</h4>
+<p>
+Non, parce que toutes les traductions proposées doivent d'abord être validé par notre
+équipe d'administrateur.
+</p>
+<br/>
+<h4 id="tra-2">Comment proposer une traduction?</h4>
+<p>
+Il suffit de cliquer sur l'icône <img src="@{'/public/images/idea.png'}"
+                         title="&{'ayat.suggest'}" width="20px"
+                         height="20px" alt="&{'ayat.suggest'}"/>
+qui se trouve à côté du verset pour lequel vous voulez proposé une meilleure
+traduction. Une zone de texte s'affichera pour que vous puissez taper votre traduction.
+Enfin n'oubliez pas de cliquer sur <img src="@{'/public/images/save.png'}"
+                          width="20px"
+                         height="20px" alt=""/> pour envoyer votre traduction.
+</p>
+<br/>
+<div style="border-bottom: 1px #ccc solid"></div>
+<h3 id="com">
+    Commentaires
+</h3>
+<br/>
+<h4 id="com-0">
+    C'est quoi le système des commentaires?
+</h4>
+<p>
+Cette fonction permet aux membres inscrit de proposer des commentaires (tafsir)
+des versets qu'ils connaissent, ce qui permet à nos visiteurs de mieux comprendre
+ces versets. Les commentaires peuvent être privés ou public, regardez la prochaine
+question pour comprendre la différence entre les deux.
+</p>
+<br/>
+<h4 id="com-1">
+    C'est quoi la différence entre un commentaire public et un commentaire privé?
+</h4>
+<p>
+Un commentaire public est visible pour tout le monde, même ceux qui ne sont pas inscrit
+et doit d'abord être validé par les administrateurs du site avant d'être visible. Tandis
+qu'un commentaire privé n'est visible que par celui qui la créer et il ne doit
+pas être validé par les administrateurs pour être visible.
+</p>
+<br/>
+<h4 id="com-2">
+    Comment proposer un commentaire?
+</h4>
+<p>
+Si vous voulez proposé un commentaire public, vous devrez cliquer sur cette icône
+ <img src="@{'/public/images/publicComment.png'}"
+                         title="&{'ayat.publicComment'}" width="20px"
+                         height="20px" alt="&{'ayat.publicComment'}"/> qui se trouvera
+ à côté du verset choisi, si c'est un commentaire privé il faudra cliquer sur
+ cette icône <img src="@{'/public/images/privateComment.png'}"
+                         title="&{'ayat.privateComment'}" width="20px"
+                         height="20px" alt="&{'ayat.privateComment'}"/>
+ Pour la suite c'est le même principe que pour envoyer une traduction.
+</p>
+<br/>
+<div style="border-bottom: 1px #ccc solid"></div>
+<h3 id="cha">
+    Chapitres
+</h3>
+<br/>
+<h4 id="cha-1">C'est quoi le système des chapitres?</h4>
+<p>
+Cette fonction permet de regrouper tous les versets concernant un sujet
+précis sous forme d'un chapitre. Par exemple si j'ai envie de regrouper tous les
+versets concernant la prière, il suffira que je crée un chapitre sur la prière et
+ensuite je placerai tous les versets que j'estime concernant la prière dans ce chapitre.
+</p>
+<br/>
+<h4 id="cha-2">C'est quoi la différence entre un chapitre public et un chapitre privé?</h4>
+<p>
+Les système des chapitres suit le même principe que les commentaires, ainsi un chapitre
+public est visible pour tout le monde mais doit d'abord être validé par les administrateurs
+avant d'être visible, tandis qu'un chapitre privé n'est visible que par celui qui
+la créer et ne doit pas être validé par les administrateurs avant d'être visible.
+</p>
+<br/>
+<h4 id="cha-3">Comment proposer un nouveau chapitre?</h4>
+<p>
+Il y a deux façons de faire. Vous pouvez le faire soit via le menu 
+<strong>"Chapitres"</strong> ou via
+ le menu <strong>"Mes chapitres"</strong> qui s'affiche tout en haut de la page seulement quand
+ vous êtes connecté. Dans ces menus, vous trouverez un lien qui se nomme :
+ <strong>"Proposer un nouveau chapitre public"</strong>. Il suffit de cliquer dessus et de suivre
+ les instructions.
+</p>
+<br/>
+<h4 id="cha-4">Comment proposer l'ajout d'un verset dans un chapitre?</h4>
+<p>
+    Vous devez d'abord sélectionné les versets en cliquant
+    sur <img src="@{'/public/images/select.png'}"
+                         title="&{'ayat.select'}" width="20px"
+                         height="20px" alt="&{'ayat.select'}"/>
+    pour chaque verset que vous voulez ajouter. Ensuite il faut aller dans
+    le menu <strong>"Mes chapitres"</strong> qui apparaît tout en
+haut de la page quand vous êtes connecté.<br/><br/>
+Dans ce menu il y a un lien qui se nomme : <strong>Voir les versets que vous avez selectionnés</strong><br/>
+Voici un exemple d'écran, j'ai sélectionné le verset 4 de la sourate 1 : <br/><br/>
+<img src="@{'public/images/ayatChapter.png'}" alt="" width="1000"/><br/><br/>
+Il y a deux liste de chapitres en bas de chaque verset, la liste de chapitres publics
+et la liste des chapitres privés. Il suffit de choisir dans une des deux liste et
+de cliquer sur le bouton <strong>"Ajouter"</strong> pour ajouter ce verset dans le chapitre
+choisi.<br/>
+Vous pouvez également choisir un chapitre dans les deux listes, ce qui permet
+de proposer l'ajout d'un verset dans un chapitre public et aussi d'ajouter ce verset dans
+un chapitre privé en une seule opération.<br/><br/>
+Enfin si vous voulez ajouter plusieurs versets en même temps, vous pouvez soit cliquer
+sur la case à coché <strong>"Selectionner tous les versets de cette liste"</strong>
+qui sélectionnera tous les versets de la liste courante ou alors vous pouvez choisir certains
+versets seulement en cliquant sur <strong>"Selectionner ce verset"</strong> pour
+les versets que vous voulez seulement. Pour ajouter ces versets vous devrez utilisé
+les listes de chapitres et le bouton <strong>"Ajouter"</strong> qui se trouve tout en haut
+du premier verset de la liste courante et juste en bas du texte
+<strong>"Ajouter tous les versets selectionnés au(x) chapitre(s) suivant :"</strong>
+</p>

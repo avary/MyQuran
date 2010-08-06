@@ -105,7 +105,7 @@ public class Proposals extends Controller {
 
     }
 
-    public static void newChapter(@Required String title) {
+    public static void newChapter(@Required String title) throws Throwable {
         User user = (User) Cache.get("user_" + Secure.Security.connected());
 
         if (user == null) {
