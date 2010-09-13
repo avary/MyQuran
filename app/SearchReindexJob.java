@@ -19,6 +19,7 @@ public class SearchReindexJob extends Job {
                 SearchModule.init();
                 SearchModule.reindex();
 
+                /*
                 try {
                     Autocompleter autocomplete = new Autocompleter(SearchModule.DATA_PATH+"/autocomplete");
                     autocomplete.reIndex(FSDirectory.getDirectory(SearchModule.DATA_PATH+"/models.Ayat", null),
@@ -28,7 +29,7 @@ public class SearchReindexJob extends Job {
                     java.util.logging.Logger.getLogger(SearchModule.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-
+*/
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

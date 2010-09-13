@@ -257,7 +257,7 @@ input, button, select {
 
 .ayatContent{
     vertical-align: top;
-    width: 905px;
+    width: 900px;
     display: inline-block;
     font-size:15px;
     font-weight: bold;
@@ -265,9 +265,20 @@ input, button, select {
     text-align:left;
 }
 
+.ayatArabic{
+    font-family: arabic;
+    vertical-align: top;
+    width: 900px;
+    display: inline-block;
+    font-size:25px;
+    display: none;
+    padding:5px 10px;
+    text-align:right;
+}
+
 .ayatComment{
     vertical-align: top;
-    margin-left: 70px;
+    margin-left: 80px;
     width: 910px;
     font-size:15px;
     padding:5px 5px;
@@ -488,4 +499,25 @@ a.green-button {
     text-decoration:none;
     text-shadow:0 -1px 1px #608925;
     width:245px;
+}
+
+.trigger {
+    background-color: #fff;
+    border:1px solid #DCC372;
+    color:#000;
+    display:block;
+    font-family:verdana,helvetica,arial,sans-serif;
+    font-size:16px;
+    font-weight:700;
+    left:0;
+    letter-spacing:-1px;
+    padding-left: 10px;
+    position:fixed;
+    text-decoration:none;
+    top:250px;
+}
+
+@font-face {
+    font-family: arabic;
+    src: url(me_quran.ttf);
 }

@@ -1,14 +1,66 @@
+function toogleArabic(){
+
+    var self = this, doMask = function() {
+        $("body").mask("");
+    };
+    $.queueTimer.add(doMask, this);
+
+    $('div.ayatArabic').each(function() {
+        var self = this, doToggle = function() {
+            $(self).toggle();
+        };
+        $.queueTimer.add(doToggle, this);
+    });
+
+    self = this, doUnMask = function() {
+        $("body").unmask();
+    };
+    $.queueTimer.add(doUnMask, this);
+
+
+
+}
+
+function toogleOptions(){
+
+    var self = this, doMask = function() {
+        $("body").mask("");
+    };
+    $.queueTimer.add(doMask, this);
+    
+    $('div.options').each(function() {
+        var self = this, doToggle = function() {
+            if($(self).hasClass("textarea")){
+                $(self).hide();
+            }else{
+                $(self).toggle();
+            }
+            
+        };
+        $.queueTimer.add(doToggle, this);
+    });
+
+    self = this, doUnMask = function() {
+        $("body").unmask();
+    };
+    $.queueTimer.add(doUnMask, this);
+
+    
+     
+}
+
 function showComment(ayatID,load){
+    
     if($("#ayatPublicComment_"+ayatID).text().trim() == "" && load == "yes"){
         $.post(publicCommentLoadURL, {
             ayatID: ayatID
         },
         function(data){
             $("#ayatPublicComment_"+ayatID).html(data.content);
-            $("#ayatPublicComment_"+ayatID).slideToggle("slow");
+            $("#ayatPublicCommentBox_"+ayatID).slideToggle("slow");
         });
     }else{
-        $("#ayatPublicComment_"+ayatID).slideToggle("slow");
+        $("#ayatPublicCommentBox_"+ayatID).slideToggle("slow");
     }
     
 }
@@ -26,20 +78,26 @@ function showPrivateCommentBox(id,load){
     }
 
     tinyMCE.init({
-
+        
         mode : "specific_textareas",
         editor_selector : "privateCommentArea_"+id,
 
-        plugins : "save",
+        language : "fr",
+        height: "400",
+        width: "900",
+        plugins : "pagebreak,style,layer,table,save,advhr,inlinepopups,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
         theme : "advanced",
-        theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull",
+        theme_advanced_resizing : false,
+        theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,|,\n\
+justifyleft,justifycenter,justifyright,justifyfull,|,fontsizeselect,hr,removeformat,|,\n\
+cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,|,\n\
+undo,redo,|,link,unlink,cleanup,|,forecolor,backcolor",
         theme_advanced_buttons2 : "",
         theme_advanced_buttons3 :"",
         theme_advanced_buttons4 :"",
         theme_advanced_toolbar_location : "top",
         theme_advanced_toolbar_align : "left",
-        theme_advanced_statusbar_location : "bottom",
-        theme_advanced_resizing : true,
+        
         cleanup: false,
         convert_fonts_to_spans : false,
         inline_styles: false,
@@ -113,16 +171,22 @@ function showPublicCommentBox(id){
         mode : "specific_textareas",
         editor_selector : "publicCommentArea_"+id,
 
-        plugins : "save",
+        language : "fr",
+        height: "400",
+        width: "900",
+        plugins : "pagebreak,style,layer,table,save,advhr,inlinepopups,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
         theme : "advanced",
-        theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull",
+        theme_advanced_resizing : false,
+        theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,|,\n\
+justifyleft,justifycenter,justifyright,justifyfull,|,fontsizeselect,hr,removeformat,|,\n\
+cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,|,\n\
+undo,redo,|,link,unlink,cleanup,|,forecolor,backcolor",
+
         theme_advanced_buttons2 : "",
         theme_advanced_buttons3 :"",
         theme_advanced_buttons4 :"",
         theme_advanced_toolbar_location : "top",
         theme_advanced_toolbar_align : "left",
-        theme_advanced_statusbar_location : "bottom",
-        theme_advanced_resizing : true,
         cleanup: false,
         convert_fonts_to_spans : false,
         inline_styles: false,
@@ -196,16 +260,21 @@ function showTranslationBox(id){
         mode : "specific_textareas",
         editor_selector : "translationArea_"+id,
 
-        plugins : "save",
+        language : "fr",
+        height: "250",
+        width: "900",
+        plugins : "pagebreak,style,layer,table,save,advhr,inlinepopups,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
         theme : "advanced",
-        theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,forecolor,|,justifyleft,justifycenter,justifyright,justifyfull",
+        theme_advanced_resizing : false,
+        theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,|,\n\
+justifyleft,justifycenter,justifyright,justifyfull,|,fontsizeselect,hr,removeformat,|,\n\
+cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,|,\n\
+undo,redo,|,link,unlink,cleanup,|,forecolor,backcolor",
         theme_advanced_buttons2 : "",
         theme_advanced_buttons3 :"",
         theme_advanced_buttons4 :"",
         theme_advanced_toolbar_location : "top",
         theme_advanced_toolbar_align : "left",
-        theme_advanced_statusbar_location : "bottom",
-        theme_advanced_resizing : true,
         cleanup: false,
         convert_fonts_to_spans : false,
         inline_styles: false,
@@ -346,9 +415,9 @@ function showHidePrivateCommentBox(id,load){
 
     if($('#privateCommentArea_'+id).length == 0 || load == "no"){
         showPrivateCommentBox(id,load);
-        $("#privateComment_"+id).toggle();
+        $("#privateCommentBox_"+id).toggle();
     }else{
-        $("#privateComment_"+id).toggle();
+        $("#privateCommentBox_"+id).toggle();
     }
 
 }
@@ -361,9 +430,9 @@ function showHidePublicCommentBox(id){
 
     if($('#publicCommentArea_'+id).length == 0){
         showPublicCommentBox(id);
-        $("#publicComment_"+id).toggle();
+        $("#publicCommentBox_"+id).toggle();
     }else{
-        $("#publicComment_"+id).toggle();
+        $("#publicCommentBox_"+id).toggle();
     }
 
 }
@@ -376,9 +445,9 @@ function showHideTranslateBox(id){
 
     if($('#translationArea_'+id).length == 0){
         showTranslationBox(id);
-        $("#translation_"+id).toggle();
+        $("#translationBox_"+id).toggle();
     }else{
-        $("#translation_"+id).toggle();
+        $("#translationBox_"+id).toggle();
     }
 
 }
@@ -585,3 +654,37 @@ function removeChapterAyat(chapterID,ayatID){
         });
     }
 }
+
+$.queueTimer = {
+    _timer: null,
+    _queue: [],
+    add: function(fn, context, time) {
+        var setTimer = function(time) {
+            $.queueTimer._timer = setTimeout(function() {
+                time = $.queueTimer.add();
+                if ($.queueTimer._queue.length) {
+                    setTimer(time);
+                }
+            }, time || 2);
+        }
+
+        if (fn) {
+            $.queueTimer._queue.push([fn, context, time]);
+            if ($.queueTimer._queue.length == 1) {
+                setTimer(time);
+            }
+            return;
+        }
+
+        var next = $.queueTimer._queue.shift();
+        if (!next) {
+            return 0;
+        }
+        next[0].call(next[1] || window);
+        return next[2];
+    },
+    clear: function() {
+        clearTimeout($.queueTimer._timer);
+        $.queueTimer._queue = [];
+    }
+};

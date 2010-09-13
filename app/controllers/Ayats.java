@@ -49,7 +49,7 @@ public class Ayats extends Controller {
     public static void search(String q,int page){
         
         List<Long> result = SearchModule.search("content:"+q, Ayat.class).all().fetchIds();
-        Collections.sort(result);
+        //Collections.sort(result);
 
         List<Ayat> ayats = new ArrayList<Ayat>();
 
@@ -74,8 +74,15 @@ public class Ayats extends Controller {
 
         List<Long> searchPage = result.subList(start, end);
         for (Long id : searchPage) {
+            System.out.println("ayat id : "+id);
             ayats.add((Ayat) Ayat.findById(id));
         }
+
+        for (Ayat ayat : ayats) {
+            System.out.println("#ayat id : "+ayat.id);
+        }
+
+        Collections.sort(ayats);
 
         render(ayats,q,page,nbPage,nbAyat);
     }

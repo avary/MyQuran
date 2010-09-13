@@ -6,6 +6,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Ayat;
@@ -21,8 +22,6 @@ import org.jsoup.nodes.Document;
 import org.owasp.validator.html.AntiSamy;
 import org.owasp.validator.html.CleanResults;
 import org.owasp.validator.html.Policy;
-import org.owasp.validator.html.PolicyException;
-import org.owasp.validator.html.ScanException;
 import play.cache.Cache;
 import play.data.validation.Required;
 import play.mvc.Controller;
@@ -96,6 +95,13 @@ public class Proposals extends Controller {
                 topic.nbResponse = topic.nbResponse + 1;
                 topic.proposal = p;
                 topic.save();
+
+                List<User> users = User.find("isAdmin = true").fetch();
+                for (User u : users) {
+                    u.notification = true;
+                    u.save();
+                    Cache.set("user_" + u.username, u, "1h");
+                }
             }
         } else {
             renderJSON("{\"result\":\"error\"}");
@@ -117,7 +123,7 @@ public class Proposals extends Controller {
             flash.error("error");
             flash.put("emptyChapter", "error.emptyChapter");
         } else {
-            Chapter chapter = Chapter.find("byUserAndTitleAndType", user, title, 1).first();
+            Chapter chapter = Chapter.find("user is null and title = ?", title).first();
             if (chapter != null) {
                 flash.error("error");
                 flash.put("duplicateChapter", "error.duplicateChapter");
@@ -158,6 +164,13 @@ public class Proposals extends Controller {
         topic.nbResponse = topic.nbResponse + 1;
         topic.proposal = p;
         topic.save();
+
+        List<User> users = User.find("isAdmin = true").fetch();
+        for (User u : users) {
+            u.notification = true;
+            u.save();
+            Cache.set("user_" + u.username, u, "1h");
+        }
 
         flash.put("chapterProposed", "chapter.chapterProposed");
 
@@ -214,6 +227,13 @@ public class Proposals extends Controller {
         topic.proposal = p;
         topic.save();
 
+        List<User> users = User.find("isAdmin = true").fetch();
+        for (User u : users) {
+            u.notification = true;
+            u.save();
+            Cache.set("user_" + u.username, u, "1h");
+        }
+
         renderJSON("{\"result\":\"ok\"}");
     }
 
@@ -265,6 +285,13 @@ public class Proposals extends Controller {
         topic.proposal = p;
         topic.save();
 
+        List<User> users = User.find("isAdmin = true").fetch();
+        for (User u : users) {
+            u.notification = true;
+            u.save();
+            Cache.set("user_" + u.username, u, "1h");
+        }
+
         renderJSON("{\"result\":\"ok\"}");
     }
 
@@ -307,7 +334,7 @@ public class Proposals extends Controller {
             c.save();
             flash.success("chapter.added");
         } else {
-            if(post.topic.proposal.chapter.ayats == null){
+            if (post.topic.proposal.chapter.ayats == null) {
                 post.topic.proposal.chapter.ayats = new ArrayList<Ayat>();
             }
             post.topic.proposal.chapter.ayats.add(post.topic.proposal.ayat);
@@ -421,9 +448,9 @@ public class Proposals extends Controller {
             post.topic.save();
             post.topic.proposal.save();
 
-            if(post.topic.proposal.ayat == null){
+            if (post.topic.proposal.ayat == null) {
                 flash.success("chapter.rejectedChapter");
-            }else{
+            } else {
                 flash.success("chapter.rejectedChapterAyat");
             }
 

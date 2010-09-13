@@ -80,7 +80,7 @@ public class Bootstrap extends Job {
             allQuran.doJob();
             File allQuranFile = new File("MyQuran/tmp/coran.pdf");
             Download d = Download.find("byIsActifAndName", true, "coranAll").first();
-            if (d != null) {
+            if (d != null && d.pdfFile.get() !=null) {
                 d.pdfFile.get().delete();
                 d.delete();
             }
@@ -99,7 +99,7 @@ public class Bootstrap extends Job {
             manzilQuran.doJob();
             File manzilQuranFile = new File("MyQuran/tmp/quranManzil.zip");
             d = Download.find("byIsActifAndName", true, "quranManzil").first();
-            if (d != null) {
+            if (d != null && d.pdfFile.get() !=null) {
                 d.pdfFile.get().delete();
                 d.delete();
             }
@@ -118,7 +118,7 @@ public class Bootstrap extends Job {
             juzQuran.doJob();
             File juzQuranFile = new File("MyQuran/tmp/quranJuz.zip");
             d = Download.find("byIsActifAndName", true, "quranJuz").first();
-            if (d != null) {
+            if (d != null && d.pdfFile.get() !=null) {
                 d.pdfFile.get().delete();
                 d.delete();
             }

@@ -25,7 +25,7 @@ user.newPassword=Nouveau mot de passe
 ayat=verset%s
 ayat.top=Remonter en haut de la page
 ayat.select=Selectionner ce verset
-ayat.publicComment=Ajouter un commentaire public
+ayat.publicComment=Proposer un commentaire public
 ayat.privateComment=Ajouter un commentaire privé
 ayat.viewComment=Voir le commentaire
 ayat.suggest=Proposer une meilleure traduction
@@ -51,6 +51,7 @@ chapter.added2=Ce verset a été ajouté au chapitre.
 chapter.rejectedChapter=Ce nouveau chapitre a été rejeté.
 chapter.rejectedChapterAyat=L'ajout de ce verset au chapitre a été rejeté.
 
+comment=Commentaire
 comment.add=Commentaire ajouté
 comment.addPublic=Votre proposition de commentaire a été envoyée
 comment.notAddPublic=Votre proposition de commentaire n'a pas été envoyée
@@ -107,6 +108,8 @@ see=Voir
 create=Créer
 chapter=Chapitre
 ayats=versets
+showHideArabic=Voir ou cacher les versets en arabe.
+showHideOptions=Voir ou cacher les icônes.
 
 error.emptyUsername=Le nom d'utilisateur est obligatoire.
 error.badUsername=Ce nom d'utilisateur est déjà utilisé.

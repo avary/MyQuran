@@ -23,10 +23,8 @@ import org.owasp.validator.html.CleanResults;
 import org.owasp.validator.html.Policy;
 import play.cache.Cache;
 import play.data.validation.Required;
-import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Router;
-import play.mvc.With;
 
 /**
  *
@@ -35,6 +33,12 @@ import play.mvc.With;
 public class Forums extends Controller {
 
     public static void index() {
+        User user = User.find("byUsername", Secure.Security.connected()).first();
+        user.notification = false;
+        user.save();
+        Cache.set("user_" + user.username, user, "1h");
+        session.put("newMessage", 0);
+        
         List<ForumCategory> forumCategories = ForumCategory.find(""
                 + "order by categoryOrder").fetch();
         render(forumCategories);
@@ -45,16 +49,15 @@ public class Forums extends Controller {
             page = 1;
         }
 
-        User user = (User) Cache.get("user_" + Secure.Security.connected());
+        User user = User.find("byUsername", Secure.Security.connected()).first();
+        user.notification = false;
+        user.save();
+        Cache.set("user_" + user.username, user, "1h");
+        session.put("newMessage", 0);
 
-        if (user == null) {
-            user = User.find("byUsername", Secure.Security.connected()).first();
-            Cache.set("user_" + user.username, user, "1h");
-        }
-
-        List<models.forum.Topic> threads = models.forum.Topic.find("author = ? " +
-                " "
-                    + "order by updateAt desc", user).fetch(page, 50);
+        List<models.forum.Topic> threads = models.forum.Topic.find("author = ? "
+                + " "
+                + "order by updateAt desc", user).fetch(page, 50);
 
         renderArgs.put("title", "coran.al-imane.org - Mes propositions");
 
@@ -86,7 +89,7 @@ public class Forums extends Controller {
         if (user.isAdmin) {
             threads = models.forum.Topic.find("forum = ? "
                     + "order by updateAt desc", forum).fetch(page, 50);
-        } 
+        }
 
         renderArgs.put("title", "zawaj.al-imane.org - " + forum.name);
         render(forum, threads, nbPage, page);
@@ -257,6 +260,21 @@ public class Forums extends Controller {
 
             thread.lastPost = post;
             thread.save();
+
+            if (user.isAdmin) {
+                thread.proposal.user.notification = true;
+                thread.proposal.user.save();
+                Cache.set("user_" + thread.proposal.user.username, thread.proposal.user, "1h");
+            }
+
+            List<User> users = User.find("isAdmin = true").fetch();
+            for (User u : users) {
+                if (!u.equals(user.username)) {
+                    u.notification = true;
+                    u.save();
+                    Cache.set("user_" + u.username, u, "1h");
+                }
+            }
 
             int page;
             if (thread.nbResponse <= 0) {

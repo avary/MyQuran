@@ -7,7 +7,7 @@
     <div style="display: inline-block;width: 70px;height: 80px">
         <div>
             <div class="ayatNumber">${_ayat.sa}</div>
-            <div style="padding-top: 3px;">
+            <div style="padding-top: 3px;" class="options">
                 <a href="#top">
                     <img src="@{'/public/images/up.png'}"
                          title="&{'ayat.top'}" width="20px" height="20px"
@@ -27,7 +27,7 @@
                 </a>
             </div>
 
-            <div>
+            <div class="options">
                 <a href="#"
                    onclick="selectAyat('${_ayat.id}');return false;">
                     <img src="@{'/public/images/select.png'}"
@@ -74,11 +74,14 @@
             </div>
         </div>
     </div>
+    <div style="display: inline-block;width: 930px; float: right;">
+        <div class="ayatArabic" >${_ayat.arabic}</div>
+        <div class="ayatContent" >${_ayat.content}</div>
+    </div>
 
-    <div class="ayatContent" >${_ayat.content}</div>
 
     #{if _chap}
-    <div style="margin-left: 75px;" >
+    <div style="margin-left: 75px;"  class="options">
         <table width="100%">
             <tr>
                 <td width="1%">
@@ -117,7 +120,7 @@
     #{/if}
 
     #{if _ayat.comment}
-    <div style="padding-left: 85px">
+    <div style="padding-left: 85px"  class="options">
         #{if _com && !_com.user}
         <a href="#" onclick="showComment('${_ayat.id}','no');return false;">
             &{'ayat.viewComment'}
@@ -128,29 +131,65 @@
             &{'ayat.viewComment'}
         </a>
         #{/else}
-        
-        <div id="ayatPublicComment_${_ayat.id}" style="display: none">
-            #{if _com && !_com.user}
-            ${_com.content.raw()}
-            #{/if}
+
+
+        <div style="width: 900px;border: 1px #7a3919 solid;display: none" id="ayatPublicCommentBox_${_ayat.id}">
+            
+            <div id="forumCategoryHead">
+                &{'comment'}
+            </div>
+            <div id="ayatPublicComment_${_ayat.id}" style="padding: 10px;">
+                #{if _com && !_com.user}
+                ${_com.content.raw()}
+                #{/if}
+            </div>
+
         </div>
+
     </div>
     #{/if}
 
     <form action="" onsubmit="savePublicComment('${_ayat.id}');return false;">
-        <div class="ayatComment" id="publicComment_${_ayat.id}" ></div>
+        <div class="ayatComment options textarea" id="publicCommentBox_${_ayat.id}" >
+            <div style="width: 900px;border: 1px #7a3919 solid;">
+                <div id="forumCategoryHead">
+                    &{'ayat.publicComment'}
+                </div>
+                <div id="publicComment_${_ayat.id}"></div>
+
+            </div>
+        </div>
     </form>
     <form action="" onsubmit="savePrivateComment('${_ayat.id}');return false;">
-        <div class="ayatComment" id="privateComment_${_ayat.id}" >
-            #{if _com && _com.user}
-            <textarea id="privateCommentArea_${_ayat.id}" class="privateCommentArea_${_ayat.id}" cols="80" rows="8">
+        <div class="ayatComment options textarea"  id="privateCommentBox_${_ayat.id}">
+            <div style="width: 900px;border: 1px #7a3919 solid;">
+                <div id="forumCategoryHead">
+                    &{'ayat.privateComment'}
+                </div>
+                <div id="privateComment_${_ayat.id}">
+                    #{if _com && _com.user}
+                    <textarea id="privateCommentArea_${_ayat.id}" class="privateCommentArea_${_ayat.id}" cols="80" rows="8">
                 ${_com.content}
-            </textarea>
-            #{/if}
+                    </textarea>
+                    #{/if}
+                </div>
+
+            </div>
+
         </div>
     </form>
     <form action="" onsubmit="saveTranslation('${_ayat.id}');return false;">
-        <div class="ayatComment" id="translation_${_ayat.id}" ></div>
+        <div class="ayatComment options textarea" id="translationBox_${_ayat.id}" >
+            <div style="width: 900px;border: 1px #7a3919 solid;">
+                <div id="forumCategoryHead">
+                    &{'ayat.suggest'}
+                </div>
+                <div id="translation_${_ayat.id}"></div>
+
+            </div>
+        </div>
     </form>
+
+    <div style="clear: both"></div>
 
 </div>
