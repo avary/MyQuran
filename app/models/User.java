@@ -6,9 +6,12 @@ package models;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import play.data.validation.Email;
 import play.data.validation.Required;
 import play.db.jpa.Model;
@@ -31,6 +34,7 @@ public class User extends Model implements Comparable {
     public int proposal;
     public boolean notification;
     public boolean isAdmin;
+    @Temporal(TemporalType.TIMESTAMP) public Date lastVisit;
 
     public User(String username, String email, String password, String confirm) {
         this.username = username;

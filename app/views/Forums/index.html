@@ -27,7 +27,8 @@
 
 </script>
 
-<br/>
+<a href="@{Forums.listAllTopic()}">&{'forum.lastPost'}</a>
+<br/><br/>
 #{list items:forumCategories, as:'category'}
     #{showForumCategory category:category /}<br/>
 #{/list}

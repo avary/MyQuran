@@ -50,10 +50,11 @@
 </p>
 #{/if}
 
-#{if flash.chapterAdded || flash.chapterProposed}
+#{if flash.chapterAdded || flash.chapterProposed || flash.alreadyProposedChapter}
 <p class="success">
     &{flash.chapterAdded}
     &{flash.chapterProposed}
+    &{flash.alreadyProposedChapter}
 </p>
 #{/if}
 

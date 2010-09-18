@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.User;
@@ -38,7 +39,7 @@ public class Forums extends Controller {
         user.save();
         Cache.set("user_" + user.username, user, "1h");
         session.put("newMessage", 0);
-        
+
         List<ForumCategory> forumCategories = ForumCategory.find(""
                 + "order by categoryOrder").fetch();
         render(forumCategories);
@@ -63,8 +64,62 @@ public class Forums extends Controller {
 
         int nbPage = (int) (Math.ceil(threads.size() / 50));
 
+        if (page == 1) {
+            long lastVisit = Long.parseLong(session.get("lastVisit"));
+
+            for (Topic topic : threads) {
+
+                if (topic.updateAt.getTime() > lastVisit && !topic.lastPost.author.equals(user)) {
+                    session.put("topic" + topic.id, true);
+                }
+
+            }
+
+            user.lastVisit = new Date();
+            user.save();
+            session.put("lastVisit", user.lastVisit.getTime());
+        }
+
         render(threads, nbPage, page);
     }
+
+    public static void listAllTopic(int page) {
+        if (page < 1) {
+            page = 1;
+        }
+
+        User user = User.find("byUsername", Secure.Security.connected()).first();
+        user.notification = false;
+        user.save();
+        Cache.set("user_" + user.username, user, "1h");
+        session.put("newMessage", 0);
+
+        List<models.forum.Topic> threads = models.forum.Topic.find(""
+                + "order by updateAt desc").fetch(page, 50);
+
+        renderArgs.put("title", "coran.al-imane.org - Mes propositions");
+
+        int nbPage = (int) (Math.ceil(threads.size() / 50));
+
+        if (page == 1) {
+            long lastVisit = Long.parseLong(session.get("lastVisit"));
+
+            for (Topic topic : threads) {
+
+                if (topic.updateAt.getTime() > lastVisit && !topic.lastPost.author.equals(user)) {
+                    session.put("topic" + topic.id, true);
+                }
+
+            }
+
+            user.lastVisit = new Date();
+            user.save();
+            session.put("lastVisit", user.lastVisit.getTime());
+        }
+
+        render("Forums/listTopicUser.html",threads, nbPage, page);
+    }
+
 
     public static void listThread(Long forumID, int page, String title) {
         if (page < 1) {
@@ -78,12 +133,7 @@ public class Forums extends Controller {
             nbPage = (int) (Math.ceil(forum.nbTopic / 50));
         }
 
-        User user = (User) Cache.get("user_" + Secure.Security.connected());
-
-        if (user == null) {
-            user = User.find("byUsername", Secure.Security.connected()).first();
-            Cache.set("user_" + user.username, user, "1h");
-        }
+        User user = User.find("byUsername", Secure.Security.connected()).first();
 
         List<models.forum.Topic> threads = null;
         if (user.isAdmin) {
@@ -92,6 +142,23 @@ public class Forums extends Controller {
         }
 
         renderArgs.put("title", "zawaj.al-imane.org - " + forum.name);
+
+        if (page == 1) {
+            long lastVisit = Long.parseLong(session.get("lastVisit"));
+
+            for (Topic topic : threads) {
+
+                if (topic.updateAt.getTime() > lastVisit && !topic.lastPost.author.equals(user)) {
+                    session.put("topic" + topic.id, true);
+                }
+
+            }
+
+            user.lastVisit = new Date();
+            user.save();
+            session.put("lastVisit", user.lastVisit.getTime());
+        }
+        
         render(forum, threads, nbPage, page);
     }
 
@@ -113,6 +180,10 @@ public class Forums extends Controller {
                 + "order by createAt", topic).fetch(page, 10);
 
         renderArgs.put("title", "zawaj.al-imane.org - " + topic.name);
+        if (session.get("topic" + topic.id) != null) {
+            System.out.println("ici");
+            session.put("topic" + topic.id, false);
+        }
         render(topic, posts, page, nbPage);
     }
 
@@ -269,7 +340,7 @@ public class Forums extends Controller {
 
             List<User> users = User.find("isAdmin = true").fetch();
             for (User u : users) {
-                if (!u.equals(user.username)) {
+                if (!u.equals(user)) {
                     u.notification = true;
                     u.save();
                     Cache.set("user_" + u.username, u, "1h");

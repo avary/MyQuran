@@ -42,6 +42,9 @@ public class Ayats extends Controller {
             ayats = (List<Ayat>) Cache.get("sourat_ayat_"+souratNumber);
         }
 
+        for (Ayat ayat : ayats) {
+            System.out.println("tags : "+ayat.tags);
+        }
         int maxAyat = ayats.size();
         render(ayats, sourat,maxAyat);
     }

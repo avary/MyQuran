@@ -29,6 +29,12 @@
             ${_thread.name}
         </a>
 
+        #{if session.get("topic"+_thread.id) == "true"}
+        <span class="rejected">
+            (&{'forum.newPost'})
+        </span>
+        #{/if}
+
         <p>
             &{'forum.by'}
             <strong>

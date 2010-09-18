@@ -1,3 +1,11 @@
+function showHideTagBox(ayatID){
+    if(username == ''){
+        alert(userNotConnected);
+        return;
+    }
+    $("#tag_"+ayatID).toggle();
+}
+
 function toogleArabic(){
 
     var self = this, doMask = function() {
@@ -539,6 +547,10 @@ function addToChapterSimple(ayatID){
                 $("#message2_"+ayatID).append(chapterError+"<br/>");
                 $("#message2_"+ayatID).addClass("validation");
                 $("#message2_"+ayatID).show();
+            }else if(data.result == 'chapterAlreadyProposed'){
+                $("#message2_"+ayatID).html(selectedAyatAlreadyProposed+"<br/>");
+                $("#message2_"+ayatID).addClass("validation");
+                $("#message2_"+ayatID).show();
             }else{
                 $("#message2_"+ayatID).append(selectedAyatAlreadyAdded+"<br/>");
                 $("#message2_"+ayatID).addClass("validation");
@@ -604,6 +616,14 @@ function addToChapter(ayatID){
 
                     $("#allAyat_"+ayatID).fadeOut('slow');
                 }, 5000);
+            }else if(data.result == 'chapterAlreadyProposed'){
+                $("#message_"+ayatID).html(selectedAyatAlreadyProposed+"<br/>");
+                $("#message_"+ayatID).addClass("validation");
+                $("#message_"+ayatID).show();
+                window.setTimeout(function() {
+                    $("#message_"+ayatID).fadeOut('slow');
+
+                }, 5000);
             }else if(data.result == 'error'){
                 $("#message2_"+ayatID).append(chapterError+"<br/>");
                 $("#message2_"+ayatID).addClass("validation");
@@ -625,6 +645,70 @@ function addToChapter(ayatID){
     }
 }
 
+function sendTagProposition(ayatID){
+
+
+    var data = $("#tagForm_"+ayatID).serialize();
+
+    //start the ajax
+    $.ajax({
+        //this is the php file that processes the data and send mail
+        url: newTagURL,
+
+        //GET method is used
+        type: "POST",
+
+        //pass the data
+        data: data,
+
+        //Do not cache the page
+        cache: false,
+
+        //success
+        success: function (data) {
+            if (data.result == "ok") {
+                $("#message_"+ayatID).html(tagProposed+"<br/>");
+                $("#message_"+ayatID).removeClass("validation");
+                $("#message_"+ayatID).addClass("success");
+                $("#message_"+ayatID).show();
+                window.setTimeout(function() {
+                    $("#message_"+ayatID).fadeOut('slow');
+                }, 3000);
+            } else if(data.result == "existingTag"){
+                $("#message_"+ayatID).html(existingTag+" : "+data.tags+"<br/>");
+                $("#message_"+ayatID).removeClass("success");
+                $("#message_"+ayatID).addClass("validation");
+                $("#message_"+ayatID).show();
+                window.setTimeout(function() {
+                    $("#message_"+ayatID).fadeOut('slow');
+
+                }, 5000);
+            } else if(data.result == "noTag"){
+                $("#message_"+ayatID).html(noTag+"<br/>");
+                $("#message_"+ayatID).removeClass("success");
+                $("#message_"+ayatID).addClass("validation");
+                $("#message_"+ayatID).show();
+                window.setTimeout(function() {
+                    $("#message_"+ayatID).fadeOut('slow');
+
+                }, 5000);
+            }else if(data.result == "noAyat"){
+                $("#message_"+ayatID).html(noAyat+"<br/>");
+                $("#message_"+ayatID).removeClass("success");
+                $("#message_"+ayatID).addClass("validation");
+                $("#message_"+ayatID).show();
+                window.setTimeout(function() {
+                    $("#message_"+ayatID).fadeOut('slow');
+
+                }, 5000);
+            }
+        }
+    });
+
+    //cancel the submit button default behaviours
+    return false;
+ 
+}
 
 function removeChapterAyat(chapterID,ayatID){
     var result = confirm(confirmRemoveChapterAyat);

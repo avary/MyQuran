@@ -1,0 +1,39 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Valider le(s) tag(s)' /}
+
+#{if flash.error}
+<p class="validation">
+    &{flash.error}
+</p>
+#{/if}
+
+#{if flash.success}
+<p class="success">
+    &{flash.success}
+</p>
+#{/if}
+
+<h4 style="border: 0px;">&{'tag.validate'} :</h4>
+<br/>
+<strong>${post.topic.proposal.content}</strong>
+
+<br/><br/>
+<div style="display: inline-block;width: 70px;height: 50px">
+    <div>
+        <div class="ayatNumber">${post.topic.proposal.ayat.sa}</div>
+    </div>
+</div>
+
+<div class="ayatContent" >${post.topic.proposal.ayat.content}</div>
+<div style="border-bottom: 1px #eeeeee solid"></div>
+<br/>
+
+#{if accepted}
+#{form @Proposals.validateTags()}
+<input type="hidden" name="postID" value="${post.id}"/>
+<input type="text" name="tags" value="${post.topic.proposal.content}"/>
+<input type="submit" name="save" value="&{'forum.validate'}"/>
+#{/form}
+#{/if}
+
+

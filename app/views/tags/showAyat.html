@@ -28,11 +28,18 @@
             </div>
 
             <div class="options">
+                <!--
                 <a href="#"
                    onclick="selectAyat('${_ayat.id}');return false;">
                     <img src="@{'/public/images/select.png'}"
                          title="&{'ayat.select'}" width="20px"
                          height="20px" alt="&{'ayat.select'}"/>
+                </a>
+                -->
+                <a href="#"
+                   onclick="showHideTagBox('${_ayat.id}');return false;">
+                    <img src="@{'/public/images/tag.png'}"
+                         title="&{'ayat.tag'}"  alt="&{'ayat.tag'}"/>
                 </a>
 
                 #{if session.username}
@@ -77,6 +84,14 @@
     <div style="display: inline-block;width: 930px; float: right;">
         <div class="ayatArabic" >${_ayat.arabic}</div>
         <div class="ayatContent" >${_ayat.content}</div>
+        <div class="ayatTag" >
+            #{list items:_ayat.tags,as:"t"}
+            <a href="" class="tag">
+                ${t.name}
+            </a>
+            #{/list}
+            
+        </div>
     </div>
 
 
@@ -149,6 +164,14 @@
     </div>
     #{/if}
 
+    <div id="tag_${_ayat.id}" class="ayatComment options">
+        <form action="" method="post" id="tagForm_${_ayat.id}">
+            <input type="text" name="names" />
+            <input type="hidden" name="ayatID" value="${_ayat.id}"/>
+            <input type="submit" name="add" value="&{'send'}" onclick="return sendTagProposition('${_ayat.id}');"/>
+        </form>
+        <span style="font-style: italic">&{'tag.info'}</span>
+    </div>
     <form action="" onsubmit="savePublicComment('${_ayat.id}');return false;">
         <div class="ayatComment options textarea" id="publicCommentBox_${_ayat.id}" >
             <div style="width: 900px;border: 1px #7a3919 solid;">

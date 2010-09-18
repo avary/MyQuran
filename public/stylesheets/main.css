@@ -265,6 +265,16 @@ input, button, select {
     text-align:left;
 }
 
+.ayatTag{
+    vertical-align: top;
+    width: 900px;
+    display: inline-block;
+    font-size:15px;
+    font-weight: bold;
+    padding:5px 10px;
+    text-align:left;
+}
+
 .ayatArabic{
     font-family: arabic;
     vertical-align: top;
@@ -521,3 +531,18 @@ a.green-button {
     font-family: arabic;
     src: url(me_quran.ttf);
 }
+
+.tag {
+    background-color:#f7f1df;
+    border-bottom:1px solid #c28a2d;
+    border-right:1px solid #c28a2d;
+    color:#3E6D8E;
+    font-size:80%;
+    line-height:2.4;
+    margin:2px 2px 2px 0;
+    padding:3px 4px;
+    text-decoration:none;
+    white-space:nowrap;
+}
+
+

@@ -3,6 +3,7 @@ package controllers;
 import java.lang.reflect.InvocationTargetException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -309,6 +310,15 @@ public class Secure extends Controller {
         }
         // Mark user as connected
         session.put("username", username);
+        if(user.lastVisit == null){
+            session.put("lastVisit", -1);
+        }else{
+            session.put("lastVisit", user.lastVisit.getTime());
+        }
+
+        user.lastVisit = new Date();
+        user.save();
+
         // Remember if needed
         if (remember) {
             response.setCookie("rememberme", Crypto.sign(username) + "-" + username, "30d");

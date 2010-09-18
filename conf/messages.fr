@@ -34,6 +34,11 @@ ayat.selected=Verset selectionné
 ayat.alreadySelected=Verset déjà selectionné
 ayat.basmallah=Au nom d'Allah, le Tout Miséricordieux, le Très Miséricordieux.
 ayat.deleteSelected=Enlever ce verset des versets sélectionnés.
+ayat.tag=Proposer un nouveau tag
+
+tag.info=Vous pouvez proposer plusieurs tags à la fois en les séparant par une virgule, ex : prière, jeûne, adoration
+tag.validate=Valider le(s) tag(s) suivant(s)
+tag.validated=Les tags ont été ajoutés.
 
 chapter.title=Nom
 chapter.delete=Supprimer ce chapitre
@@ -128,7 +133,7 @@ error.noAyatNumber=Ceci n'est pas un numéro de verset correct.
 error.maxAyat=Cette sourate contient seulement %s versets.
 error.badAyatNumber=Vous devez choisir un verset entre 1 et %s.
 error.emptyChapter=Vous devez entrer un nom pour créer un chapitre
-error.duplicateChapter=Ce nom est déjà utilisé pour un chapitre
+error.duplicateChapter=Ce chapitre existe déjà.
 error.deleteChapter=Le chapitre n'a pas pu être supprimé.
 error.emptyEditChapter=Vous devez entrer un nom pour changer le nom de ce chapitre
 error.noChapter=Vous n'avez pas choisi un chapitre
@@ -138,6 +143,11 @@ error.badChapter=Vous essayez d'enlever un verset d'un chapitre qui n'existe pas
 error.denied=Vous n'avez pas les droits nécessaire pour accéder à cette page.
 error.emptyObject=Vous devez entrer le sujet de votre demande
 error.chapterError=Une erreur s'est produite lors de votre proposition.
+error.alreadyProposedChapter=Ce nom de chapitre a déjà été proposé et attend d'être validé.
+tagProposed=Votre proposition a été envoyée.
+error.existingTag= Les tags suivants sont déjà présent pour ce verset :
+error.noTag=Vous n'avez pas écrit un tag.
+error.noAyat=Vous essayez de proposer des tags à un verset inéxistant.
 
 info.selectedAyatProposed=Votre proposition d'ajout de verset a été envoyé
 info.userAdded=Vous avez bien été enregistré, un email vous a été envoyé pour que nous puissons valider votre adresse mail.
@@ -189,6 +199,7 @@ info.contact=Nous contacter
 info.sendMessage=Votre message a bien été envoyé. Nous vous répondrons dans les plus bref délais.
 info.ayatRemovedFromDefaultChapter=Ce verset a été bien enlevé des versets sélectionnés.
 info.confirmRemoveAyatSelected=Etes vous sur de vouloir enlever ce verset des versets sélectionnés?
+info.selectedAyatAlReadyProposed=Ce verset a déjà été proposé pour ce chapitre et est en attente de validation.
 
 mail.welcomeSubject=Bienvenue %s
 mail.hello=Bienvenue
@@ -236,6 +247,8 @@ forum.yourMessage=Votre message
 forum.postContent=Message
 forum.validate=Valider
 forum.reject=Rejeter
+forum.newPost=Nouveau message
+forum.lastPost=Derniers messages
 
 since.seconds=Il y a %s seconde%s
 since.minutes=Il y a %s minute%s

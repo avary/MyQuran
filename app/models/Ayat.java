@@ -4,8 +4,13 @@
  */
 package models;
 
+import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import play.db.jpa.Model;
 import search.Field;
@@ -29,6 +34,8 @@ public class Ayat extends Model implements Comparable<Ayat> {
     @Lob
     public String arabic;
     public boolean comment;
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch=FetchType.EAGER)
+    public Set<Tag> tags;
 
     @Override
     public boolean equals(Object obj) {
@@ -61,7 +68,7 @@ public class Ayat extends Model implements Comparable<Ayat> {
             if (this.number > o.number) {
                 return 1;
             }
-        }else{
+        } else {
             if (this.sourat.number < o.sourat.number) {
                 return -1;
             }
@@ -73,5 +80,14 @@ public class Ayat extends Model implements Comparable<Ayat> {
 
 
         return 0;
+    }
+
+    public boolean tagItWith(String name) {
+        return tags.add(Tag.findOrCreateByName(name));
+    }
+
+    public static List<Ayat> findTaggedWith(String tag) {
+        return Ayat.find(
+                "select distinct a from Ayat a join a.tags as t where t.name = ?", tag).fetch();
     }
 }

@@ -7,12 +7,14 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Ayat;
 import models.Chapter;
 import models.Comment;
 import models.Proposal;
+import models.Tag;
 import models.User;
 import models.forum.Forum;
 import models.forum.Post;
@@ -24,6 +26,7 @@ import org.owasp.validator.html.CleanResults;
 import org.owasp.validator.html.Policy;
 import play.cache.Cache;
 import play.data.validation.Required;
+import play.data.validation.Validation;
 import play.mvc.Controller;
 
 /**
@@ -32,8 +35,90 @@ import play.mvc.Controller;
  */
 public class Proposals extends Controller {
 
+    public static void newTag(long ayatID, @Required String names) {
+        if (Validation.hasErrors()) {
+            renderJSON("{\"result\":\"noTag\"}");
+        }
+
+        Ayat ayat = Ayat.findById(ayatID);
+        if (ayat == null) {
+            renderJSON("{\"result\":\"noAyat\"}");
+        }
+
+        User user = (User) Cache.get("user_" + Secure.Security.connected());
+
+        if (user == null) {
+            user = User.find("byUsername", Secure.Security.connected()).first();
+            Cache.set("user_" + user.username, user, "1h");
+        }
+
+        String existingTag = "";
+        String tag = "";
+        StringTokenizer st = new StringTokenizer(names, ",");
+        while (st.hasMoreTokens()) {
+            tag = st.nextToken();
+            if (ayat.tags.contains(new Tag(tag))) {
+                existingTag += existingTag.length() > 0 ? ", " : "";
+                existingTag += tag;
+            }
+        }
+
+        if (existingTag.length() > 0) {
+            renderJSON("{\"result\":\"existingTag\",\"tags\":\"" + existingTag + "\"}");
+        }
+
+        Proposal p = new Proposal();
+        p.ayat = ayat;
+        p.state = 0;
+        p.type = 2;
+        p.user = user;
+        p.content=names;
+        p.save();
+
+        Forum forum = Forum.find("byName", "Propositions de chapitres").first();
+        Topic topic = new Topic();
+        topic.author = user;
+        topic.createAt = new Date();
+        topic.updateAt = new Date();
+        topic.forum = forum;
+        topic.name = "[Tag] Nouveau tags : " + names;
+        topic.proposal = p;
+        topic.save();
+
+        forum.lastTopic = topic;
+        forum.nbPost = forum.nbPost + 1;
+        forum.nbTopic = forum.nbTopic + 1;
+        forum.save();
+
+        Post post = new Post();
+        post.author = user;
+        post.content = "<strong>Proposition d'ajout des tags : "
+                + "</strong>" + names + "<br/><br/>"
+                + "Sourate " + ayat.sourat.number + ", verset " + ayat.number + " : "
+                + "<br/><br/><strong>" + ayat.content + "</strong>";
+        post.createAt = new Date();
+        post.state = 0;
+        post.topic = topic;
+        post.title = "";
+        post.save();
+
+        topic.lastPost = post;
+        topic.nbResponse = topic.nbResponse + 1;
+        topic.proposal = p;
+        topic.save();
+
+        List<User> users = User.find("isAdmin = true").fetch();
+        for (User u : users) {
+            u.notification = true;
+            u.save();
+            Cache.set("user_" + u.username, u, "1h");
+        }
+
+        renderJSON("{\"result\":\"ok\"}");
+    }
+
     public static void newAyatToChapter(long ayatID, long publicChapterID) {
-        System.out.println(publicChapterID);
+
         if (publicChapterID == -1) {
             renderJSON("{\"result\":\"noChapter\"}");
         }
@@ -52,6 +137,13 @@ public class Proposals extends Controller {
             if (publicChapter.ayats.contains(ayat)) {
                 renderJSON("{\"result\":\"ko\"}");
             } else {
+                Proposal pr = Proposal.find("type = 2 and state = 0 and "
+                        + "ayat = ? and chapter = ?", ayat, publicChapter).first();
+
+                if (pr != null) {
+                    renderJSON("{\"result\":\"chapterAlreadyProposed\"}");
+                }
+
                 Chapter defaultChapter = Chapter.find("byTitleAndUser", "", user).first();
                 defaultChapter.ayats.remove(ayat);
                 defaultChapter.save();
@@ -127,7 +219,17 @@ public class Proposals extends Controller {
             if (chapter != null) {
                 flash.error("error");
                 flash.put("duplicateChapter", "error.duplicateChapter");
+            } else {
+                Proposal pr = Proposal.find("type = 2 and state = 0 and content = ?", title).first();
+                if (pr != null) {
+                    flash.error("error");
+                    flash.put("alreadyProposedChapter", "error.alreadyProposedChapter");
+                }
             }
+        }
+
+        if (flash.get("error") != null) {
+            Chapters.newChapter(1);
         }
 
         Forum forum = Forum.find("byName", "Propositions de chapitres").first();
@@ -300,50 +402,44 @@ public class Proposals extends Controller {
         boolean accepted = true;
 
         if (post.topic.proposal.type == 0) {
-            flash.keep();
+            
             render("Proposals/validateTransalation.html", post, accepted);
         }
         if (post.topic.proposal.type == 1) {
-            flash.keep();
+            
             Comment c = Comment.find("ayat = ? and user is null ", post.topic.proposal.ayat).first();
             render("Proposals/validateComment.html", post, accepted, c);
         }
         if (post.topic.proposal.type == 2) {
-            flash.keep();
-            render("Proposals/validateChapter.html", post, accepted);
+            
+            render("Proposals/validateTags.html", post, accepted);
         }
 
     }
 
-    public static void validateChapter(Long postID, String title) {
+    public static void validateTags(Long postID, @Required String tags) {
         Post post = Post.findById(postID);
 
-        if (post.topic.proposal.ayat == null && (title == null || title.trim().isEmpty())) {
-            flash.put("chapterError", "chapter.noTitle");
+        if (Validation.hasErrors()) {
+            flash.put("error", "error.noTag");
             flash.keep();
             validate(postID);
         }
 
+        StringTokenizer st = new StringTokenizer(tags, ",");
+        while (st.hasMoreTokens()) {
+            post.topic.proposal.ayat.tagItWith(st.nextToken());
+        }
+        post.topic.proposal.ayat.save();
+        
         post.topic.finished = true;
         post.topic.updateAt = new Date();
         post.topic.proposal.state = 1;
 
-        if (post.topic.proposal.ayat == null) {
-            Chapter c = new Chapter();
-            c.title = title;
-            c.save();
-            flash.success("chapter.added");
-        } else {
-            if (post.topic.proposal.chapter.ayats == null) {
-                post.topic.proposal.chapter.ayats = new ArrayList<Ayat>();
-            }
-            post.topic.proposal.chapter.ayats.add(post.topic.proposal.ayat);
-            post.topic.proposal.chapter.save();
-            flash.success("chapter.added2");
-        }
-
         post.topic.save();
         post.topic.proposal.save();
+
+        flash.success("tag.validated");
 
         render(post);
     }
