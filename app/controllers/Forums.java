@@ -94,8 +94,15 @@ public class Forums extends Controller {
         Cache.set("user_" + user.username, user, "1h");
         session.put("newMessage", 0);
 
-        List<models.forum.Topic> threads = models.forum.Topic.find(""
-                + "order by updateAt desc").fetch(page, 50);
+        List<models.forum.Topic> threads = null;
+        if (user.isAdmin) {
+            threads = models.forum.Topic.find(""
+                    + "order by updateAt desc").fetch(page, 50);
+        } else {
+            threads = models.forum.Topic.find("author = ? "
+                    + " "
+                    + "order by updateAt desc", user).fetch(page, 50);
+        }
 
         renderArgs.put("title", "coran.al-imane.org - Mes propositions");
 
@@ -117,9 +124,8 @@ public class Forums extends Controller {
             session.put("lastVisit", user.lastVisit.getTime());
         }
 
-        render("Forums/listTopicUser.html",threads, nbPage, page);
+        render("Forums/listTopicUser.html", threads, nbPage, page);
     }
-
 
     public static void listThread(Long forumID, int page, String title) {
         if (page < 1) {
@@ -158,7 +164,7 @@ public class Forums extends Controller {
             user.save();
             session.put("lastVisit", user.lastVisit.getTime());
         }
-        
+
         render(forum, threads, nbPage, page);
     }
 

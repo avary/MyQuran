@@ -1,14 +1,8 @@
 #{extends 'main.html' /}
-#{set title:'zawaj.al-imane.org - Répondre'/}
-
-#{set 'description'}
-<meta name="description" content="Zawaj.al-imane.org, le site matrimonial qui propose un espace de rencontre dans le respect de la religion et d'autrui pour la communauté musulmane chiite francophone">
-#{/set}
-#{set 'keywords'}
-<meta name="keywords" content="zawaj,mariage,chiite,chiisme,épouse,mari, mariage islamique,site zawaj,site mariage, site zawaj musulman,site mariage musulman">
-#{/set}
+#{set title:'coran.al-imane.org - Répondre'/}
 
 #{set 'moreScripts'}
+
 <script src="@{'/public/javascripts/tiny_mce.js'}" type="text/javascript" charset='utf-8'></script>
 
 #{/set}
@@ -21,16 +15,21 @@
             mode : "specific_textareas",
             editor_selector : "post_content",
 
-            theme : "advanced",
-            plugins : "save,advhr,advimage,advlink,emotions,inlinepopups,searchreplace,contextmenu,paste,directionality,fullscreen,noneditable,nonbreaking,xhtmlxtras",
+            height: "500",
+            width: "1000",
 
+            theme : "advanced",
+            plugins : "pagebreak,style,layer,table,save,advhr,inlinepopups,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+        
             // Theme options
-            theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,fontselect,fontsizeselect,hr,removeformat,|,emotions,|,fullscreen",
-            theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,|,undo,redo,|,link,unlink,image,cleanup,|,forecolor,backcolor,blockquote",
+            theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,|,\n\
+                justifyleft,justifycenter,justifyright,justifyfull,|,fontsizeselect,hr,removeformat,|,\n\
+                cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,|,\n\
+                undo,redo,|,link,unlink,cleanup,|,forecolor,backcolor",
+            theme_advanced_buttons2 : "",
             theme_advanced_buttons3 : "",
             theme_advanced_toolbar_location : "top",
             theme_advanced_toolbar_align : "left",
-            theme_advanced_statusbar_location : "bottom",
             theme_advanced_resizing : false,
             cleanup: false,
             convert_fonts_to_spans : false,
@@ -98,12 +97,13 @@
 
 </script>
 
-<a href="@{Forums.index()}">
+<a href="@{Forums.listAllTopic(1)}">
+    #{secure.check 'admin'}
     &{'proposal'}
-</a>
-<img src="@{'public/images/arrow.png'}"/>
-<a href="@{Forums.listThread(thread.forum.id,1)}">
-    ${thread.forum.name}
+    #{/secure.check}
+    #{secure.check 'user'}
+    &{'myProposal'}
+    #{/secure.check}
 </a>
 <img src="@{'public/images/arrow.png'}"/>
 <a href="@{Forums.listPost(thread.id,1)}">

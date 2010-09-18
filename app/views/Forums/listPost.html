@@ -29,21 +29,16 @@
 
 </script>
 
-#{secure.check 'admin'}
-<a href="@{Forums.index()}">
+
+<a href="@{Forums.listAllTopic(1)}">
+    #{secure.check 'admin'}
     &{'proposal'}
-</a>
-<img src="@{'public/images/arrow.png'}" alt="/"/>
-<a href="@{Forums.listThread(topic.forum.id,1,topic.forum.name.slugify())}">
-    ${topic.forum.name}
+    #{/secure.check}
+    #{secure.check 'user'}
+    &{'myProposal'}
+    #{/secure.check}
 </a>
 
-#{/secure.check}
-#{secure.check 'user'}
-<a href="@{Forums.listTopicUser(1)}">
-    &{'myProposal'}
-</a>
-#{/secure.check}
 
 <img src="@{'public/images/arrow.png'}" alt="/"/>
 ${topic.name}

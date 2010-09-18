@@ -43,24 +43,21 @@
                 <div id="hijriDate">
                     #{if session.username}
                     <span style="font-weight: normal">&{'mail.hello'}</span> <strong>${session.username}</strong>,
-                    #{secure.check 'admin'}
-                    <a href="@{Forums.index()}">
+
+                    <a href="@{Forums.listAllTopic(1)}">
+                        #{secure.check 'admin'}
                         &{'proposal'}
-                    </a> 
-                    #{/secure.check}
-                    #{secure.check 'user'}
-                    <a href="@{Forums.listTopicUser(1)}">
+                        #{/secure.check}
+                        #{secure.check 'user'}
                         &{'myProposal'}
-                    </a>
-                    #{/secure.check}
-                    
+                        #{/secure.check}
+                    </a>                     
+
                     #{if session.newMessage == "1"}
                     <img src="@{'public/images/message.png'}" alt="" class="img"
                          width="16" height="16"/>
                     #{/if}
-                    |
 
-                    <a href="@{Chapters.index()}">&{'menu.myChapter'}</a>
                     |
                     <a href="@{Comments.list()}">&{'menu.myComment'}</a>
                     |
@@ -80,7 +77,7 @@
                     <li>|</li>
                     <li><a href="@{Sourats.list()}">&{'menu.sourats'}</a></li>
                     <li>|</li>
-                    <li><a href="@{Chapters.indexPublic()}">&{'menu.chapter'}</a></li>
+                    <li><a href="@{tags.index()}">&{'menu.tags'}</a></li>
                     <li>|</li>
                     <li><a href="@{Comments.listPublic()}">&{'menu.comment'}</a></li>
                     <li>|</li>

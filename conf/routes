@@ -12,14 +12,8 @@ GET     /connexion                              Secure.login
 GET     /inscription                            Secure.registration
 GET     /inscription-reussie                    Secure.register
 GET     /mes-chapitres                          Chapters.index
-GET     /chapitres                              Chapters.indexPublic
-GET     /nouveau-chapitre/{type}                Chapters.newChapter
-GET     /chapitre-ajouté                        Chapters.add
-GET     /renommer-chapitre                      Chapters.edit
-GET     /chapitre-renommé                       Chapters.save
-GET     /mon-chapitre/{chapterID}/{title}           Chapters.viewChapterAyat
-GET     /chapitre/{chapterID}/{title}           Chapters.viewPublicChapterAyat
-GET     /chapitre/versets-selectionnés          Chapters.viewSelectedAyat
+GET     /tags                                   Tags.index
+GET     /tag/{slug}                             Tags.viewAyats
 GET     /mes-commentaires                       Comments.list
 GET     /mes-commentaires-par-sourate           Comments.listBySourat
 GET     /commentaires-du-coran                  Comments.listPublic
@@ -28,6 +22,9 @@ GET     /telechargement-du-coran                Downloads.index
 GET     /telecharger-le-coran-entier            Downloads.allQuran
 GET     /telecharger-le-coran-manzil            Downloads.manzilQuran
 GET     /telecharger-le-coran-juz               Downloads.juzQuran
+GET     /propositions/page-{page}               Forums.listAllTopic
+GET     /faq                                    Application.faq
+GET     /recherche_verset/{q}                   Ayats.search
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public

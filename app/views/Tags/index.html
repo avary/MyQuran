@@ -1,0 +1,46 @@
+#{extends 'main.html' /}
+#{set title:'coran.al-imane.org - Tags' /}
+
+
+#{if tags.size() > 0 }
+
+<div style="border-bottom: 1px #eeeeee solid"></div>
+<div style="text-align: center">
+    <h4>&{'menu.tags'} : </h4>
+</div>
+
+<br/>
+
+#{list items:tags, as:'tag'}
+    #{if tag_index == 1}
+    <div id="chapterList" >
+        <table>
+    #{/if}
+    #{if tag_index == 51}
+    <div id="chapterList">
+        <table>
+    #{/if}
+    #{if tag_index == 101}
+    <div id="chapterList">
+        <table>
+    #{/if}
+
+    <tr><td>
+    ${tag_index} -
+    <a href="@{Tags.viewAyats(tag.get('tag'))}">
+        ${tag.get('tag')} (${tag.get('ayats')} &{'ayat',tag.get('ayats').pluralize()})
+    </a>
+    </td>
+    </tr>
+    #{if tag_index == 50 || tag_index == 100 || tag_index == 150}
+    </table>
+    </div>
+    #{/if}
+
+#{/list}
+
+#{if tag_index != 50 || tag_index != 100 || tag_index != 150}
+    </table></div>
+#{/if}
+#{/if}
+

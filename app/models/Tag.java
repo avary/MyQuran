@@ -4,10 +4,16 @@
  */
 package models;
 
+import java.util.List;
+import java.util.Map;
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import play.db.jpa.Model;
 
 @Entity
+@Table(uniqueConstraints =
+@UniqueConstraint(columnNames = "name"))
 public class Tag extends Model implements Comparable<Tag> {
 
     public String name;
@@ -16,6 +22,7 @@ public class Tag extends Model implements Comparable<Tag> {
         this.name = name;
     }
 
+    @Override
     public String toString() {
         return name;
     }
@@ -54,5 +61,9 @@ public class Tag extends Model implements Comparable<Tag> {
         return hash;
     }
 
-    
+    public static List<Map> getCloud() {
+        List<Map> result = Tag.find(
+                "select new map(t.name as tag, count(a.id) as ayats) from models.Ayat a join a.tags as t group by t.name").fetch();
+        return result;
+    }
 }

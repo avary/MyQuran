@@ -6,6 +6,7 @@ package models;
 
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,8 +35,12 @@ public class Ayat extends Model implements Comparable<Ayat> {
     @Lob
     public String arabic;
     public boolean comment;
-    @ManyToMany(cascade = CascadeType.PERSIST,fetch=FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     public Set<Tag> tags;
+
+    public Ayat(){
+        this.tags = new TreeSet<Tag>();
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -88,6 +93,8 @@ public class Ayat extends Model implements Comparable<Ayat> {
 
     public static List<Ayat> findTaggedWith(String tag) {
         return Ayat.find(
-                "select distinct a from Ayat a join a.tags as t where t.name = ?", tag).fetch();
+                "select distinct a from models.Ayat a join a.tags as t where t.name = ?", tag).fetch();
     }
+
+
 }

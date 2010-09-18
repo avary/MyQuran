@@ -1,10 +1,7 @@
 package controllers;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Chapter;
-import models.User;
 import notifiers.Notifier;
 import play.cache.Cache;
 import play.data.validation.Email;

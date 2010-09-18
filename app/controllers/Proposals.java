@@ -4,14 +4,12 @@
  */
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Ayat;
-import models.Chapter;
 import models.Comment;
 import models.Proposal;
 import models.Tag;
@@ -81,7 +79,7 @@ public class Proposals extends Controller {
         topic.createAt = new Date();
         topic.updateAt = new Date();
         topic.forum = forum;
-        topic.name = "[Tag] Nouveau tags : " + names;
+        topic.name = "[Tag] Ajout d'un verset : " + names;
         topic.proposal = p;
         topic.save();
 
@@ -92,7 +90,7 @@ public class Proposals extends Controller {
 
         Post post = new Post();
         post.author = user;
-        post.content = "<strong>Proposition d'ajout des tags : "
+        post.content = "<strong>Proposition d'ajout du verset dans les tags suivants : "
                 + "</strong>" + names + "<br/><br/>"
                 + "Sourate " + ayat.sourat.number + ", verset " + ayat.number + " : "
                 + "<br/><br/><strong>" + ayat.content + "</strong>";
@@ -115,170 +113,6 @@ public class Proposals extends Controller {
         }
 
         renderJSON("{\"result\":\"ok\"}");
-    }
-
-    public static void newAyatToChapter(long ayatID, long publicChapterID) {
-
-        if (publicChapterID == -1) {
-            renderJSON("{\"result\":\"noChapter\"}");
-        }
-
-        User user = (User) Cache.get("user_" + Secure.Security.connected());
-
-        if (user == null) {
-            user = User.find("byUsername", Secure.Security.connected()).first();
-            Cache.set("user_" + user.username, user, "1h");
-        }
-
-        Chapter publicChapter = Chapter.findById(publicChapterID);
-
-        if (publicChapter != null) {
-            Ayat ayat = Ayat.findById(ayatID);
-            if (publicChapter.ayats.contains(ayat)) {
-                renderJSON("{\"result\":\"ko\"}");
-            } else {
-                Proposal pr = Proposal.find("type = 2 and state = 0 and "
-                        + "ayat = ? and chapter = ?", ayat, publicChapter).first();
-
-                if (pr != null) {
-                    renderJSON("{\"result\":\"chapterAlreadyProposed\"}");
-                }
-
-                Chapter defaultChapter = Chapter.find("byTitleAndUser", "", user).first();
-                defaultChapter.ayats.remove(ayat);
-                defaultChapter.save();
-
-                Proposal p = new Proposal();
-                p.ayat = ayat;
-                p.chapter = publicChapter;
-                p.state = 0;
-                p.type = 2;
-                p.user = user;
-                p.save();
-
-                Forum forum = Forum.find("byName", "Propositions de chapitres").first();
-                Topic topic = new Topic();
-                topic.author = user;
-                topic.createAt = new Date();
-                topic.updateAt = new Date();
-                topic.forum = forum;
-                topic.name = "[Chapitre] Ajout de verset au chapitre : " + publicChapter.title;
-                topic.proposal = p;
-                topic.save();
-
-                forum.lastTopic = topic;
-                forum.nbPost = forum.nbPost + 1;
-                forum.nbTopic = forum.nbTopic + 1;
-                forum.save();
-
-                Post post = new Post();
-                post.author = user;
-                post.content = "<strong>Proposition d'ajout de verset dans le chapitre : "
-                        + "</strong>" + publicChapter.title + "<br/><br/>"
-                        + "Sourate " + ayat.sourat.number + ", verset " + ayat.number + " : "
-                        + "<br/><br/><strong>" + ayat.content + "</strong>";
-                post.createAt = new Date();
-                post.state = 0;
-                post.topic = topic;
-                post.title = "";
-                post.save();
-
-                topic.lastPost = post;
-                topic.nbResponse = topic.nbResponse + 1;
-                topic.proposal = p;
-                topic.save();
-
-                List<User> users = User.find("isAdmin = true").fetch();
-                for (User u : users) {
-                    u.notification = true;
-                    u.save();
-                    Cache.set("user_" + u.username, u, "1h");
-                }
-            }
-        } else {
-            renderJSON("{\"result\":\"error\"}");
-        }
-
-        renderJSON("{\"result\":\"ok\"}");
-
-    }
-
-    public static void newChapter(@Required String title) throws Throwable {
-        User user = (User) Cache.get("user_" + Secure.Security.connected());
-
-        if (user == null) {
-            user = User.find("byUsername", Secure.Security.connected()).first();
-            Cache.set("user_" + user.username, user, "1h");
-        }
-
-        if (validation.hasError("title")) {
-            flash.error("error");
-            flash.put("emptyChapter", "error.emptyChapter");
-        } else {
-            Chapter chapter = Chapter.find("user is null and title = ?", title).first();
-            if (chapter != null) {
-                flash.error("error");
-                flash.put("duplicateChapter", "error.duplicateChapter");
-            } else {
-                Proposal pr = Proposal.find("type = 2 and state = 0 and content = ?", title).first();
-                if (pr != null) {
-                    flash.error("error");
-                    flash.put("alreadyProposedChapter", "error.alreadyProposedChapter");
-                }
-            }
-        }
-
-        if (flash.get("error") != null) {
-            Chapters.newChapter(1);
-        }
-
-        Forum forum = Forum.find("byName", "Propositions de chapitres").first();
-        Topic topic = new Topic();
-        topic.author = user;
-        topic.createAt = new Date();
-        topic.updateAt = new Date();
-        topic.forum = forum;
-        topic.name = "[Chapitre] Nouveau chapitre : " + title;
-        topic.save();
-
-        Proposal p = new Proposal();
-        p.content = title;
-        p.state = 0;
-        p.type = 2;
-        p.user = user;
-        p.save();
-
-        forum.lastTopic = topic;
-        forum.nbPost = forum.nbPost + 1;
-        forum.nbTopic = forum.nbTopic + 1;
-        forum.save();
-
-        Post post = new Post();
-        post.author = user;
-        post.content = "<strong>Proposition d'un nouveau chapitre : </strong>" + title;
-        post.createAt = new Date();
-        post.state = 0;
-        post.topic = topic;
-        post.title = "";
-        post.save();
-
-        topic.lastPost = post;
-        topic.nbResponse = topic.nbResponse + 1;
-        topic.proposal = p;
-        topic.save();
-
-        List<User> users = User.find("isAdmin = true").fetch();
-        for (User u : users) {
-            u.notification = true;
-            u.save();
-            Cache.set("user_" + u.username, u, "1h");
-        }
-
-        flash.put("chapterProposed", "chapter.chapterProposed");
-
-        flash.keep();
-
-        Chapters.newChapter(1);
     }
 
     public static void newComment(Long ayatId, String comment) {
@@ -431,6 +265,7 @@ public class Proposals extends Controller {
             post.topic.proposal.ayat.tagItWith(st.nextToken());
         }
         post.topic.proposal.ayat.save();
+        Cache.delete("sourat_"+post.topic.proposal.ayat.sourat.number);
         
         post.topic.finished = true;
         post.topic.updateAt = new Date();

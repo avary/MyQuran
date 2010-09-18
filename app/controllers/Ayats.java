@@ -6,14 +6,19 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import models.Ayat;
 import models.Sourat;
 import play.cache.Cache;
 import play.mvc.Controller;
+import play.mvc.Scope.Session;
 import play.mvc.With;
+import play.templates.JavaExtensions;
+import play.templates.Template;
+import play.templates.TemplateLoader;
 import search.SearchModule;
-
 
 /**
  *
@@ -22,72 +27,72 @@ import search.SearchModule;
 @With(InitControllers.class)
 public class Ayats extends Controller {
 
-    public static void list(String title,int souratNumber) {
-        Sourat sourat = null;
+    public static void list(String title, int souratNumber) {
+        long t1 = System.currentTimeMillis();
+        Sourat sourat = Sourat.find("byNumber", souratNumber).first();
+        renderArgs.put("title", "coran.al-imane.org - Sourate " + sourat.number + " - " + sourat.title);
 
+        String content = null;
         if (Cache.get("sourat_" + souratNumber) == null) {
-            sourat = Sourat.find("byNumber", souratNumber).first();
-            Cache.set("sourat_"+souratNumber, sourat, "24h");
-        }else{
-            sourat = (Sourat) Cache.get("sourat_" + souratNumber);
-        }
+            List<Ayat> ayats = Ayat.find("bySourat", sourat).fetch();
+            int maxAyat = ayats.size();
 
-        renderArgs.put("title","coran.al-imane.org - Sourate "+sourat.number+" - "+sourat.title);
-
-        List<Ayat> ayats = null;
-        if(Cache.get("sourat_ayat_"+souratNumber) == null){
-            ayats = Ayat.find("bySourat", sourat).fetch();
-            Cache.set("sourat_ayat_"+souratNumber, ayats, "24h");
-        }else{
-            ayats = (List<Ayat>) Cache.get("sourat_ayat_"+souratNumber);
+            Map args = new HashMap();
+            args.put("ayats", ayats);
+            args.put("sourat", sourat);
+            args.put("maxAyat", maxAyat);
+            args.put("session", Session.current());
+            Template t = TemplateLoader.load("Sourats/sourat.html");
+            content = t.render(args);
+            Cache.add("sourat_" + sourat.number, content, "24h");
+        } else {
+            content = (String) Cache.get("sourat_" + souratNumber);
         }
+        long t2 = System.currentTimeMillis();
+        System.out.println("time : "+(t2-t1));
 
-        for (Ayat ayat : ayats) {
-            System.out.println("tags : "+ayat.tags);
-        }
-        int maxAyat = ayats.size();
-        render(ayats, sourat,maxAyat);
+        render(content,sourat);
     }
 
-    public static void search(String q,int page){
-        
-        List<Long> result = SearchModule.search("content:"+q, Ayat.class).all().fetchIds();
+    public static void search(String q, int page) {
+
+        List<Long> result = SearchModule.search("content:" + q, Ayat.class).all().fetchIds();
         //Collections.sort(result);
 
         List<Ayat> ayats = new ArrayList<Ayat>();
 
-        if(page <= 0){
+        if (page <= 0) {
             page = 1;
         }
-        
+
         int pageSize = 200;
         int nbAyat = result.size();
 
-        int start = (page - 1)*pageSize;
-        int end = start+pageSize;
+        int start = (page - 1) * pageSize;
+        int end = start + pageSize;
         int nbPage = (int) Math.ceil(result.size() / 200.0);
 
-        if(start >= result.size()){
-            render(ayats,q);
+        if (start >= result.size()) {
+            render(ayats, q);
         }
 
-        if(end >= result.size()){
+        if (end >= result.size()) {
             end = result.size();
         }
 
         List<Long> searchPage = result.subList(start, end);
         for (Long id : searchPage) {
-            System.out.println("ayat id : "+id);
+            System.out.println("ayat id : " + id);
             ayats.add((Ayat) Ayat.findById(id));
         }
 
         for (Ayat ayat : ayats) {
-            System.out.println("#ayat id : "+ayat.id);
+            System.out.println("#ayat id : " + ayat.id);
         }
 
         Collections.sort(ayats);
 
-        render(ayats,q,page,nbPage,nbAyat);
+        render(ayats, q, page, nbPage, nbAyat);
     }
 
     @Check("admin")
@@ -124,14 +129,14 @@ public class Ayats extends Controller {
         user.translation--;
         user.save();
         Cache.set("user_" + user.username, user, "1h");
-*/
+         */
         flash.success("info.editAyatSuccess");
 
         //render("Translations/view.html", t);
     }
 
     @Check("admin")
-    public static void editAyat(Long ayatID) throws Throwable{
+    public static void editAyat(Long ayatID) throws Throwable {
         Secure.checkAccess();
         flash.clear();
         Ayat ayat = Ayat.findById(ayatID);
@@ -140,7 +145,7 @@ public class Ayats extends Controller {
     }
 
     @Check("admin")
-    public static void saveAyat(Long ayatID, String content) throws Throwable{
+    public static void saveAyat(Long ayatID, String content) throws Throwable {
         Secure.checkAccess();
         flash.clear();
         Ayat ayat = Ayat.findById(ayatID);
@@ -148,10 +153,10 @@ public class Ayats extends Controller {
         ayat.content = content;
         ayat.save();
 
-        Cache.delete("sourat_ayat_"+ayat.sourat.number);
+        Cache.delete("sourat_ayat_" + ayat.sourat.number);
 
         flash.success("info.editAyatSuccess");
 
-        render("Ayats/editAyat.html",ayat);
+        render("Ayats/editAyat.html", ayat);
     }
 }

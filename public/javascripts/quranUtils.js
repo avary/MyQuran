@@ -6,6 +6,10 @@ function showHideTagBox(ayatID){
     $("#tag_"+ayatID).toggle();
 }
 
+function showHideArabAyat(ayatID){
+    $("#arab_"+ayatID).toggle();
+}
+
 function toogleArabic(){
 
     var self = this, doMask = function() {
@@ -675,7 +679,7 @@ function sendTagProposition(ayatID){
                     $("#message_"+ayatID).fadeOut('slow');
                 }, 3000);
             } else if(data.result == "existingTag"){
-                $("#message_"+ayatID).html(existingTag+" : "+data.tags+"<br/>");
+                $("#message_"+ayatID).html(existingTag+" : <strong>"+data.tags+"</strong><br/>");
                 $("#message_"+ayatID).removeClass("success");
                 $("#message_"+ayatID).addClass("validation");
                 $("#message_"+ayatID).show();
@@ -710,16 +714,17 @@ function sendTagProposition(ayatID){
  
 }
 
-function removeChapterAyat(chapterID,ayatID){
-    var result = confirm(confirmRemoveChapterAyat);
+function removeTagAyat(tagName,ayatID){
+    var result = confirm(confirmRemoveTagAyat);
     if(result){
-        $.post(removeChapterAyatURL, {
+        $.post(removeTagAyatURL, {
             ayatID: ayatID,
-            chapterID:chapterID
+            tagName:tagName
         },
         function(data){
             if(data.result == 'ok'){
-                $("#message_"+ayatID).html(ayatRemovedFromChapter+"<br/>");
+                $("#message_"+ayatID).html(ayatRemovedFromTag+"<br/>");
+                $("#message_"+ayatID).removeClass("validation");
                 $("#message_"+ayatID).addClass("success");
                 $("#message_"+ayatID).show();
                 window.setTimeout(function() {
@@ -727,7 +732,8 @@ function removeChapterAyat(chapterID,ayatID){
                     $("#allAyat_"+ayatID).fadeOut('slow');
                 }, 3000);
             }else if(data.result == 'error'){
-                $("#message_"+ayatID).html(badChapter+"<br/>");
+                $("#message_"+ayatID).html(noTag+"<br/>");
+                $("#message_"+ayatID).removeClass("success");
                 $("#message_"+ayatID).addClass("validation");
                 $("#message_"+ayatID).show();
                 window.setTimeout(function() {
