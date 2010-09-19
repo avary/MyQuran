@@ -54,6 +54,8 @@ public class Ayats extends Controller {
         render(content,sourat);
     }
 
+    
+
     public static void search(String q, int page) {
 
         List<Long> result = SearchModule.search("content:" + q, Ayat.class).all().fetchIds();

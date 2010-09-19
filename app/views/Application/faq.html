@@ -36,6 +36,11 @@
             C'est quoi toutes ces icônes à côté de chaque verset?
         </a>
     </li>
+    <li>
+        <a href="#gen-6">
+            Notre boite à outil.
+        </a>
+    </li>
 </ul>
 <h3>
     Traduction
@@ -78,27 +83,17 @@
     </li>
 </ul>
 <h3>
-    Chapitres
+    Tags
 </h3>
 <ul>
     <li>
         <a href="#cha-1">
-            C'est quoi le système des chapitres?
+            C'est quoi le système des tags?
         </a>
     </li>
     <li>
         <a href="#cha-2">
-            C'est quoi la différence entre un chapitre public et un chapitre privé?
-        </a>
-    </li>
-    <li>
-        <a href="#cha-3">
-            Comment proposer un nouveau chapitre?
-        </a>
-    </li>
-    <li>
-        <a href="#cha-4">
-            Comment proposer l'ajout d'un verset dans un chapitre?
+            Comment proposer un nouveau tag?
         </a>
     </li>
 </ul>
@@ -123,13 +118,13 @@
     système de commentaires qui permet à nos membres de proposer des tafsir des versets qu'ils connaissent.
     <br/><br/>
     Enfin nous voulions aussi offrir un moyen rapide de trouver les versets portant sur un sujet
-    précis en permettant la création de chapitres pour regrouper ces versets.
+    précis en permettant la création de tags pour regrouper ces versets.
 </p>
 <br/>
 <h4 id="gen-2">Suis je obligé de m'inscrire?</h4>
 <p>
     Non vous n'êtes pas obligé de vous inscrire mais seul quelqu'un d'inscrit
-    pourra proposer des traductions, commentaires et des nouveau chapitres.
+    pourra proposer des traductions, commentaires et des nouveaux tags.
 </p>
 <br/>
 
@@ -172,17 +167,39 @@ L'image <img src="@{'/public/images/privateComment.png'}"
 permet d'ajouter un commentaire privé, un clique affiche une zone de texte pour taper votre commentaire
 et un nouveau clique cache cette zone.
 <br/>
-L'image <img src="@{'/public/images/select.png'}"
-                         title="&{'ayat.select'}" width="20px"
-                         height="20px" alt="&{'ayat.select'}"/>
-permet de sélectionner ce verset pour l'ajouter par après dans un chapitre public et/ou privé.
+L'image <img src="@{'/public/images/tag.png'}"
+                         title="&{'ayat.tag'}" 
+                          alt="&{'ayat.tag'}"/>
+permet de proposer un ou des tags pour le verset courrant.
 <br/>
 L'image <img src="@{'/public/images/idea.png'}"
                          title="&{'ayat.suggest'}" width="20px"
                          height="20px" alt="&{'ayat.suggest'}"/>
 permet de proposer une traduction du verset courant, même principe de fonctionnement que le commentaire.
+<br/>
+L'image <img src="@{'/public/images/alif.png'}"
+                         title="&{'ayat.arab'}"
+                         height="25" alt="&{'ayat.arab'}"/>
+permet d'afficher ou de cacher le verset en arabe.
+</p>
+
+<br/>
+
+<h4 id="gen-6">Notre boite à outil.</h4>
+<p>
+    Vous verrez dans chaque page qui affiche des versets cette boite à outil à gauche de votre écran :<br/>
+    <img src="@{'/public/images/toolbar.png'}" alt=""/><br/>
+    L'image <img src="@{'/public/images/arab.gif'}"
+                         alt=""/>
+    permet d'afficher ou de cacher la version arabe de chaque verset de la page en cours.<br/>
+    L'image <img src="@{'/public/images/option.png'}"
+                         alt=""/>
+    permet d'afficher ou de cacher toutes les icônes et tags des versets de la page en cours.
+    Cela est utile quand vous voulez copiez un ou plusieurs versets pour les poster sur un forum ou autre.
+    Si on ne cache pas les icônes, elles seront aussi copiées en même temps que le(s) verset(s).
 </p>
 <br/>
+
 <div style="border-bottom: 1px #ccc solid"></div>
 <h3 id="tra">
     Traduction
@@ -255,60 +272,28 @@ Si vous voulez proposé un commentaire public, vous devrez cliquer sur cette ic�
 <br/>
 <div style="border-bottom: 1px #ccc solid"></div>
 <h3 id="cha">
-    Chapitres
+    Tags
 </h3>
 <br/>
-<h4 id="cha-1">C'est quoi le système des chapitres?</h4>
+<h4 id="cha-1">C'est quoi le système des tags?</h4>
 <p>
 Cette fonction permet de regrouper tous les versets concernant un sujet
-précis sous forme d'un chapitre. Par exemple si j'ai envie de regrouper tous les
-versets concernant la prière, il suffira que je crée un chapitre sur la prière et
-ensuite je placerai tous les versets que j'estime concernant la prière dans ce chapitre.
+précis sous forme de tag. Par exemple si j'ai envie de regrouper tous les
+versets concernant la prière, il suffira que pour chaque verset concerné, je propose le tag "prière". <br/>
+Quand un verset contient un ou plusieurs tags, il seront affichés en bas du verset, comme vous pouvez le voir sur
+l'image suivant : <br/>
+<img src="@{'/public/images/ayatTag.png'}"
+                         title=""  alt=""/>
+<br/>
+En cliquant sur le tag prière de ce verset, vous pouvez voir tous les versets qui contiennent ce tag.
 </p>
 <br/>
-<h4 id="cha-2">C'est quoi la différence entre un chapitre public et un chapitre privé?</h4>
+<h4 id="cha-2">Comment proposer un nouveau tag?</h4>
 <p>
-Les système des chapitres suit le même principe que les commentaires, ainsi un chapitre
-public est visible pour tout le monde mais doit d'abord être validé par les administrateurs
-avant d'être visible, tandis qu'un chapitre privé n'est visible que par celui qui
-la créer et ne doit pas être validé par les administrateurs avant d'être visible.
+Il suffit de cliquer sur <img src="@{'/public/images/tag.png'}"
+                         title="&{'ayat.tag'}"
+                          alt="&{'ayat.tag'}"/> du verset concerné. Une zone de saisie vous permettra d'introduire votre nouveau tag.
+Vous pouvez proposer plusieurs tags à la fois en les séparant par une virgule.
+Vos tags devront d'abord être validés par un administrateur avant d'être visible.
 </p>
-<br/>
-<h4 id="cha-3">Comment proposer un nouveau chapitre?</h4>
-<p>
-Il y a deux façons de faire. Vous pouvez le faire soit via le menu 
-<strong>"Chapitres"</strong> ou via
- le menu <strong>"Mes chapitres"</strong> qui s'affiche tout en haut de la page seulement quand
- vous êtes connecté. Dans ces menus, vous trouverez un lien qui se nomme :
- <strong>"Proposer un nouveau chapitre public"</strong>. Il suffit de cliquer dessus et de suivre
- les instructions.
-</p>
-<br/>
-<h4 id="cha-4">Comment proposer l'ajout d'un verset dans un chapitre?</h4>
-<p>
-    Vous devez d'abord sélectionné les versets en cliquant
-    sur <img src="@{'/public/images/select.png'}"
-                         title="&{'ayat.select'}" width="20px"
-                         height="20px" alt="&{'ayat.select'}"/>
-    pour chaque verset que vous voulez ajouter. Ensuite il faut aller dans
-    le menu <strong>"Mes chapitres"</strong> qui apparaît tout en
-haut de la page quand vous êtes connecté.<br/><br/>
-Dans ce menu il y a un lien qui se nomme : <strong>Voir les versets que vous avez selectionnés</strong><br/>
-Voici un exemple d'écran, j'ai sélectionné le verset 4 de la sourate 1 : <br/><br/>
-<img src="@{'public/images/ayatChapter.png'}" alt="" width="1000"/><br/><br/>
-Il y a deux liste de chapitres en bas de chaque verset, la liste de chapitres publics
-et la liste des chapitres privés. Il suffit de choisir dans une des deux liste et
-de cliquer sur le bouton <strong>"Ajouter"</strong> pour ajouter ce verset dans le chapitre
-choisi.<br/>
-Vous pouvez également choisir un chapitre dans les deux listes, ce qui permet
-de proposer l'ajout d'un verset dans un chapitre public et aussi d'ajouter ce verset dans
-un chapitre privé en une seule opération.<br/><br/>
-Enfin si vous voulez ajouter plusieurs versets en même temps, vous pouvez soit cliquer
-sur la case à coché <strong>"Selectionner tous les versets de cette liste"</strong>
-qui sélectionnera tous les versets de la liste courante ou alors vous pouvez choisir certains
-versets seulement en cliquant sur <strong>"Selectionner ce verset"</strong> pour
-les versets que vous voulez seulement. Pour ajouter ces versets vous devrez utilisé
-les listes de chapitres et le bouton <strong>"Ajouter"</strong> qui se trouve tout en haut
-du premier verset de la liste courante et juste en bas du texte
-<strong>"Ajouter tous les versets selectionnés au(x) chapitre(s) suivant :"</strong>
-</p>
+
