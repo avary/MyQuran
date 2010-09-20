@@ -27,7 +27,6 @@ public class InitControllers extends Controller{
         }
 
         if (user != null) {
-            session.put("proposal", user.proposal);
             session.put("newMessage", user.notification ? 1 : 0);
         }
     }

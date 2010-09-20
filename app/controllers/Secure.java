@@ -263,11 +263,14 @@ public class Secure extends Controller {
                 }
             }
 
-            String confirm = "" + System.currentTimeMillis() + "" + username.hashCode();
+            String confirm = Codec.UUID();
             User user = new User(username, mail, hashString.toString(), confirm);
             user.isAdmin = false;
             user.notification = false;
-            user.proposal = 0;
+            user.lastVisit = new Date();
+            user.newPost = true;
+            user.newsletter = true;
+            user.notification = false;
             user.save();
             try {
                 Notifier.welcome(user);

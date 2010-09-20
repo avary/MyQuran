@@ -270,6 +270,7 @@ public class Proposals extends Controller {
         post.topic.finished = true;
         post.topic.updateAt = new Date();
         post.topic.proposal.state = 1;
+        post.topic.proposal.proposalFinish = new Date();
 
         post.topic.save();
         post.topic.proposal.save();
@@ -290,6 +291,7 @@ public class Proposals extends Controller {
         post.topic.finished = true;
         post.topic.updateAt = new Date();
         post.topic.proposal.state = 1;
+        post.topic.proposal.proposalFinish = new Date();
         post.topic.proposal.ayat.content = content.trim();
 
         post.topic.save();
@@ -320,6 +322,7 @@ public class Proposals extends Controller {
 
             post.topic.finished = true;
             post.topic.updateAt = new Date();
+            post.topic.proposal.proposalFinish = new Date();
             post.topic.proposal.state = 1;
             post.topic.proposal.ayat.comment = true;
 

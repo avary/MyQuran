@@ -1,0 +1,36 @@
+
+Salam alaykom ${user.username},<br/><br/>
+Voici les derniers ajouts : <br/><br/>
+
+#{if translations.size() > 0}
+    <strong style="text-decoration:underline;">Dernières traductions : </strong><br/><br/>
+    #{list items:translations,as:'t'}
+    #{showAyatSimple ayat:t.ayat /}
+    #{if !t_isLast}
+    <div style="border-bottom: 1px #eeeeee solid"></div>
+    #{/if}
+    #{/list}
+#{/if}
+<br/><br/>
+#{if comments.size() > 0}
+    <strong style="text-decoration:underline;">Derniers commentaires : </strong><br/><br/>
+    #{list items:comments,as:'c'}
+    #{showAyatSimple ayat:c.ayat /}
+    #{if !c_isLast}
+    <div style="border-bottom: 1px #eeeeee solid"></div>
+    #{/if}
+    #{/list}
+#{/if}
+<br/><br/>
+#{if tags.size() > 0}
+    <strong style="text-decoration:underline;">Derniers tags : </strong><br/><br/>
+    #{list items:tags,as:'t'}
+    #{showAyatSimple ayat:t.ayat /}
+    #{if !t_isLast}
+    <div style="border-bottom: 1px #eeeeee solid"></div>
+    #{/if}
+    #{/list}
+#{/if}
+<br/><br/>
+Si vous ne voulez plus recevoir ce mail, il vous suffit d'aller sur votre compte et de décocher l'option :
+"Recevoir les derniers ajouts".

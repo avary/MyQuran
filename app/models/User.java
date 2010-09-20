@@ -24,24 +24,23 @@ import play.db.jpa.Model;
 public class User extends Model implements Comparable {
 
     public String username;
-    @Email
-    @Required
     public String email;
-    @Required
     public String password;
     public String confirm;
     public boolean enabled;
-    public int proposal;
+    public boolean banned;
     public boolean notification;
     public boolean isAdmin;
     @Temporal(TemporalType.TIMESTAMP) public Date lastVisit;
+
+    public boolean newsletter;
+    public boolean newPost;
 
     public User(String username, String email, String password, String confirm) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.confirm = confirm;
-        this.proposal = 0;
         this.notification = false;
     }
 

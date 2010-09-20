@@ -10,6 +10,7 @@ import models.forum.ForumCategory;
 import play.db.jpa.FileAttachment;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
+import play.mvc.Router;
 import play.test.Fixtures;
 /*
  * To change this template, choose Tools | Templates
@@ -23,7 +24,12 @@ import play.test.Fixtures;
 @OnApplicationStart
 public class Bootstrap extends Job {
 
+    public static String tagURL;
+
     public void doJob() {
+
+        tagURL = Router.getFullUrl("Tags.viewAyats");
+        System.out.println("URL : "+tagURL);
         // Check if the database is empty
         if (User.count() == 0) {
             Fixtures.load("initial-data.yml");
@@ -71,7 +77,7 @@ public class Bootstrap extends Job {
 
             fc.save();
         }
-
+/*
         AllQuranToPdfJob allQuran = new AllQuranToPdfJob();
         ManzilQuranToPdfJob manzilQuran = new ManzilQuranToPdfJob();
         JuzQuranToPdfJob juzQuran = new JuzQuranToPdfJob();
@@ -136,6 +142,7 @@ public class Bootstrap extends Job {
         } catch (Exception ex) {
             Logger.getLogger(Bootstrap.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
     }
 }
 

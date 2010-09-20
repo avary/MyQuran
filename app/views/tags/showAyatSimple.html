@@ -1,0 +1,35 @@
+<div style="padding-bottom: 10px;padding-top: 10px;">
+    <div style="display: inline-block;width: 70px;vertical-align: top;">
+        <div>
+            <div style="background:#FEF2DA none repeat scroll 0 0;color:#D6B169;
+                 font-size:15px;padding:5px 5px;text-align:center;font-weight: bold;
+                 width: 60px;border: 1px #DCC372 solid;">${_ayat.sa}</div>
+        </div>
+    </div>
+    <div style="display: inline-block;width: 930px;">
+        <div style="vertical-align: top;
+             width: 900px;
+             display: inline-block;
+             font-size:15px;
+             font-weight: bold;
+             padding:5px 10px;
+             text-align:left;" >${_ayat.content}</div>
+        <div style="vertical-align: top; width: 900px;display: inline-block;font-size:15px;font-weight: bold;padding:5px 10px;text-align:left;" >
+            #{list items:_ayat.tags,as:"t"}
+            <a href="@@{Tags.viewAyats(t.name,t.name.slugify())}" style="background-color:#f7f1df;
+               border-bottom:1px solid #c28a2d;
+               border-right:1px solid #c28a2d;
+               color: #c28a2d;
+               font-size:80%;
+               line-height:2.4;
+               margin:2px 5px 2px 0;
+               padding:3px 4px;
+               text-decoration:none;
+               white-space:nowrap;">
+                ${t.name}
+            </a>
+            #{/list}
+
+        </div>
+    </div>
+</div>
