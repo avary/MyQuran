@@ -21,6 +21,8 @@ user.username=Nom d'utilisateur
 user.password=Mot de passe
 user.email=Email
 user.newPassword=Nouveau mot de passe
+user.newsLetter=Recevoir les derniers ajouts
+user.newPost=Recevoir un email lors d'un <br/>nouveau message pour vos propositions
 
 ayat=verset%s
 ayat.top=Remonter en haut de la page

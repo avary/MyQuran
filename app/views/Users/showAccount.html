@@ -57,11 +57,13 @@
 </p>
 #{if flash.error}
 <p class="validation">
-    &{flash.errorEmail}
-    #{if flash.errorPassword}<br/>#{/if}
-    &{flash.errorPassword}
-    #{if flash.errorConfirmPassword}<br/>#{/if}
-    &{flash.errorConfirmPassword}
+
+
+&{flash.errorEmail}
+#{if flash.errorEmail && flash.errorPassword}<br/>#{/if}
+&{flash.errorPassword}
+#{if flash.errorConfirmPassword}<br/>#{/if}
+&{flash.errorConfirmPassword}
 </p>
 #{/if}
 
@@ -108,10 +110,23 @@
     </tr>
     <tr>
         <td>
-            &{'confirmPassword'} :
+            &{'user.newsLetter'} :
         </td>
         <td>
-            <input type="password" name="confirmPassword" id="confirmPassword"/>
+            <input type="checkbox" name="newsLetter" id="newsLetter"/>
+        </td>
+        <td>
+
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            &{'user.newPost'} :
+        </td>
+        <td>
+
+            <input type="checkbox" name="newPost" id="newPost"/>
         </td>
         <td>
 
@@ -127,3 +142,15 @@
 
 </table>
 #{/form}
+
+#{if user.newsletter}
+<script type="text/javascript">
+    $("#newsLetter").attr("checked","checked");
+</script>
+#{/if}
+#{if user.newPost}
+<script type="text/javascript">
+    $("#newPost").attr("checked","checked");
+</script>
+
+#{/if}

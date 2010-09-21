@@ -255,6 +255,13 @@ input, button, select {
     border: 1px #DCC372 solid;
 }
 
+.ayat{
+    display: inline-block;width: 920px;vertical-align: top;
+}
+
+.ayatOptions{
+    display: inline-block;width: 70px;vertical-align: top;
+}
 .ayatContent{
     vertical-align: top;
     width: 900px;

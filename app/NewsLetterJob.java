@@ -19,7 +19,7 @@ import play.mvc.Router;
  *
  * @author ali
  */
-@On("0 3 17 * * ?")
+@On("0 0 23 * * ?")
 //@OnApplicationStart
 public class NewsLetterJob extends Job{
 
@@ -30,6 +30,7 @@ public class NewsLetterJob extends Job{
                 + "order by type", 1,new Date()).fetch();
 
         if(proposals == null || proposals.isEmpty()){
+            System.out.println("No updates");
             return;
         }
 
@@ -37,6 +38,7 @@ public class NewsLetterJob extends Job{
                 + "newsletter = true").fetch();
 
         if(users == null || users.isEmpty()){
+            System.out.println("No users subscripted");
             return;
         }
 
@@ -54,7 +56,7 @@ public class NewsLetterJob extends Job{
         }
 
         for (User user : users) {
-            Notifier.sendNewsLetter(user,translations,comments,tags,Bootstrap.tagURL);
+            Notifier.sendNewsLetter(user,translations,comments,tags);
         }
         
         System.out.println("Finish emails");

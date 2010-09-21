@@ -17,6 +17,7 @@ import models.forum.Forum;
 import models.forum.ForumCategory;
 import models.forum.Post;
 import models.forum.Topic;
+import notifiers.Notifier;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.owasp.validator.html.AntiSamy;
@@ -338,21 +339,6 @@ public class Forums extends Controller {
             thread.lastPost = post;
             thread.save();
 
-            if (user.isAdmin) {
-                thread.proposal.user.notification = true;
-                thread.proposal.user.save();
-                Cache.set("user_" + thread.proposal.user.username, thread.proposal.user, "1h");
-            }
-
-            List<User> users = User.find("isAdmin = true").fetch();
-            for (User u : users) {
-                if (!u.equals(user)) {
-                    u.notification = true;
-                    u.save();
-                    Cache.set("user_" + u.username, u, "1h");
-                }
-            }
-
             int page;
             if (thread.nbResponse <= 0) {
                 page = 1;
@@ -363,6 +349,29 @@ public class Forums extends Controller {
             args.put("threadID", thread.id);
             args.put("page", page);
             String url = Router.getFullUrl("Forums.listPost", args);
+
+            if (user.isAdmin) {
+                thread.proposal.user.notification = true;
+                thread.proposal.user.save();
+                if (thread.proposal.user.newPost) {
+                    Notifier.sendNewPostNotification(thread.proposal.user, thread,url+"#last");
+                }
+                Cache.set("user_" + thread.proposal.user.username, thread.proposal.user, "1h");
+            }
+
+            List<User> users = User.find("isAdmin = true").fetch();
+            for (User u : users) {
+                if (!u.equals(user)) {
+                    u.notification = true;
+                    u.save(); 
+                    if (u.newPost) {
+                        Notifier.sendNewPostNotification(u, thread,url+"#last");
+                    }
+                    Cache.set("user_" + u.username, u, "1h");
+                }
+            }
+
+            
             redirect(url + "#last");
 
         } catch (Throwable ex) {

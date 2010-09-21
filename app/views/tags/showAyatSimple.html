@@ -16,7 +16,7 @@
              text-align:left;" >${_ayat.content}</div>
         <div style="vertical-align: top; width: 900px;display: inline-block;font-size:15px;font-weight: bold;padding:5px 10px;text-align:left;" >
             #{list items:_ayat.tags,as:"t"}
-            <a href="@@{Tags.viewAyats(t.name,t.name.slugify())}" style="background-color:#f7f1df;
+            <a href="http://coran.al-imane.org/tags/viewAyats?name=${t.name}" style="background-color:#f7f1df;
                border-bottom:1px solid #c28a2d;
                border-right:1px solid #c28a2d;
                color: #c28a2d;

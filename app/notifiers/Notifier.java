@@ -6,6 +6,7 @@ import play.mvc.*;
 import javax.mail.internet.*;
 
 import models.*;
+import models.forum.Topic;
 import play.i18n.Messages;
 
 public class Notifier extends Mailer {
@@ -35,11 +36,27 @@ public class Notifier extends Mailer {
     }
 
     public static boolean sendNewsLetter(User user,List<Proposal> translations,
-            List<Proposal> comments, List<Proposal> tags,String tagURL) throws Exception {
+            List<Proposal> comments, List<Proposal> tags) throws Exception {
         setFrom(new InternetAddress("admin@al-imane.org", "Site du Coran"));
         setReplyTo(new InternetAddress("admin@al-imane.org", ""));
         setSubject("Derniers ajouts");
         addRecipient(new InternetAddress(user.email, ""));
-        return sendAndWait(user,translations, comments, tags,tagURL);
+        return sendAndWait(user,translations, comments, tags);
+    }
+
+    public static boolean sendNewPostNotification(User user,Topic topic,String url) throws Exception{
+        setFrom(new InternetAddress("admin@al-imane.org", "Site du Coran"));
+        setReplyTo(new InternetAddress("admin@al-imane.org", ""));
+        setSubject("Nouveau message");
+        addRecipient(new InternetAddress(user.email, ""));
+        return sendAndWait(user,topic,url);
+    }
+
+    public static boolean sendNewProposal(User user,Topic topic) throws Exception{
+        setFrom(new InternetAddress("admin@al-imane.org", "Site du Coran"));
+        setReplyTo(new InternetAddress("admin@al-imane.org", ""));
+        setSubject("Nouvelle proposition");
+        addRecipient(new InternetAddress(user.email, ""));
+        return sendAndWait(user,topic);
     }
 }

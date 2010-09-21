@@ -4,7 +4,7 @@
     <div id="message_${_ayat.id}"></div>
     <div id="message2_${_ayat.id}"></div>
 
-    <div style="display: inline-block;width: 70px;height: 80px">
+    <div class="ayatOptions">
         <div>
             <div class="ayatNumber">${_ayat.sa}</div>
             <div style="padding-top: 3px;" class="options">
@@ -62,8 +62,8 @@
             </div>
         </div>
     </div>
-    <div style="display: inline-block;width: 930px; float: right;">
-        <div class="ayatArabic" id="arab_${_ayat.id}">${_ayat.arabic}</div>
+    <div class="ayat">
+        <div class="ayatArabic" id="arab_${_ayat.id}" style="display: none;">${_ayat.arabic}</div>
         <div class="ayatContent" >${_ayat.content}</div>
         <div class="ayatTag options" >
             #{list items:_ayat.tags,as:"t"}

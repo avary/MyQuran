@@ -35,18 +35,20 @@ public class Users extends Controller {
     }
 
     public static void editAccount(@Required @Email String mail, @Required String password,
-            String newPassword, String confirmPassword) {
+            String newPassword, String confirmPassword,boolean newsLetter,boolean newPost) {
 
+        flash.clear();
+        
         User user = User.find("byUsername", Secure.Security.connected()).first();
 
         if (validation.hasError("mail")) {
             flash.error("error");
-            flash.put("errorEmail", "error.mail");
+            flash.now("errorEmail", "error.mail");
         }
 
         if (validation.hasError("password")) {
             flash.error("error");
-            flash.put("errorPassword", "error.emptyPassword");
+            flash.now("errorPassword", "error.emptyPassword");
         } else {
             byte[] uniqueKey = password.getBytes();
             byte[] hash = null;
@@ -69,7 +71,7 @@ public class Users extends Controller {
 
             if (!user.password.equals(hashString.toString())) {
                 flash.error("error");
-                flash.put("errorPassword", "error.badPassword");
+                flash.now("errorPassword", "error.badPassword");
             }
 
         }
@@ -77,11 +79,11 @@ public class Users extends Controller {
         if (newPassword != null && !newPassword.isEmpty()) {
             if (confirmPassword == null || confirmPassword.isEmpty()) {
                 flash.error("error");
-                flash.put("errorPassword", "error.badConfirmPassword");
+                flash.now("errorPassword", "error.badConfirmPassword");
             } else {
                 if (!newPassword.equals(confirmPassword)) {
                     flash.error("error");
-                    flash.put("errorPassword", "error.badConfirmPassword");
+                    flash.now("errorPassword", "error.badConfirmPassword");
                 } else {
                     password = newPassword;
                 }
@@ -110,7 +112,10 @@ public class Users extends Controller {
                 }
             }
 
+            System.out.println(newPost);
             user.password = hashString.toString();
+            user.newPost = newPost;
+            user.newsletter = newsLetter;
             user.save();
             flash.success("info.userModified");
         }

@@ -24,12 +24,8 @@ import play.test.Fixtures;
 @OnApplicationStart
 public class Bootstrap extends Job {
 
-    public static String tagURL;
-
     public void doJob() {
 
-        tagURL = Router.getFullUrl("Tags.viewAyats");
-        System.out.println("URL : "+tagURL);
         // Check if the database is empty
         if (User.count() == 0) {
             Fixtures.load("initial-data.yml");

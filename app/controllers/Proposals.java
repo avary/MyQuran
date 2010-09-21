@@ -17,6 +17,7 @@ import models.User;
 import models.forum.Forum;
 import models.forum.Post;
 import models.forum.Topic;
+import notifiers.Notifier;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.owasp.validator.html.AntiSamy;
@@ -107,9 +108,14 @@ public class Proposals extends Controller {
 
         List<User> users = User.find("isAdmin = true").fetch();
         for (User u : users) {
-            u.notification = true;
-            u.save();
-            Cache.set("user_" + u.username, u, "1h");
+            try {
+                u.notification = true;
+                u.save();
+                Notifier.sendNewProposal(u, topic);
+                Cache.set("user_" + u.username, u, "1h");
+            } catch (Exception ex) {
+                Logger.getLogger(Proposals.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         renderJSON("{\"result\":\"ok\"}");
@@ -165,9 +171,14 @@ public class Proposals extends Controller {
 
         List<User> users = User.find("isAdmin = true").fetch();
         for (User u : users) {
-            u.notification = true;
-            u.save();
-            Cache.set("user_" + u.username, u, "1h");
+            try {
+                u.notification = true;
+                u.save();
+                Notifier.sendNewProposal(u, topic);
+                Cache.set("user_" + u.username, u, "1h");
+            } catch (Exception ex) {
+                Logger.getLogger(Proposals.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         renderJSON("{\"result\":\"ok\"}");
@@ -223,9 +234,14 @@ public class Proposals extends Controller {
 
         List<User> users = User.find("isAdmin = true").fetch();
         for (User u : users) {
-            u.notification = true;
-            u.save();
-            Cache.set("user_" + u.username, u, "1h");
+            try {
+                u.notification = true;
+                u.save();
+                Notifier.sendNewProposal(u, topic);
+                Cache.set("user_" + u.username, u, "1h");
+            } catch (Exception ex) {
+                Logger.getLogger(Proposals.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         renderJSON("{\"result\":\"ok\"}");
