@@ -8,39 +8,66 @@
 <div style="text-align: center">
     <h4>&{'menu.tags'} : </h4>
 </div>
-
+#{if flash.success}
+<p class="success">
+    &{flash.success}
+</p>
+#{/if}
 <br/>
 
 #{list items:tags, as:'tag'}
-    #{if tag_index == 1}
-    <div id="chapterList" >
-        <table>
-    #{/if}
-    #{if tag_index == 51}
-    <div id="chapterList">
-        <table>
-    #{/if}
-    #{if tag_index == 101}
-    <div id="chapterList">
-        <table>
-    #{/if}
+#{if tag_index == 1}
+<div id="chapterList" >
+    <table>
+        #{/if}
+        #{if tag_index == 51}
+        <div id="chapterList">
+            <table>
+                #{/if}
+                #{if tag_index == 101}
+                <div id="chapterList">
+                    <table>
+                        #{/if}
 
-    <tr><td>
-    ${tag_index} -
-    <a href="@{Tags.viewAyats(tag.get('tag'))}">
-        ${tag.get('tag')} (${tag.get('ayats')} &{'ayat',tag.get('ayats').pluralize()})
-    </a>
-    </td>
-    </tr>
-    #{if tag_index == 50 || tag_index == 100 || tag_index == 150}
-    </table>
-    </div>
-    #{/if}
+                        <tr><td>
 
-#{/list}
+                                <a href="@{Tags.viewAyats(tag.get('tag'))}" class="tag" style="font-size: 100%">
+                                    ${tag.get('tag')}
+                                </a>
 
-#{if tag_index != 50 || tag_index != 100 || tag_index != 150}
-    </table></div>
-#{/if}
-#{/if}
+                                (${tag.get('ayats')} &{'ayat',tag.get('ayats').pluralize()})
+                                #{secure.check "admin"}
+                                %{
+                                tagName = tag.get('tag');
+                                }%
+                                <a href="#" onclick="$('#${tagName}').toggle();return false;">
+                                    <img src="@{'/public/images/edit.png'}" alt="" width="16" height="16"/>
+                                </a>
+                                <a href="@{Tags.delete(tag.get('tag'))}" onclick="return confirm(deleteConfirm)">
+                                    <img src="@{'/public/images/delete.png'}" alt="" width="16" height="16"/>
+                                </a>
+                                <div id="${tag.get('tag')}" style="display: none">
+                                    <form action="@{Tags.save()}" method="post">
+                                        <input type="hidden" name="name" value="${tag.get('tag')}"/>
+                                        <input type="text" name="newName" value="${tag.get('tag')}"/>
+                                        <input type="submit" name="save" value="&{'save'}"/>
+                                    </form>
+                                </div>
+                                #{/secure.check}
+                            </td>
+                        </tr>
+                        #{if tag_index == 50 || tag_index == 100 || tag_index == 150}
+                    </table>
+                </div>
+                #{/if}
 
+                #{/list}
+
+                #{if tag_index != 50 || tag_index != 100 || tag_index != 150}
+            </table></div>
+        #{/if}
+        #{/if}
+
+        <script type="text/javascript">
+            var deleteConfirm = "&{'deleteConfirm'}";
+        </script>

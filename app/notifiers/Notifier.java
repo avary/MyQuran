@@ -59,4 +59,20 @@ public class Notifier extends Mailer {
         addRecipient(new InternetAddress(user.email, ""));
         return sendAndWait(user,topic);
     }
+
+    public static boolean sendProposalAccepted(Topic topic) throws Exception{
+        setFrom(new InternetAddress("admin@al-imane.org", "Coran"));
+        setReplyTo(new InternetAddress("admin@al-imane.org", ""));
+        setSubject("Proposition acceptée");
+        addRecipient(new InternetAddress(topic.proposal.user.email, ""));
+        return sendAndWait(topic);
+    }
+
+    public static boolean sendProposalRefused(Topic topic) throws Exception{
+        setFrom(new InternetAddress("admin@al-imane.org", "Coran"));
+        setReplyTo(new InternetAddress("admin@al-imane.org", ""));
+        setSubject("Proposition refusée");
+        addRecipient(new InternetAddress(topic.proposal.user.email, ""));
+        return sendAndWait(topic);
+    }
 }

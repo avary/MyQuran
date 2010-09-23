@@ -40,6 +40,8 @@ tag=Tag
 tag.info=Vous pouvez proposer plusieurs tags à la fois en les séparant par une virgule, ex : prière, jeûne, adoration
 tag.validate=Valider le(s) tag(s) suivant(s)
 tag.validated=Les tags ont été ajoutés.
+tag.deleted=Le tag a été correctement supprimé.
+tag.saved=Le nom du tag a été correctement modifié.
 
 chapter.title=Nom
 chapter.delete=Supprimer ce chapitre
@@ -116,6 +118,8 @@ chapter=Chapitre
 ayats=versets
 showHideArabic=Voir ou cacher les versets en arabe.
 showHideOptions=Voir ou cacher les icônes.
+save=Sauvegarder
+deleteConfirm=Etes vous sur de vouloir supprimer ce tag?
 
 error.emptyUsername=Le nom d'utilisateur est obligatoire.
 error.badUsername=Ce nom d'utilisateur est déjà utilisé.

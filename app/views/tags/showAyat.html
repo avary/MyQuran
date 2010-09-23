@@ -67,9 +67,7 @@
         <div class="ayatContent" >${_ayat.content}</div>
         <div class="ayatTag options" >
             #{list items:_ayat.tags,as:"t"}
-            <a href="@{Tags.viewAyats(t.name,t.name.slugify())}" class="tag">
-                ${t.name}
-            </a>
+            <a href="@{Tags.viewAyats(t.name,t.name.slugify())}" class="tag">${t.name.replaceAll(" ", "")}</a>
             #{/list}
 
         </div>

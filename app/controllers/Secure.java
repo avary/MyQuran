@@ -368,6 +368,9 @@ public class Secure extends Controller {
         static boolean check(String profile) {
             User user = User.find("byUsername", connected()).<User>first();
 
+            if(user == null){
+                return false;
+            }
             if (profile.equals("admin")) {
                 return user.isAdmin;
             } else {

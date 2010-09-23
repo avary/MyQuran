@@ -292,7 +292,11 @@ public class Proposals extends Controller {
         post.topic.proposal.save();
 
         flash.success("tag.validated");
-
+        try {
+            Notifier.sendProposalAccepted(post.topic);
+        } catch (Exception ex) {
+            Logger.getLogger(Proposals.class.getName()).log(Level.SEVERE, null, ex);
+        }
         render(post);
     }
 
@@ -317,6 +321,11 @@ public class Proposals extends Controller {
         Cache.delete("sourat_ayat_" + post.topic.proposal.ayat.sourat.number);
 
         flash.success("transalation.added");
+        try {
+            Notifier.sendProposalAccepted(post.topic);
+        } catch (Exception ex) {
+            Logger.getLogger(Proposals.class.getName()).log(Level.SEVERE, null, ex);
+        }
         render(post);
     }
 
@@ -358,6 +367,7 @@ public class Proposals extends Controller {
             Cache.delete("sourat_ayat_" + post.topic.proposal.ayat.sourat.number);
 
             flash.success("comment.added");
+            Notifier.sendProposalAccepted(post.topic);
             render(post, c);
         } catch (Throwable ex) {
             Logger.getLogger(Proposals.class.getName()).log(Level.SEVERE, null, ex);
@@ -366,7 +376,11 @@ public class Proposals extends Controller {
 
     public static void reject(Long postID) {
         Post post = Post.findById(postID);
-
+        try {
+            Notifier.sendProposalRefused(post.topic);
+        } catch (Exception ex) {
+            Logger.getLogger(Proposals.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (post.topic.proposal.type == 0) {
             post.topic.finished = true;
             post.topic.proposal.state = 2;
@@ -404,7 +418,7 @@ public class Proposals extends Controller {
                 flash.success("chapter.rejectedChapterAyat");
             }
 
-            render("Proposals/validateChapter.html", post);
+            render("Proposals/validateTags.html", post);
         }
     }
 }
